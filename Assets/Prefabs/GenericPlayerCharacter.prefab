@@ -105,15 +105,19 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  mouseDragLayer:
+    serializedVersion: 2
+    m_Bits: 32
   moveSpeed: 5
   acceleration: 15
   deceleration: 15
   clickRadius: 0.3
-  rotationSpeed: 360
+  rotationSpeed: 720
   jumpHeight: 1
   gravity: -20
   teleportDistance: 5
   teleportCooldown: 20
+  _SkinIndex: 0
 --- !u!143 &2134335087393495545
 CharacterController:
   m_ObjectHideFlags: 0

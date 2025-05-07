@@ -10,9 +10,10 @@ public class PlayerController : NetworkBehaviour
     [Tooltip("Child into which we instantiate the chosen skin prefab")]
     public Transform skinRoot;
 
-    [Header("Ground")]
+    [Header("Layers")]
     [Tooltip("Layers considered ground for raycasts")]
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask mouseDragLayer;
 
     [Header("Move")]
     public float moveSpeed = 5f;
@@ -114,25 +115,29 @@ public class PlayerController : NetworkBehaviour
         if (Input.GetMouseButtonDown(0))
             _mouseHeld = true;
 
-        if (_mouseHeld)
-        {
-            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, groundLayer))
-            {
-                _clickPoint = hit.point;
-                Vector3 flat = _clickPoint - transform.position;
-                flat.y = 0;
-                _clickDir = flat.sqrMagnitude > 0.001f
-                    ? flat.normalized
-                    : transform.forward;
-                _isMoving = flat.magnitude > clickRadius;
-            }
+        if (!_mouseHeld)
+            return;
 
-            if (Input.GetMouseButtonUp(0))
-            {
-                _mouseHeld = false;
-                _isMoving = false;
-            }
+        Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+
+        Plane ground = new Plane(Vector3.up, Vector3.zero);
+        if (ground.Raycast(ray, out float enter))
+        {
+            Vector3 worldPoint = ray.GetPoint(enter);
+            _clickPoint = worldPoint;
+
+            Vector3 flat = worldPoint - transform.position;
+            flat.y = 0;
+            _clickDir = (flat.sqrMagnitude > 0.001f)
+                         ? flat.normalized
+                         : transform.forward;
+            _isMoving = flat.magnitude > clickRadius;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            _mouseHeld = false;
+            _isMoving = false;
         }
     }
 
