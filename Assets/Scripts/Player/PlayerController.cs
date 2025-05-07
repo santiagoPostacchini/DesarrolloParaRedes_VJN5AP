@@ -6,23 +6,24 @@ using UnityEngine;
 [RequireComponent(typeof(NetworkObject))]
 public class PlayerController : NetworkBehaviour
 {
-    [Header("References")]
-    [Tooltip("Transform hijo que contiene la skin")]
+    [Header("Skin")]
+    [Tooltip("Child into which we instantiate the chosen skin prefab")]
     public Transform skinRoot;
 
-    [Tooltip("Layer del piso")]
+    [Header("Ground")]
+    [Tooltip("Layers considered ground for raycasts")]
     [SerializeField] private LayerMask groundLayer;
 
-    [Header("Movement")]
+    [Header("Move")]
     public float moveSpeed = 5f;
     public float acceleration = 10f;
     public float deceleration = 20f;
-    public float clickRadius = 1f;
+    public float clickRadius = 0.3f;
 
-    [Header("Rotation")]
+    [Header("Rotate")]
     public float rotationSpeed = 360f;
 
-    [Header("Jump & Gravity")]
+    [Header("Jump/Gravity")]
     public float jumpHeight = 1.5f;
     public float gravity = -9.81f;
 
@@ -30,6 +31,10 @@ public class PlayerController : NetworkBehaviour
     public float teleportDistance = 5f;
     public float teleportCooldown = 20f;
 
+    // 1) Networked skin index
+    [Networked] public int SkinIndex { get; set; }
+
+    // internals
     CharacterController _controller;
     Camera _mainCamera;
     Vector3 _clickPoint;
@@ -42,6 +47,9 @@ public class PlayerController : NetworkBehaviour
     bool _canTeleport = true;
     float _teleportTimer;
 
+    // track last to know when to reapply
+    int _lastSkinIndex = -1;
+
     public override void Spawned()
     {
         _controller = GetComponent<CharacterController>();
@@ -50,65 +58,89 @@ public class PlayerController : NetworkBehaviour
         _verticalVel = 0f;
         _mouseHeld = false;
         _isMoving = false;
+
+        // 2) Only the StateAuthority picks the networked skin
+        if (HasStateAuthority)
+        {
+            int idx = SkinSelection.instance.GetCurrentIndex();
+            SkinIndex = Mathf.Clamp(idx, 0, SkinSelection.instance.skins.Count - 1);
+        }
     }
 
     void Update()
     {
         if (!HasInputAuthority) return;
+
         HandleMouseInput();
         HandleJumpInput();
-        if (_mouseHeld) RotateSkin();
+
+        // Local preview: skin faces the click while dragging
+        if (_mouseHeld)
+            RotateSkinTo(_clickDir);
     }
 
     public override void FixedUpdateNetwork()
     {
-        if (!HasInputAuthority) return;
+        // 3) Skin‐sync on *all* clients
+        if (SkinIndex != _lastSkinIndex)
+        {
+            ApplySkin(SkinIndex);
+            _lastSkinIndex = SkinIndex;
+        }
+
+        // 4) Movement+teleport only on the owner
+        if (!HasInputAuthority)
+        {
+            // But even remotes should see the skin face run‐direction:
+            if (_currentVel.sqrMagnitude > 0.001f)
+                RotateSkinTo(_currentVel.normalized);
+            return;
+        }
+
         HandleTeleport();
         ApplyJumpGravity();
         HandleMovement();
+
+        // After movement, owner sees skin face run‐dir too
+        if (_currentVel.sqrMagnitude > 0.001f)
+            RotateSkinTo(_currentVel.normalized);
+
         HandleTeleportCooldown();
     }
 
+    // — Input & click handling —
     void HandleMouseInput()
     {
-        Vector3 wp;
-        if (Input.GetMouseButtonDown(0) && TryGetClick(out wp))
-        {
+        if (Input.GetMouseButtonDown(0))
             _mouseHeld = true;
-            _clickPoint = wp;
-            _clickDir = (wp - transform.position).WithY(0).normalized;
-            _isMoving = Vector3.Distance(transform.position, wp) > clickRadius;
-        }
-        else if (_mouseHeld && Input.GetMouseButton(0) && TryGetClick(out wp))
+
+        if (_mouseHeld)
         {
-            _clickPoint = wp;
-            _clickDir = (wp - transform.position).WithY(0).normalized;
-            _isMoving = Vector3.Distance(transform.position, wp) > clickRadius;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            _mouseHeld = false;
-            _isMoving = false;
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, groundLayer))
+            {
+                _clickPoint = hit.point;
+                Vector3 flat = _clickPoint - transform.position;
+                flat.y = 0;
+                _clickDir = flat.sqrMagnitude > 0.001f
+                    ? flat.normalized
+                    : transform.forward;
+                _isMoving = flat.magnitude > clickRadius;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                _mouseHeld = false;
+                _isMoving = false;
+            }
         }
     }
 
-    bool TryGetClick(out Vector3 pt)
-    {
-        var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var h, Mathf.Infinity, groundLayer))
-        {
-            pt = h.point;
-            return true;
-        }
-        pt = Vector3.zero;
-        return false;
-    }
-
-    void RotateSkin()
+    // — Skin rotation helper —
+    void RotateSkinTo(Vector3 dir)
     {
         if (skinRoot == null) return;
-        var target = new Vector3(_clickPoint.x, skinRoot.position.y, _clickPoint.z);
-        var desired = Quaternion.LookRotation(target - skinRoot.position);
+        Quaternion desired = Quaternion.LookRotation(dir, Vector3.up);
         skinRoot.rotation = Quaternion.RotateTowards(
             skinRoot.rotation,
             desired,
@@ -116,6 +148,7 @@ public class PlayerController : NetworkBehaviour
         );
     }
 
+    // — Jump & gravity —
     void HandleJumpInput()
     {
         if (Input.GetButtonDown("Jump") && _controller.isGrounded)
@@ -133,20 +166,22 @@ public class PlayerController : NetworkBehaviour
         _verticalVel += gravity * Runner.DeltaTime;
     }
 
+    // — Movement with acceleration/friction —
     void HandleMovement()
     {
-        var targetVel = _isMoving ? _clickDir * moveSpeed : Vector3.zero;
-        var rate = _isMoving ? acceleration : deceleration;
+        Vector3 targetVel = _isMoving ? _clickDir * moveSpeed : Vector3.zero;
+        float rate = _isMoving ? acceleration : deceleration;
         _currentVel = Vector3.MoveTowards(
             _currentVel,
             targetVel,
             rate * Runner.DeltaTime
         );
-        var m = _currentVel;
+        Vector3 m = _currentVel;
         m.y = _verticalVel;
         _controller.Move(m * Runner.DeltaTime);
     }
 
+    // — Teleport with Q & cooldown —
     void HandleTeleport()
     {
         if (_mouseHeld && _isMoving && _canTeleport && Input.GetKeyDown(KeyCode.Q))
@@ -161,12 +196,19 @@ public class PlayerController : NetworkBehaviour
         if (!_canTeleport)
         {
             _teleportTimer -= Runner.DeltaTime;
-            if (_teleportTimer <= 0f) _canTeleport = true;
+            if (_teleportTimer <= 0f)
+                _canTeleport = true;
         }
     }
-}
 
-static class Vec3Ext
-{
-    public static Vector3 WithY(this Vector3 v, float y) => new Vector3(v.x, y, v.z);
+    // — Instantiate the chosen skin under skinRoot —
+    void ApplySkin(int index)
+    {
+        foreach (Transform t in skinRoot) Destroy(t.gameObject);
+        var prefab = SkinSelection.instance.skins[index];
+        var inst = Instantiate(prefab, skinRoot);
+        inst.transform.localPosition = Vector3.zero;
+        inst.transform.localRotation = Quaternion.identity;
+        inst.transform.localScale = Vector3.one;
+    }
 }
