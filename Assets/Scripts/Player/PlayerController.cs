@@ -254,8 +254,8 @@ public class PlayerController : NetworkBehaviour
             return;
         }
 
-        Vector3 dir = _clickDir.sqrMagnitude > 0.001f ? _clickDir : transform.forward;
-        Vector3 origin = transform.position + transform.forward * 0.2f;
+        Vector3 dir = skinRoot.forward;
+        Vector3 origin = transform.position + skinRoot.forward * 0.2f;
 
         Debug.DrawLine(origin, origin + dir * hitRange, Color.red, 1f);
         Debug.Log($"[Hit] SphereCast from {origin} toward {dir}");
