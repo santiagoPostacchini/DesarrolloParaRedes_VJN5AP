@@ -23,7 +23,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
+    importConstraints: 1
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -82,7 +82,127 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: Dog(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Dog_Body
+      parentName: Dog(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Dog_Head
+      parentName: Dog(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DogRiggedPelvis_0111
+      parentName: Dog(Clone)
+      position: {x: 0, y: 0.13534997, z: 0}
+      rotation: {x: 0.49912268, y: -0.5008673, z: -0.49913114, w: 0.50087595}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DogRiggedLThigh_0112
+      parentName: DogRiggedPelvis_0111
+      position: {x: 0.0124146, y: 0.0068069496, z: 0.0643449}
+      rotation: {x: 0.02435641, y: 0.99956775, z: -0.00033339858, w: 0.016464442}
+      scale: {x: 0.9999999, y: 0.9999979, z: 1}
+    - name: DogRiggedLCalf_0113
+      parentName: DogRiggedLThigh_0112
+      position: {x: -0.058752403, y: -0.00000061035155, z: 0}
+      rotation: {x: 0.015413299, y: 0.024716496, z: 0.14318763, w: 0.9892668}
+      scale: {x: 1.0000181, y: 0.99997836, z: 1.0000001}
+    - name: DogRiggedLFoot_0114
+      parentName: DogRiggedLCalf_0113
+      position: {x: -0.0530798, y: -0.0000000190735, z: 0}
+      rotation: {x: -0.0048762118, y: -0.014913163, z: -0.7382038, w: 0.67439526}
+      scale: {x: 1.0000503, y: 0.9999512, z: 1.0000001}
+    - name: DogRiggedRThigh_0115
+      parentName: DogRiggedPelvis_0111
+      position: {x: 0.0124146, y: 0.0068069794, z: -0.0643448}
+      rotation: {x: 0.02439202, y: 0.99956703, z: 0.0003340542, w: -0.016453816}
+      scale: {x: 0.999998, y: 1, z: 0.9999999}
+    - name: DogRiggedRCalf_0116
+      parentName: DogRiggedRThigh_0115
+      position: {x: -0.0587523, y: -0.000000534058, z: -0.000000305176}
+      rotation: {x: -0.015406905, y: -0.02475239, z: 0.14325301, w: 0.98925656}
+      scale: {x: 0.9999937, y: 1.0000093, z: 0.9999991}
+    - name: DogRiggedRFoot_0117
+      parentName: DogRiggedRCalf_0116
+      position: {x: -0.0530798, y: -0.000000038146982, z: 0.000000152588}
+      rotation: {x: 0.004837928, y: 0.01494559, z: -0.73820525, w: 0.6743933}
+      scale: {x: 0.9999803, y: 1.00002, z: 1.0000002}
+    - name: DogRiggedSpine1_0118
+      parentName: DogRiggedPelvis_0111
+      position: {x: -0.0066779, y: -0.00051094097, z: 0.000000152588}
+      rotation: {x: 0.00000013411044, y: -0.00000004470348, z: 0.137586, w: -0.99048984}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: DogRiggedSpine2_0119
+      parentName: DogRiggedSpine1_0118
+      position: {x: -0.09655269, y: 7.105427e-17, z: 0.00000015258789}
+      rotation: {x: -0.015338234, y: -0.005136103, z: 0.14508358, w: 0.9892872}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DogRiggedSpine3_0120
+      parentName: DogRiggedSpine2_0119
+      position: {x: -0.08225008, y: 0.000000038146972, z: -2.842171e-16}
+      rotation: {x: -0.016121004, y: -0.0013240494, z: -0.0953954, w: -0.9953081}
+      scale: {x: 1, y: 1, z: 1.0000002}
+    - name: DogRiggedRibcage_0121
+      parentName: DogRiggedSpine3_0120
+      position: {x: -0.08838802, y: 0.000000076293944, z: 2.842171e-16}
+      rotation: {x: -0.016398711, y: -0.0073301694, z: -0.5218943, w: 0.8528211}
+      scale: {x: 0.999999, y: 0.999999, z: 1}
+    - name: DogRiggedLCollarbone_0122
+      parentName: DogRiggedRibcage_0121
+      position: {x: 0.00253616, y: 0.0148305, z: 0.00440002}
+      rotation: {x: -0.0052334187, y: 0.7303801, z: 0.1566767, w: 0.6648082}
+      scale: {x: 0.99999946, y: 1, z: 0.99999976}
+    - name: DogRiggedLUpperarm_0123
+      parentName: DogRiggedLCollarbone_0122
+      position: {x: -0.14279999, y: -0.000000038147, z: 0.0000000762939}
+      rotation: {x: 0.18803121, y: -0.022514898, z: -0.0912414, w: 0.9776566}
+      scale: {x: 0.9999997, y: 1.0000006, z: 1.0000005}
+    - name: DogRiggedLForearm_0124
+      parentName: DogRiggedLUpperarm_0123
+      position: {x: -0.10050922, y: -0.00000015258789, z: 0}
+      rotation: {x: 0.053181257, y: -0.006894275, z: -0.023666428, w: 0.9982806}
+      scale: {x: 1.0000001, y: 0.9999992, z: 0.99999917}
+    - name: DogRiggedLPalm_0125
+      parentName: DogRiggedLForearm_0124
+      position: {x: -0.112510994, y: 5.684342e-16, z: -5.684342e-16}
+      rotation: {x: -0.71879613, y: 0.047658563, z: 0.014987343, w: 0.6934236}
+      scale: {x: 1.0000002, y: 0.9999999, z: 0.9999958}
+    - name: DogRiggedRCollarbone_0126
+      parentName: DogRiggedRibcage_0121
+      position: {x: 0.00253616, y: 0.014830399, z: -0.00439972}
+      rotation: {x: -0.027319748, y: 0.7295643, z: -0.13366812, w: -0.6701661}
+      scale: {x: 1, y: 1.0000001, z: 0.9999999}
+    - name: DogRiggedRUpperarm_0127
+      parentName: DogRiggedRCollarbone_0126
+      position: {x: -0.14279999, y: -0.000000033378594, z: -0.0000000762939}
+      rotation: {x: -0.18814673, y: 0.022529019, z: -0.09079691, w: 0.9776754}
+      scale: {x: 0.9999995, y: 1.000001, z: 1}
+    - name: DogRiggedRForearm_0128
+      parentName: DogRiggedRUpperarm_0127
+      position: {x: -0.100509256, y: 0, z: -0.000000076293944}
+      rotation: {x: -0.053182166, y: 0.0068890336, z: -0.023629332, w: 0.9982815}
+      scale: {x: 0.99999964, y: 1.0000001, z: 0.9999997}
+    - name: DogRiggedRPalm_0129
+      parentName: DogRiggedRForearm_0128
+      position: {x: -0.112510994, y: 3.9790393e-14, z: 0.0000000762939}
+      rotation: {x: 0.7187961, y: -0.04765856, z: 0.01498692, w: 0.6934236}
+      scale: {x: 0.9999975, y: 1.0000004, z: 1.0000007}
+    - name: DogRiggedNeck_0130
+      parentName: DogRiggedRibcage_0121
+      position: {x: -0.000115966795, y: -0.00051088334, z: 0}
+      rotation: {x: 0.015889337, y: 0.0030261686, z: 0.06284273, w: 0.9978923}
+      scale: {x: 1.0000005, y: 1.0000006, z: 1.0000002}
+    - name: DogRiggedHead_0131
+      parentName: DogRiggedNeck_0130
+      position: {x: -0.124081, y: 1.15818466e-14, z: -0.000000152588}
+      rotation: {x: 0.00000047683716, y: 0.00000023841858, z: -0.035431013, w: 0.9993721}
+      scale: {x: 0.99999994, y: 0.9999996, z: 0.99999994}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -91,13 +211,13 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: 
+    rootMotionBoneName: DogRiggedPelvis_0111
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 3
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1

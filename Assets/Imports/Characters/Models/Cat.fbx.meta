@@ -116,7 +116,132 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: Cat(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Cat_Body
+      parentName: Cat(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Cat_Head
+      parentName: Cat(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CatRiggedPelvis_021
+      parentName: Cat(Clone)
+      position: {x: 0, y: 0.13535096, z: 0}
+      rotation: {x: 0.49912268, y: -0.5008673, z: -0.49913114, w: 0.50087595}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000002}
+    - name: CatRiggedLThigh_022
+      parentName: CatRiggedPelvis_021
+      position: {x: 0.0124146, y: 0.0068069496, z: 0.0643451}
+      rotation: {x: 0.02435666, y: 0.9995677, z: -0.00033348796, w: 0.016464336}
+      scale: {x: 1.0000001, y: 0.99999696, z: 1.0000002}
+    - name: CatRiggedLCalf_023
+      parentName: CatRiggedLThigh_022
+      position: {x: -0.0587524, y: -0.000000457764, z: 0.000000305176}
+      rotation: {x: 0.015411109, y: 0.024738371, z: 0.1432369, w: 0.9892592}
+      scale: {x: 1.0000176, y: 0.9999794, z: 1.0000004}
+    - name: CatRiggedLFoot_024
+      parentName: CatRiggedLCalf_023
+      position: {x: -0.0530798, y: 0.0000000190735, z: 0}
+      rotation: {x: -0.0046226317, y: -0.014711246, z: -0.7382265, w: 0.6743767}
+      scale: {x: 1.0000501, y: 0.9999508, z: 1}
+    - name: CatRiggedRThigh_025
+      parentName: CatRiggedPelvis_021
+      position: {x: 0.0124146, y: 0.0068069496, z: -0.0643448}
+      rotation: {x: 0.02441506, y: 0.9995643, z: 0.00035586953, w: -0.016587168}
+      scale: {x: 0.99999803, y: 1, z: 0.9999999}
+    - name: CatRiggedRCalf_026
+      parentName: CatRiggedRThigh_025
+      position: {x: -0.0587524, y: -0.000000457764, z: -0.000000457764}
+      rotation: {x: -0.0153720975, y: -0.0249739, z: 0.14311361, w: 0.98927176}
+      scale: {x: 0.9999939, y: 1.0000099, z: 0.9999993}
+    - name: CatRiggedRFoot_027
+      parentName: CatRiggedRCalf_026
+      position: {x: -0.0530798, y: 3.211653e-14, z: 0.000000305176}
+      rotation: {x: 0.004503725, y: 0.014760518, z: -0.73816, w: 0.67444915}
+      scale: {x: 0.99998, y: 1.0000201, z: 1}
+    - name: CatRiggedSpine1_028
+      parentName: CatRiggedPelvis_021
+      position: {x: -0.0066778897, y: -0.00051094097, z: 0.000000152588}
+      rotation: {x: 0.00000013411044, y: -0.00000004470348, z: 0.137586, w: -0.99048984}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CatRiggedSpine2_029
+      parentName: CatRiggedSpine1_028
+      position: {x: -0.09655273, y: 0, z: -2.842171e-16}
+      rotation: {x: -0.015338219, y: -0.0051361006, z: 0.14508359, w: 0.9892872}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CatRiggedSpine3_030
+      parentName: CatRiggedSpine2_029
+      position: {x: -0.08225, y: 0.000000038146972, z: -2.842171e-16}
+      rotation: {x: -0.01612099, y: -0.0013240513, z: -0.095395386, w: -0.9953081}
+      scale: {x: 0.9999999, y: 1.0000001, z: 1.0000001}
+    - name: CatRiggedRibcage_031
+      parentName: CatRiggedSpine3_030
+      position: {x: -0.08838798, y: 0, z: 0}
+      rotation: {x: -0.01639894, y: -0.007328679, z: -0.5218213, w: 0.8528657}
+      scale: {x: 0.999999, y: 0.999999, z: 1}
+    - name: CatRiggedLCollarbone_032
+      parentName: CatRiggedRibcage_031
+      position: {x: 0.00253616, y: 0.0148305, z: 0.00440002}
+      rotation: {x: -0.005233396, y: 0.7303802, z: 0.15667664, w: 0.6648082}
+      scale: {x: 0.99999946, y: 1, z: 0.99999994}
+    - name: CatRiggedLUpperarm_033
+      parentName: CatRiggedLCollarbone_032
+      position: {x: -0.14279999, y: 0.000000038147004, z: 0.000000114441}
+      rotation: {x: 0.18803072, y: -0.022515256, z: -0.091239996, w: 0.97765684}
+      scale: {x: 0.9999995, y: 1.0000005, z: 0.9999999}
+    - name: CatRiggedLForearm_034
+      parentName: CatRiggedLUpperarm_033
+      position: {x: -0.100509256, y: 0.00000015258789, z: 2.842171e-16}
+      rotation: {x: 0.053181186, y: -0.006893918, z: -0.023667568, w: 0.9982805}
+      scale: {x: 1.0000002, y: 0.9999994, z: 1.0000005}
+    - name: CatRiggedLPalm_035
+      parentName: CatRiggedLForearm_034
+      position: {x: -0.112510994, y: 1.9326763e-14, z: -0.000000038147}
+      rotation: {x: -0.7187964, y: 0.047657847, z: 0.014987003, w: 0.69342333}
+      scale: {x: 1.0000001, y: 1.0000004, z: 0.9999983}
+    - name: CatRiggedRCollarbone_036
+      parentName: CatRiggedRibcage_031
+      position: {x: 0.00253616, y: 0.0148306, z: -0.00439972}
+      rotation: {x: -0.02731968, y: 0.72956425, z: -0.1336681, w: -0.67016613}
+      scale: {x: 1.0000005, y: 1.0000002, z: 1.0000005}
+    - name: CatRiggedRUpperarm_037
+      parentName: CatRiggedRCollarbone_036
+      position: {x: -0.14279999, y: -0.00000007629389, z: -0.000000152588}
+      rotation: {x: -0.18814641, y: 0.022529555, z: -0.09079612, w: 0.97767556}
+      scale: {x: 0.9999997, y: 1.0000008, z: 0.99999976}
+    - name: CatRiggedRForearm_038
+      parentName: CatRiggedRUpperarm_037
+      position: {x: -0.100509, y: 0.00000015258789, z: -0.00000015258802}
+      rotation: {x: -0.053182077, y: 0.006888948, z: -0.023630414, w: 0.9982814}
+      scale: {x: 0.99999934, y: 1.0000004, z: 0.9999999}
+    - name: CatRiggedRPalm_039
+      parentName: CatRiggedRForearm_038
+      position: {x: -0.112510994, y: 2.842171e-16, z: 5.684342e-16}
+      rotation: {x: 0.718796, y: -0.047658097, z: 0.014987612, w: 0.69342375}
+      scale: {x: 0.99999714, y: 0.99999887, z: 0.99999994}
+    - name: CatRiggedNeck_040
+      parentName: CatRiggedRibcage_031
+      position: {x: -0.00011604309, y: -0.00051078794, z: 2.842171e-16}
+      rotation: {x: 0.015889311, y: 0.0030261965, z: 0.06284265, w: 0.9978924}
+      scale: {x: 1.0000001, y: 1.0000004, z: 1.0000001}
+    - name: CatRiggedHead_041
+      parentName: CatRiggedNeck_040
+      position: {x: -0.124079995, y: -0.000000038146975, z: -0.000000305176}
+      rotation: {x: 0.00000047683716, y: 0.00000023841858, z: -0.035431013, w: 0.9993721}
+      scale: {x: 1.0000002, y: 1, z: 1}
+    - name: CatRiggedTail_042
+      parentName: CatRiggedPelvis_021
+      position: {x: -0.00387964, y: -0.120333, z: 0.000000152588}
+      rotation: {x: 0.000000029802319, y: -0.000000029802319, z: 0.81915206, w: 0.57357633}
+      scale: {x: 1.0000005, y: 1.0000001, z: 1.0000001}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -131,7 +256,7 @@ ModelImporter:
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 3
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1

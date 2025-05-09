@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour, INetworkRunnerCallbacks
 {
     public static GameManager Instance { get; private set; }
 
-    // store each player’s chosen skin index
     Dictionary<PlayerRef, int> _skinChoices = new();
 
     void Awake()
@@ -17,24 +16,20 @@ public class GameManager : MonoBehaviour, INetworkRunnerCallbacks
         else Instance = this;
     }
 
-    // called by each PlayerController in Spawned()
     public void RegisterLocalSkin(PlayerRef me, int skinIndex)
     {
         _skinChoices[me] = skinIndex;
         Debug.Log($"[GameManager] Registered skin {skinIndex} for {me}");
     }
 
-    // ── INetworkRunnerCallbacks ─────────────────────────────────────────────────
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        // look up the just-spawned NetworkObject
         var netObj = runner.GetPlayerObject(player);
         if (netObj == null) return;
 
         var pc = netObj.GetComponent<PlayerController>();
         if (pc == null) return;
 
-        // if we have a registered choice for that player, apply it
         if (_skinChoices.TryGetValue(player, out var idx))
         {
             Debug.Log($"[GameManager] Applying skin {idx} for {player}");
@@ -46,7 +41,6 @@ public class GameManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    // ── other INetworkRunnerCallbacks (no-ops) ─────────────────────────────────
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
     public void OnInput(NetworkRunner runner, Fusion.NetworkInput input) { }
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, Fusion.NetworkInput input) { }
@@ -62,29 +56,9 @@ public class GameManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnSceneLoadStart(NetworkRunner runner) { }
     public void OnHostMigration(NetworkRunner runner, Fusion.HostMigrationToken hostMigrationToken) { }
     public void OnCustomAuthenticationResponse(NetworkRunner runner, System.Collections.Generic.Dictionary<string, object> data) { }
-
-    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
-    {
-        throw new NotImplementedException();
-    }
+    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
+    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
+    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
+    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
+    public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
 }

@@ -23,7 +23,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
+    importConstraints: 1
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -82,7 +82,127 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: Bulldog(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BullDog_Body
+      parentName: Bulldog(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BullDog_Head
+      parentName: Bulldog(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterPelvis_0490
+      parentName: Bulldog(Clone)
+      position: {x: 0, y: 0.13535, z: 0}
+      rotation: {x: 0.49912268, y: -0.5008673, z: -0.49913114, w: 0.50087595}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
+    - name: CharacterLThigh_0491
+      parentName: CharacterPelvis_0490
+      position: {x: 0.0124146, y: 0.0068069496, z: 0.0643448}
+      rotation: {x: 0.02435638, y: 0.99956775, z: -0.00033344328, w: 0.016464457}
+      scale: {x: 0.99999964, y: 0.9999979, z: 0.9999998}
+    - name: CharacterLCalf_0492
+      parentName: CharacterLThigh_0491
+      position: {x: -0.0587524, y: -0.000000610352, z: 0.00000038623799}
+      rotation: {x: 0.0154132545, y: 0.024716482, z: 0.14318769, w: 0.9892669}
+      scale: {x: 1.0000182, y: 0.999977, z: 1.0000001}
+    - name: CharacterLFoot_0493
+      parentName: CharacterLCalf_0492
+      position: {x: -0.0530798, y: 0.000000305176, z: 8.5265126e-16}
+      rotation: {x: -0.0048762164, y: -0.014913117, z: -0.7382039, w: 0.6743953}
+      scale: {x: 1.0000505, y: 0.9999509, z: 1.0000004}
+    - name: CharacterRThigh_0494
+      parentName: CharacterPelvis_0490
+      position: {x: 0.0124146, y: 0.00680664, z: -0.0643449}
+      rotation: {x: 0.024392035, y: 0.99956703, z: 0.0003340244, w: -0.01645377}
+      scale: {x: 0.9999978, y: 1, z: 1}
+    - name: CharacterRCalf_0495
+      parentName: CharacterRThigh_0494
+      position: {x: -0.058752097, y: -0.000000610352, z: -0.000000305176}
+      rotation: {x: -0.015406832, y: -0.02475241, z: 0.14325292, w: 0.9892566}
+      scale: {x: 0.99999386, y: 1.0000097, z: 0.9999992}
+    - name: CharacterRFoot_0496
+      parentName: CharacterRCalf_0495
+      position: {x: -0.0530798, y: 0.000000305176, z: -0.00000015258802}
+      rotation: {x: 0.004837832, y: 0.014945561, z: -0.73820525, w: 0.6743933}
+      scale: {x: 0.9999804, y: 1.0000203, z: 1.0000002}
+    - name: CharacterSpine1_0497
+      parentName: CharacterPelvis_0490
+      position: {x: -0.0066778897, y: -0.00051086396, z: 0.0000000762939}
+      rotation: {x: 0.00000016391276, y: -0.000000014901159, z: 0.13758594, w: -0.99048984}
+      scale: {x: 1, y: 1, z: 0.9999999}
+    - name: CharacterSpine2_0498
+      parentName: CharacterSpine1_0497
+      position: {x: -0.09655273, y: 0, z: 1.4210854e-16}
+      rotation: {x: -0.015338157, y: -0.005135943, z: 0.14508358, w: 0.9892872}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterSpine3_0499
+      parentName: CharacterSpine2_0498
+      position: {x: -0.08225006, y: 0, z: 0}
+      rotation: {x: -0.016120927, y: -0.0013239362, z: -0.0953953, w: -0.99530804}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: CharacterRibcage_0500
+      parentName: CharacterSpine3_0499
+      position: {x: -0.088388, y: 0.000000305176, z: -0.000000152588}
+      rotation: {x: -0.01606134, y: -0.0019161074, z: -0.13194136, w: 0.9911256}
+      scale: {x: 0.999999, y: 0.999999, z: 1}
+    - name: CharacterNeck_0510
+      parentName: CharacterRibcage_0500
+      position: {x: -0.000116043, y: -0.00051116897, z: 0.000000152588}
+      rotation: {x: 0.01863505, y: 0.001490011, z: 0.039619885, w: 0.99903995}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterHead_0511
+      parentName: CharacterNeck_0510
+      position: {x: -0.124079995, y: -0.000000305176, z: 0}
+      rotation: {x: -0.0027668697, y: 0.0019812398, z: -0.012222595, w: 0.99991953}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000005}
+    - name: CharacterLCollarbone_0501
+      parentName: CharacterRibcage_0500
+      position: {x: 0.0025362, y: 0.0148303, z: 0.00439987}
+      rotation: {x: -0.0052334075, y: 0.7303801, z: 0.15667672, w: 0.6648083}
+      scale: {x: 0.9999995, y: 0.9999999, z: 0.9999997}
+    - name: CharacterLUpperarm_0502
+      parentName: CharacterLCollarbone_0501
+      position: {x: -0.14280021, y: 0, z: 0.000000038146972}
+      rotation: {x: 0.18803056, y: -0.022514932, z: -0.09124057, w: 0.97765684}
+      scale: {x: 0.9999988, y: 1.0000005, z: 1.0000001}
+    - name: CharacterLForearm_0503
+      parentName: CharacterLUpperarm_0502
+      position: {x: -0.10050924, y: 0.00000015258789, z: 0}
+      rotation: {x: 0.053181246, y: -0.0068941303, z: -0.023667457, w: 0.9982805}
+      scale: {x: 1.0000004, y: 1.0000005, z: 0.99999976}
+    - name: CharacterLPalm_0504
+      parentName: CharacterLForearm_0503
+      position: {x: -0.112510994, y: -5.684342e-16, z: 5.684342e-16}
+      rotation: {x: -0.7187962, y: 0.047658566, z: 0.0149872415, w: 0.69342345}
+      scale: {x: 1.0000002, y: 1.0000002, z: 0.99999624}
+    - name: CharacterRCollarbone_0505
+      parentName: CharacterRibcage_0500
+      position: {x: 0.00253616, y: 0.0148303, z: -0.00439987}
+      rotation: {x: -0.027319819, y: 0.7295643, z: -0.13366805, w: -0.6701661}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000001}
+    - name: CharacterRUpperarm_0506
+      parentName: CharacterRCollarbone_0505
+      position: {x: -0.14280029, y: 5.684342e-16, z: -0.000000038146972}
+      rotation: {x: -0.18814622, y: 0.022529714, z: -0.090794906, w: 0.9776757}
+      scale: {x: 0.99999994, y: 1.0000011, z: 0.9999989}
+    - name: CharacterRForearm_0489
+      parentName: CharacterRUpperarm_0506
+      position: {x: -0.100509, y: 0.0000003051759, z: -0.00000015258806}
+      rotation: {x: -0.053182248, y: 0.0068889023, z: -0.023631878, w: 0.9982814}
+      scale: {x: 1, y: 1.0000001, z: 0.99999994}
+    - name: CharacterRPalm_0509
+      parentName: CharacterRForearm_0489
+      position: {x: -0.112510994, y: -0.00000030517603, z: -0.00000015258802}
+      rotation: {x: 0.71879596, y: -0.047658578, z: 0.014987011, w: 0.6934237}
+      scale: {x: 0.999998, y: 1.0000001, z: 1.0000002}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -91,13 +211,13 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: 
+    rootMotionBoneName: CharacterPelvis_0490
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 3
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
