@@ -114,11 +114,11 @@ MonoBehaviour:
   gravity: -20
   teleportDistance: 5
   teleportCooldown: 20
-  hitRadius: 0.5
-  hitRange: 0.3
+  hitRadius: 0.3
+  hitRange: 0.5
   hitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   hitCooldown: 0.5
   _SkinIndex: 0
 --- !u!143 &2134335087393495545

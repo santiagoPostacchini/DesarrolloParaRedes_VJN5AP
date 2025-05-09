@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using Fusion;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -257,7 +259,7 @@ public class PlayerController : NetworkBehaviour
         Vector3 dir = skinRoot.forward;
         Vector3 origin = transform.position + skinRoot.forward * 0.2f;
 
-        Debug.DrawLine(origin, origin + dir * hitRange, Color.red, 1f);
+        Debug.DrawRay(origin, dir * hitRange, Color.red, 4f);
         Debug.Log($"[Hit] SphereCast from {origin} toward {dir}");
 
         if (Physics.SphereCast(origin, hitRadius, dir, out var hit, hitRange, hitLayer))
