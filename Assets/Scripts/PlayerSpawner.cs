@@ -7,15 +7,18 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 
     public void PlayerJoined(PlayerRef player)
     {
-        // Only spawn your own avatar
+        // Only the host (StateAuthority) spawns avatars for everyone
         if (player != Runner.LocalPlayer)
             return;
 
+        // This spawn is automatically propagated to all clients
         Runner.Spawn(
             PlayerPrefab,
-            Vector3.up,
+            Vector3.up,              // choose your spawn height
             Quaternion.identity,
-            player
+            player                   // grants that client InputAuthority
         );
+
+        Debug.Log($"[Spawner] Spawned avatar for Player {player}");
     }
 }

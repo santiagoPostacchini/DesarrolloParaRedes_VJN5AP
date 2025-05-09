@@ -54,7 +54,6 @@ public class PlayerController : NetworkBehaviour
     private float _verticalVel;
     private int _lastSkinIndex;
 
-    // local hit cooldown
     private bool _hitRequested;
     private float _hitTimer;
 
@@ -71,8 +70,14 @@ public class PlayerController : NetworkBehaviour
         _hitTimer = 0f;
         _lastSkinIndex = -1;
 
+        if (Object.HasInputAuthority)
+        {
+            int idx = SkinSelection.instance.GetCurrentIndex();
+            GameManager.Instance.RegisterLocalSkin(Runner.LocalPlayer, idx);
+            // Also apply locally immediately:
+            RPC_SetSkin(idx);
+        }
         Debug.Log($"[Spawn] Player spawned at {transform.position}");
-        AssignInitialSkin();
     }
 
     void Update()
@@ -87,7 +92,6 @@ public class PlayerController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        SyncSkin();
         ProcessTeleport();
         ProcessJumpAndGravity();
         ProcessMovement();
@@ -99,29 +103,26 @@ public class PlayerController : NetworkBehaviour
     // ────────────────────────────────────────────────────────────
     //   Initialization & Skin
     // ────────────────────────────────────────────────────────────
-    private void AssignInitialSkin()
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All, InvokeLocal = true)]
+    public void RPC_SetSkin(int index)
     {
-        if (!HasStateAuthority) return;
-        int idx = SkinSelection.instance.GetCurrentIndex();
-        SkinIndex = Mathf.Clamp(idx, 0, SkinSelection.instance.skins.Count - 1);
-        Debug.Log($"[Spawn] Assigned SkinIndex = {SkinIndex}");
+        ApplySkin(index);
+        Debug.Log($"[Skin] Applied skin #{index} on player {Object.InputAuthority}");
     }
 
-    private void SyncSkin()
-    {
-        if (SkinIndex == _lastSkinIndex) return;
-        ApplySkin(SkinIndex);
-        _lastSkinIndex = SkinIndex;
-    }
-
+    // Instantiates the chosen prefab under skinRoot
     public void ApplySkin(int index)
     {
+        // remove any existing skin children
         foreach (Transform t in skinRoot) Destroy(t.gameObject);
+
+        // instantiate the selected prefab
         var go = Instantiate(SkinSelection.instance.skins[index], skinRoot);
         go.transform.localPosition = Vector3.zero;
         go.transform.localRotation = Quaternion.identity;
         go.transform.localScale = Vector3.one;
-        Debug.Log($"[Skin] Applied skin #{index}");
+
+        go.SetActive(true);
     }
 
     // ────────────────────────────────────────────────────────────
