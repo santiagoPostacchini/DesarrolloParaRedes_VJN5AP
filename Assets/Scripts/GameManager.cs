@@ -1,29 +1,65 @@
 ﻿using Fusion;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    void Awake()
+    [SerializeField] GameObject _winImage;
+    [SerializeField] GameObject _loseImage;
+
+    List<PlayerRef> _clients;
+
+    private void Awake()
     {
-        if (Instance != null && Instance != this) 
-            Destroy(gameObject);
-        else 
-        { 
-            Instance = this; DontDestroyOnLoad(gameObject);
+        Instance = this;
+
+        _clients = new List<PlayerRef>();
+    }
+    public void AddToList(PlayerController player)
+    {
+        var playerRef = player.Object.InputAuthority;
+
+        if (_clients.Contains(playerRef)) return;
+
+        _clients.Add(playerRef);
+    }
+
+    void RemoveFromList(PlayerRef client)
+    {
+        _clients.Remove(client);
+    }
+
+    [Rpc]
+    public void RPC_Defeat(PlayerRef client)
+    {
+        if (client == Runner.LocalPlayer)
+        {
+            ShowDefeatImage();
+        }
+
+        RemoveFromList(client);
+
+        if (_clients.Count == 1 && HasStateAuthority)
+        {
+            RPC_Win(_clients[0]);
         }
     }
 
-    public void StartGamemode()
+    [Rpc]
+    void RPC_Win([RpcTarget] PlayerRef client)
     {
-
+        ShowWinImage();
     }
 
-    public GameObject GetPlayerSkin()
+    void ShowDefeatImage()
     {
-        return SkinSelection.instance.GetCurrentSelection();
+        _loseImage.SetActive(true);
+    }
+
+    void ShowWinImage()
+    {
+        _winImage.SetActive(true);
     }
 }

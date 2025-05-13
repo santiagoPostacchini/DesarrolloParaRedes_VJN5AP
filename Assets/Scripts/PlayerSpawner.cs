@@ -1,24 +1,52 @@
-using Fusion;
 using UnityEngine;
+using Fusion;
 
 public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 {
-    [SerializeField] private GameObject _playerPrefab;
-    [SerializeField] private Transform[] _spawnPoints;
+    [SerializeField] GameObject _playerPrefab;
 
+    [SerializeField] Transform[] _spawnPoints;
+
+    bool _initialized;
+    int _index;
+
+    //Se ejecuta en CADA cliente conectado cuando uno nuevo entra.
     public void PlayerJoined(PlayerRef player)
     {
-        if (player != Runner.LocalPlayer)
+
+        var playerCount = 2; //Runner.SessionInfo.PlayerCount;
+        //Es necesario que hayan dos clientes para que se ejecute el juego. El primer cliente inicializa la partida y el segundo la comienza
+
+        if (_initialized && playerCount >= 2)
+        {
+            CreatePlayer(_index);
             return;
+        }
 
-        CreatePlayer(Runner.LocalPlayer.PlayerId - 1);
-
-        Debug.Log($"[Spawner] Spawned avatar for Player {player}");
+        //Si el cliente que entro, es el mismo que el cliente donde esta ejecutado este codigo, entones:
+        if (player == Runner.LocalPlayer)
+        {
+            if (playerCount < 2)
+            {
+                if (!_initialized)
+                {
+                    _initialized = true;
+                    _index = playerCount - 1;
+                }
+            }
+            else
+            {
+                CreatePlayer(playerCount - 1);
+            }
+        }
     }
 
-    void CreatePlayer(int index)
+    void CreatePlayer(int playerIndex)
     {
-        var spawnPoint = _spawnPoints[index];
-        NetworkObject playerObject =  Runner.Spawn(_playerPrefab, Vector3.up/2, spawnPoint.rotation);
+        _initialized = false;
+
+        var spawnPoint = _spawnPoints[playerIndex];
+
+        Runner.Spawn(_playerPrefab, spawnPoint.position + Vector3.up, spawnPoint.rotation, Runner.LocalPlayer);
     }
 }
