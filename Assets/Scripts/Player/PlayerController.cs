@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Fusion;
 using UnityEngine;
 
@@ -9,196 +10,166 @@ public class PlayerController : NetworkBehaviour
     [Header("Skin")]
     public Transform skinRoot;
 
-    [Header("Layers")]
+    [Header("Movement Settings")]
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float deceleration = 20f;
+    [SerializeField] private float clickRadius = 0.3f;
     [SerializeField] private LayerMask groundLayer;
 
-    [Header("Move")]
-    public float moveSpeed = 5f;
-    public float acceleration = 10f;
-    public float deceleration = 20f;
-    public float clickRadius = 0.3f;
-
-    [Header("Rotate")]
-    public float rotationSpeed = 360f;
+    [Header("Rotation")]
+    [SerializeField] private float rotationSpeed = 360f;
 
     [Header("Jump & Gravity")]
-    public float jumpHeight = 1.5f;
-    public float gravity = -9.81f;
+    [SerializeField] private float jumpHeight = 1.5f;
+    [SerializeField] private float gravity = -9.81f;
 
     [Header("Teleport")]
-    public float teleportDistance = 5f;
-    public float teleportCooldown = 20f;
+    [SerializeField] private float teleportDistance = 5f;
+    [SerializeField] private float teleportCooldown = 20f;
 
     [Header("Melee Hit")]
-    public float hitRadius = 0.5f;
-    public float hitRange = 0.3f;
-    public LayerMask hitLayer;
-    public float hitCooldown = 1.0f;
+    [SerializeField] private float hitRadius = 0.5f;
+    [SerializeField] private float hitRange = 0.3f;
+    [SerializeField] private LayerMask hitLayer;
+    [SerializeField] private float hitCooldown = 1.0f;
 
-    private Animator _anim;
+    public int SkinIndex { get; set; }
+    private int _lastSkin = -1;
 
-    [Networked] public int SkinIndex { get; set; }
+    [Networked, OnChangedRender(nameof(OnStunChanged))]
+    private TickTimer stunTimer { get; set; }
+    private int _lastStunTick = -1;
 
-    private CharacterController _cc;
-    private Camera _cam;
-    private Vector3 _clickDir;
-    private bool _mouseHeld;
-    private bool _isMoving;
-    private bool _jumpReq;
-    private bool _isStunned;
-    private bool _canTeleport = true;
-    private float _teleportTimer;
-    private Vector3 _velocity;
-    private float _verticalVel;
-    private int _lastSkinIndex;
+    // ——— Internals ——————————————————————————————————————————
+    CharacterController _cc;
+    Camera _cam;
+    NetworkMecanimAnimator _netAnim;
 
-    private bool _hitRequested;
-    private float _hitTimer;
+    Vector3 _clickDir;
+    Vector3 _velocity;
+    float _verticalVel;
 
-    private void Awake()
-    {
-        _cc = GetComponent<CharacterController>();
-        _cam = Camera.main;
-        
-    }
+    bool _mouseHeld, _isMoving, _jumpReq, _isStunned, _hitRequested, _canTeleport = true;
+    float _hitTimer, _teleportTimer;
 
     public override void Spawned()
     {
+        _cc = GetComponent<CharacterController>();
+        _cam = Camera.main;
+        _netAnim = GetComponentInChildren<NetworkMecanimAnimator>();
+
         _velocity = Vector3.zero;
         _verticalVel = 0f;
-        _mouseHeld = false;
-        _isMoving = false;
+        _hitTimer = _teleportTimer = 0f;
+
+        stunTimer = TickTimer.None;
         _isStunned = false;
-        _hitRequested = false;
-        _hitTimer = 0f;
-        _lastSkinIndex = -1;
 
-        Debug.Log($"SkinSelection.instance = {SkinSelection.instance}");
-        Debug.Log($"GameManager.Instance = {GameManager.Instance}");
-        Debug.Log($"Camera.main = {Camera.main}");
-
-        if (Object.HasInputAuthority)
-        {
-            int idx = SkinSelection.instance.GetCurrentIndex();
-            GameManager.Instance.RegisterLocalSkin(Runner.LocalPlayer, idx);
-            RPC_SetSkin(idx);
-        }
-        _anim = GetComponentInChildren<Animator>();
-        Debug.Log($"[Spawn] Player spawned at {transform.position}");
+        RPC_SetSkin();
     }
 
     void Update()
     {
         if (!HasInputAuthority) return;
+        ReadInput();
 
-        HandleMouseInput();
-        HandleJumpInput();
-        BufferHitRequest();
-        PreviewDragRotation();
-        UpdateAnimations();
+        if (_mouseHeld && !_isStunned)
+            RotateTowards(_clickDir);
+
+        UpdateAnimationFlags();
     }
 
     public override void FixedUpdateNetwork()
     {
-        if (!HasInputAuthority) return;
+        if (!HasInputAuthority)
+        {
+            if (_velocity.sqrMagnitude > 0.001f && !_isStunned)
+                RotateTowards(_velocity.normalized);
+            return;
+        }
 
         ProcessTeleport();
-        ProcessJumpAndGravity();
+        ProcessJumpGravity();
         ProcessMovement();
-        UpdateHitTimer();
-        ProcessBufferedHit();
+
+        if (_hitRequested)
+            ProcessHit();
+
         ProcessRotationAfterMove();
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.All, InvokeLocal = true)]
-    public void RPC_SetSkin(int index)
+    static void OnStunChanged(PlayerController c)
     {
-        ApplySkin(index);
-        Debug.Log($"[Skin] Applied skin #{index} on player {Object.InputAuthority}");
+        if (!c.stunTimer.Expired(c.Runner))
+            c.StartCoroutine(c.StunCoroutine());
     }
 
-    public void ApplySkin(int index)
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    void RPC_SetSkin()
     {
-        foreach (Transform t in skinRoot)
-            Destroy(t.gameObject);
-
-        GameObject go = Instantiate(
-            SkinSelection.instance.skins[index],
-            skinRoot
-        );
-
+        foreach (Transform t in skinRoot) Destroy(t.gameObject);
+        var go = Instantiate(SkinSelection.instance.skins[SkinIndex], skinRoot);
         go.transform.localPosition = Vector3.zero;
         go.transform.localRotation = Quaternion.identity;
         go.transform.localScale = Vector3.one;
-
-        go.SetActive(true);
     }
 
-    private void HandleMouseInput()
+    IEnumerator StunCoroutine()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            _mouseHeld = true;
-            Debug.Log("[Input] Drag started");
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            _mouseHeld = false;
-            _isMoving = false;
-            Debug.Log("[Input] Drag ended");
-        }
-        if (!_mouseHeld || _isStunned) return;
-
-        Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hit, Mathf.Infinity, groundLayer))
-        {
-            Vector3 flat = hit.point - transform.position;
-            flat.y = 0f;
-            _clickDir = flat.sqrMagnitude > 0.001f ? flat.normalized : transform.forward;
-            _isMoving = flat.magnitude > clickRadius;
-        }
+        _isStunned = true;
+        _isMoving = false;
+        _netAnim.Animator?.SetTrigger("Stunned");
+        yield return new WaitForSeconds(hitCooldown);
+        _isStunned = false;
+        _netAnim.Animator?.SetTrigger("Recover");
     }
 
-    private void HandleJumpInput()
+    // ——— Input Phase ———————————————————————————————————————
+    void ReadInput()
     {
+        if (Input.GetMouseButtonDown(0)) _mouseHeld = true;
+        if (Input.GetMouseButtonUp(0)) { _mouseHeld = _isMoving = false; }
+
+        // dragging → world hit
+        if (_mouseHeld && !_isStunned)
+        {
+            var ray = _cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var h, Mathf.Infinity, groundLayer))
+            {
+                var flat = h.point - transform.position;
+                flat.y = 0;
+                _clickDir = (flat.sqrMagnitude > 0.001f) ? flat.normalized : transform.forward;
+                _isMoving = flat.magnitude > clickRadius;
+            }
+        }
+
         if (_cc.isGrounded && Input.GetButtonDown("Jump"))
         {
             _jumpReq = true;
-            Debug.Log("[Input] Jump requested");
-            _anim?.SetTrigger("Jump");
+            _netAnim.Animator?.SetTrigger("Jump");
         }
-    }
 
-    private void BufferHitRequest()
-    {
-        if (Input.GetMouseButtonDown(1) && !_hitRequested)
+        if (Input.GetMouseButtonDown(1))
         {
             _hitRequested = true;
-            Debug.Log("[Input] Right-click detected");
+            _netAnim.Animator?.SetTrigger("Throw");
         }
     }
 
-    private void ProcessTeleport()
+    // ——— Physics Phase —————————————————————————————————————
+    void ProcessMovement()
     {
-        if (_mouseHeld && _isMoving && _canTeleport && Input.GetKeyDown(KeyCode.Q))
-        {
-            transform.position += _clickDir * teleportDistance;
-            _canTeleport = false;
-            _teleportTimer = teleportCooldown;
-            Debug.Log($"[Teleport] Teleported to {transform.position}");
-        }
-        if (!_canTeleport)
-        {
-            _teleportTimer -= Runner.DeltaTime;
-            if (_teleportTimer <= 0f)
-            {
-                _canTeleport = true;
-                Debug.Log("[Teleport] Ready again");
-            }
-        }
+        if (_isStunned) return;
+        var target = _isMoving ? _clickDir * moveSpeed : Vector3.zero;
+        var rate = _isMoving ? acceleration : deceleration;
+        _velocity = Vector3.MoveTowards(_velocity, target, rate * Runner.DeltaTime);
+
+        var m = _velocity; m.y = _verticalVel;
+        _cc.Move(m * Runner.DeltaTime);
     }
 
-    private void ProcessJumpAndGravity()
+    void ProcessJumpGravity()
     {
         if (_cc.isGrounded && _verticalVel < 0f)
             _verticalVel = 0f;
@@ -207,131 +178,68 @@ public class PlayerController : NetworkBehaviour
         {
             _verticalVel = Mathf.Sqrt(2f * jumpHeight * -gravity);
             _jumpReq = false;
-            Debug.Log($"[Jump] Jump applied, verticalVel={_verticalVel}");
         }
 
         _verticalVel += gravity * Runner.DeltaTime;
     }
 
-    private void ProcessMovement()
+    void ProcessTeleport()
     {
-        if (_isStunned) return;
+        if (_mouseHeld && _isMoving && _canTeleport && Input.GetKeyDown(KeyCode.Q))
+        {
+            transform.position += _clickDir * teleportDistance;
+            _canTeleport = false;
+            _teleportTimer = teleportCooldown;
+        }
 
-        Vector3 target = _isMoving ? _clickDir * moveSpeed : Vector3.zero;
-        float rate = _isMoving ? acceleration : deceleration;
-        _velocity = Vector3.MoveTowards(_velocity, target, rate * Runner.DeltaTime);
-
-        Vector3 move = _velocity;
-        move.y = _verticalVel;
-        _cc.Move(move * Runner.DeltaTime);
+        if (!_canTeleport)
+        {
+            _teleportTimer -= Runner.DeltaTime;
+            if (_teleportTimer <= 0f) _canTeleport = true;
+        }
     }
 
-    private void UpdateHitTimer()
+    void ProcessHit()
     {
-        if (_hitTimer > 0f)
-            _hitTimer -= Runner.DeltaTime;
-    }
-
-    private void ProcessBufferedHit()
-    {
-        if (!_hitRequested) return;
         _hitRequested = false;
+        if (_hitTimer > 0f || _isStunned) return;
 
-        _anim?.SetTrigger("Throw");
+        Vector3 origin = transform.position + transform.forward * 0.2f + Vector3.up * 0.5f;
+        Debug.DrawLine(origin, origin + transform.forward * hitRange, Color.red, 1f);
 
-        if (_isStunned)
+        if (Physics.SphereCast(origin, hitRadius, transform.forward, out var h, hitRange, hitLayer)
+            && h.collider.TryGetComponent<PlayerController>(out var other))
         {
-            Debug.Log("[Hit] Aborted: player is stunned");
-            return;
+            other.RPC_RequestStun();
+            _hitTimer = hitCooldown;
         }
-        if (_hitTimer > 0f)
-        {
-            Debug.Log("[Hit] Aborted: on cooldown");
-            return;
-        }
-
-        Vector3 dir = skinRoot.forward;
-        Vector3 origin = transform.position + skinRoot.forward * 0.2f;
-        Debug.DrawRay(origin, dir * hitRange, Color.red, 4f);
-        Debug.Log($"[Hit] SphereCast from {origin} toward {dir}");
-
-        if (Physics.SphereCast(origin, hitRadius, dir, out var hit, hitRange, hitLayer))
-        {
-            Debug.Log($"[Hit] Spherecast HIT {hit.collider.name} at {hit.point}");
-            if (hit.collider.TryGetComponent<PlayerController>(out var other))
-            {
-                Debug.Log($"[Hit] RPC_TakeHit -> {other.Object.InputAuthority}");
-                other.RPC_TakeHit();
-            }
-        }
-        else
-        {
-            Debug.Log("[Hit] Spherecast missed");
-        }
-
-        _hitTimer = hitCooldown;
-        Debug.Log($"[Hit] Cooldown started ({hitCooldown}s)");
     }
 
-    private void PreviewDragRotation()
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    void RPC_RequestStun()
     {
-        if (_mouseHeld && !_isStunned)
-            RotateSkinTo(_clickDir);
+        if (HasStateAuthority)
+            stunTimer = TickTimer.CreateFromSeconds(Runner, hitCooldown);
     }
 
-    private void ProcessRotationAfterMove()
+    void ProcessRotationAfterMove()
     {
         if (_mouseHeld) return;
-        if (_velocity.sqrMagnitude <= 0.001f) return;
-        if (_isStunned) return;
-        RotateSkinTo(_velocity.normalized);
+        if (_velocity.sqrMagnitude <= 0.001f || _isStunned) return;
+        RotateTowards(_velocity.normalized);
     }
 
-    private void RotateSkinTo(Vector3 dir)
+    void RotateTowards(Vector3 dir)
     {
-        if (skinRoot == null) return;
-        Quaternion desired = Quaternion.LookRotation(dir, Vector3.up);
-        skinRoot.rotation = Quaternion.RotateTowards(
-            skinRoot.rotation,
-            desired,
-            rotationSpeed * Time.deltaTime
-        );
+        var desired = Quaternion.LookRotation(dir, Vector3.up);
+        skinRoot.rotation = Quaternion.RotateTowards(skinRoot.rotation, desired, rotationSpeed * Time.deltaTime);
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
-    void RPC_TakeHit()
+    void UpdateAnimationFlags()
     {
-        if (!Object.HasInputAuthority) return;
-        ApplyLocalStun();
+        if (_netAnim == null) return;
+        _netAnim.Animator?.SetBool("isRunning", _isMoving);
+        _netAnim.Animator?.SetBool("isGrounded", _cc.isGrounded);
     }
 
-    private void ApplyLocalStun()
-    {
-        if (_isStunned) return;
-        _isStunned = true;
-        _isMoving = false;
-        Debug.Log("[Stun] Player stunned locally");
-        StartCoroutine(RecoverFromStun());
-    }
-
-    IEnumerator RecoverFromStun()
-    {
-        yield return new WaitForSeconds(1f);
-        _isStunned = false;
-        Debug.Log("[Stun] Player recovered locally");
-    }
-
-    private void UpdateAnimations()
-    {
-        if (_anim == null || _cc == null) return;
-
-        _anim.SetBool("isRunning", _isMoving);
-        _anim.SetBool("isGrounded", _cc.isGrounded);
-    }
-}
-
-static class Vec3Ext
-{
-    public static Vector3 WithY(this Vector3 v, float y) =>
-        new Vector3(v.x, y, v.z);
 }

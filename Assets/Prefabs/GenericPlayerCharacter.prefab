@@ -142,13 +142,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinRoot: {fileID: 5257348401970245875}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
   moveSpeed: 5
   acceleration: 15
   deceleration: 15
   clickRadius: 0.3
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   rotationSpeed: 720
   jumpHeight: 1
   gravity: -20

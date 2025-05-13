@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 {
-    public GameObject PlayerPrefab;
+    [SerializeField] private GameObject _playerPrefab;
+    [SerializeField] private Transform[] _spawnPoints;
 
     public void PlayerJoined(PlayerRef player)
     {
-        // Only the host (StateAuthority) spawns avatars for everyone
         if (player != Runner.LocalPlayer)
             return;
 
-        // This spawn is automatically propagated to all clients
-        Runner.Spawn(
-            PlayerPrefab,
-            Vector3.up,              // choose your spawn height
-            Quaternion.identity,
-            player                   // grants that client InputAuthority
-        );
+        CreatePlayer(Runner.LocalPlayer.PlayerId - 1);
 
         Debug.Log($"[Spawner] Spawned avatar for Player {player}");
+    }
+
+    void CreatePlayer(int index)
+    {
+        var spawnPoint = _spawnPoints[index];
+        NetworkObject playerObject =  Runner.Spawn(_playerPrefab, Vector3.up/2, spawnPoint.rotation);
     }
 }
