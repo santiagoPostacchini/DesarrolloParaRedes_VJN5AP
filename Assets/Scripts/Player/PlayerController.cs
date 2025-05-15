@@ -35,12 +35,15 @@ public class PlayerController : NetworkBehaviour
     public LayerMask hitLayer;
     public float hitCooldown = 1.0f;
 
-    [SerializeField] NetworkMecanimAnimator _netAnim;
-
+    // ── Networked State ────────────────────────────────────────
     [Networked] public int SkinIndex { get; set; }
-    [Networked] public bool NetIsRunning { get; set; }
-    [Networked] public bool NetIsGrounded { get; set; }
+    
+    [Networked(OnChangedRe = nameof(OnRotationChanged))]
+    private Quaternion NetworkedRotation { get; set; }
 
+
+
+    // ── Private State ──────────────────────────────────────────
     private CharacterController _cc;
     private Camera _cam;
     private Vector3 _clickDir;
@@ -52,19 +55,15 @@ public class PlayerController : NetworkBehaviour
     private float _teleportTimer;
     private Vector3 _velocity;
     private float _verticalVel;
-    private int _lastSkinIndex = -1;
+    private int _lastSkinIndex;
 
     private bool _hitRequested;
     private float _hitTimer;
 
-    private void Awake()
+    public override void Spawned()
     {
         _cc = GetComponent<CharacterController>();
         _cam = Camera.main;
-    }
-
-    public override void Spawned()
-    {
         _velocity = Vector3.zero;
         _verticalVel = 0f;
         _mouseHeld = false;
@@ -72,22 +71,20 @@ public class PlayerController : NetworkBehaviour
         _isStunned = false;
         _hitRequested = false;
         _hitTimer = 0f;
+        _lastSkinIndex = -1;
 
-        if (HasInputAuthority)
+        if (Object.HasInputAuthority)
         {
-            SkinIndex = SkinSelection.instance.GetCurrentIndex();
+            int idx = SkinSelection.instance.GetCurrentIndex();
+            //GameManager.Instance.RegisterLocalSkin(Runner.LocalPlayer, idx);
+            // Also apply locally immediately:
+            //RPC_SetSkin(idx);
         }
-
-        ApplySkin(SkinIndex);
-        _lastSkinIndex = SkinIndex;
-
-        _netAnim = GetComponentInChildren<NetworkMecanimAnimator>();
+        Debug.Log($"[Spawn] Player spawned at {transform.position}");
     }
 
     void Update()
     {
-        if (!HasInputAuthority) return;
-
         HandleMouseInput();
         HandleJumpInput();
         BufferHitRequest();
@@ -96,31 +93,32 @@ public class PlayerController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (_lastSkinIndex != SkinIndex)
-        {
-            ApplySkin(SkinIndex);
-            _lastSkinIndex = SkinIndex;
-        }
-
         ProcessTeleport();
         ProcessJumpAndGravity();
         ProcessMovement();
         UpdateHitTimer();
         ProcessBufferedHit();
         ProcessRotationAfterMove();
-        UpdateAnimations();
+
+        // Sincronizar la rotación del jugador
+        if (Object.HasStateAuthority)
+        {
+            NetworkedRotation = skinRoot.rotation;
+        }
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All, InvokeLocal = true)]
+    public void RPC_SetSkin(int index)
+    {
+        ApplySkin(index);
+        Debug.Log($"[Skin] Applied skin #{index} on player {Object.InputAuthority}");
     }
 
     public void ApplySkin(int index)
     {
-        foreach (Transform child in skinRoot)
-            Destroy(child.gameObject);
+        foreach (Transform t in skinRoot) Destroy(t.gameObject);
 
-        GameObject go = Instantiate(
-            SkinSelection.instance.skins[index],
-            skinRoot
-        );
-
+        var go = Instantiate(SkinSelection.instance.skins[index], skinRoot);
         go.transform.localPosition = Vector3.zero;
         go.transform.localRotation = Quaternion.identity;
         go.transform.localScale = Vector3.one;
@@ -131,12 +129,16 @@ public class PlayerController : NetworkBehaviour
     private void HandleMouseInput()
     {
         if (Input.GetMouseButtonDown(0))
+        {
             _mouseHeld = true;
+            Debug.Log("[Input] Drag started");
+        }
 
         if (Input.GetMouseButtonUp(0))
         {
             _mouseHeld = false;
             _isMoving = false;
+            Debug.Log("[Input] Drag ended");
         }
 
         if (!_mouseHeld || _isStunned) return;
@@ -150,20 +152,22 @@ public class PlayerController : NetworkBehaviour
             _isMoving = flat.magnitude > clickRadius;
         }
     }
-
     private void HandleJumpInput()
     {
         if (_cc.isGrounded && Input.GetButtonDown("Jump"))
         {
             _jumpReq = true;
-            _netAnim.SetTrigger("Jump");
+            Debug.Log("[Input] Jump requested");
         }
     }
 
     private void BufferHitRequest()
     {
         if (Input.GetMouseButtonDown(1) && !_hitRequested)
+        {
             _hitRequested = true;
+            Debug.Log("[Input] Right-click detected");
+        }
     }
 
     private void ProcessTeleport()
@@ -173,13 +177,17 @@ public class PlayerController : NetworkBehaviour
             transform.position += _clickDir * teleportDistance;
             _canTeleport = false;
             _teleportTimer = teleportCooldown;
+            Debug.Log($"[Teleport] Teleported to {transform.position}");
         }
 
         if (!_canTeleport)
         {
             _teleportTimer -= Runner.DeltaTime;
             if (_teleportTimer <= 0f)
+            {
                 _canTeleport = true;
+                Debug.Log("[Teleport] Ready again");
+            }
         }
     }
 
@@ -192,6 +200,7 @@ public class PlayerController : NetworkBehaviour
         {
             _verticalVel = Mathf.Sqrt(2f * jumpHeight * -gravity);
             _jumpReq = false;
+            Debug.Log($"[Jump] Jump applied, verticalVel={_verticalVel}");
         }
 
         _verticalVel += gravity * Runner.DeltaTime;
@@ -201,13 +210,10 @@ public class PlayerController : NetworkBehaviour
     {
         if (_isStunned) return;
 
-        _netAnim.Animator.SetBool("isRunning", NetIsRunning);
-        _netAnim.Animator.SetBool("isGrounded", NetIsGrounded);
-
         Vector3 target = _isMoving ? _clickDir * moveSpeed : Vector3.zero;
         float rate = _isMoving ? acceleration : deceleration;
-        _velocity = Vector3.MoveTowards(_velocity, target, rate * Runner.DeltaTime);
 
+        _velocity = Vector3.MoveTowards(_velocity, target, rate * Runner.DeltaTime);
         Vector3 move = _velocity;
         move.y = _verticalVel;
         _cc.Move(move * Runner.DeltaTime);
@@ -224,64 +230,79 @@ public class PlayerController : NetworkBehaviour
         if (!_hitRequested) return;
         _hitRequested = false;
 
-        _netAnim.Animator.SetTrigger("Throw");
+        if (_isStunned)
+        {
+            Debug.Log("[Hit] Aborted: player is stunned");
+            return;
+        }
 
-        if (_isStunned || _hitTimer > 0f) return;
+        if (_hitTimer > 0f)
+        {
+            Debug.Log("[Hit] Aborted: on cooldown");
+            return;
+        }
 
         Vector3 dir = skinRoot.forward;
         Vector3 origin = transform.position + skinRoot.forward * 0.2f;
 
+        Debug.DrawRay(origin, dir * hitRange, Color.red, 4f);
+        Debug.Log($"[Hit] SphereCast from {origin} toward {dir}");
+
         if (Physics.SphereCast(origin, hitRadius, dir, out var hit, hitRange, hitLayer))
         {
+            Debug.Log($"[Hit] Spherecast HIT {hit.collider.name} at {hit.point}");
             if (hit.collider.TryGetComponent<PlayerController>(out var other))
+            {
+                Debug.Log($"[Hit] RPC_TakeHit -> {other.Object.InputAuthority}");
                 other.RPC_TakeHit();
+            }
+        }
+        else
+        {
+            Debug.Log("[Hit] Spherecast missed");
         }
 
+        // start local cooldown
         _hitTimer = hitCooldown;
+        Debug.Log($"[Hit] Cooldown started ({hitCooldown}s)");
     }
 
     private void PreviewDragRotation()
     {
+        if (!HasInputAuthority) return;
         if (_mouseHeld && !_isStunned)
-            RotateTransformTo(_clickDir);
-
-        UpdateSkinRootRotation();
+            RotateSkinTo(_clickDir);
     }
 
     private void ProcessRotationAfterMove()
     {
-        if (_velocity.sqrMagnitude <= 0.001f || _isStunned) return;
-        RotateTransformTo(_velocity.normalized);
+        if (HasInputAuthority) // Jugador local
+        {
+            if (_mouseHeld && !_isStunned)
+            {
+                RotateSkinTo(_clickDir); // Rotar hacia el ratón
+            }
+        }
+        else // Jugadores remotos
+        {
+            // Aplicar la rotación sincronizada
+            skinRoot.rotation = NetworkedRotation;
+        }
     }
 
-    private void RotateTransformTo(Vector3 dir)
+    private static void OnRotationChanged(Changed<PlayerController> changed)
     {
-        if (dir == Vector3.zero) return;
-
+        Debug.Log($"[NetworkedRotation] Updated to {changed.Behaviour.NetworkedRotation}");
+    }
+    private void RotateSkinTo(Vector3 dir)
+    {
+        if (skinRoot == null) return;
         Quaternion desired = Quaternion.LookRotation(dir, Vector3.up);
-        transform.rotation = Quaternion.RotateTowards(
-            transform.rotation,
+        skinRoot.rotation = Quaternion.RotateTowards(
+            skinRoot.rotation,
             desired,
             rotationSpeed * Time.deltaTime
         );
-    }
-
-    private void UpdateSkinRootRotation()
-    {
-        if (HasInputAuthority && _mouseHeld && !_isStunned)
-        {
-            Quaternion look = Quaternion.LookRotation(_clickDir, Vector3.up);
-            skinRoot.rotation = look;
-        }
-        else
-        {
-            Quaternion look = Quaternion.LookRotation(transform.forward, Vector3.up);
-            skinRoot.rotation = Quaternion.Slerp(
-                skinRoot.rotation,
-                look,
-                Runner.DeltaTime
-            );
-        }
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
@@ -296,6 +317,7 @@ public class PlayerController : NetworkBehaviour
         if (_isStunned) return;
         _isStunned = true;
         _isMoving = false;
+        Debug.Log("[Stun] Player stunned locally");
         StartCoroutine(RecoverFromStun());
     }
 
@@ -303,17 +325,7 @@ public class PlayerController : NetworkBehaviour
     {
         yield return new WaitForSeconds(1f);
         _isStunned = false;
-    }
-
-    private void UpdateAnimations()
-    {
-        if (IsProxy) return;
-
-        NetIsRunning = _isMoving;
-        NetIsGrounded = _cc.isGrounded;
-
-        if (_jumpReq)
-            _netAnim.Animator.SetTrigger("Jump");
+        Debug.Log("[Stun] Player recovered locally");
     }
 }
 

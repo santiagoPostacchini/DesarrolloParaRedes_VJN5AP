@@ -1,37 +1,65 @@
-﻿using System;
-using Fusion;
-using Fusion.Sockets;
+﻿using Fusion;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour, INetworkRunnerCallbacks
+public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [SerializeField] GameObject _winImage;
+    [SerializeField] GameObject _loseImage;
+
+    List<PlayerRef> _clients;
+
     private void Awake()
     {
-        if (Instance != null) Destroy(this);
-        else Instance = this;
+        Instance = this;
+
+        _clients = new List<PlayerRef>();
+    }
+    public void AddToList(PlayerController player)
+    {
+        var playerRef = player.Object.InputAuthority;
+
+        if (_clients.Contains(playerRef)) return;
+
+        _clients.Add(playerRef);
     }
 
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
-    public void OnInput(NetworkRunner runner, NetworkInput input) { }
-    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
-    public void OnShutdown(NetworkRunner runner, ShutdownReason reason) { }
-    public void OnConnectedToServer(NetworkRunner runner) { }
-    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) { }
-    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
-    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
-    public void OnUserSimulationMessage(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest message) { }
-    public void OnSessionListUpdated(NetworkRunner runner, System.Collections.Generic.List<SessionInfo> sessionList) { }
-    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, Allocator buffer) { }
-    public void OnSceneLoadDone(NetworkRunner runner) { }
-    public void OnSceneLoadStart(NetworkRunner runner) { }
-    public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
-    public void OnCustomAuthenticationResponse(NetworkRunner runner, System.Collections.Generic.Dictionary<string, object> data) { }
-    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
-    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
-    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
-    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
-    public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
+    void RemoveFromList(PlayerRef client)
+    {
+        _clients.Remove(client);
+    }
+
+    [Rpc]
+    public void RPC_Defeat(PlayerRef client)
+    {
+        if (client == Runner.LocalPlayer)
+        {
+            ShowDefeatImage();
+        }
+
+        RemoveFromList(client);
+
+        if (_clients.Count == 1 && HasStateAuthority)
+        {
+            RPC_Win(_clients[0]);
+        }
+    }
+
+    [Rpc]
+    void RPC_Win([RpcTarget] PlayerRef client)
+    {
+        ShowWinImage();
+    }
+
+    void ShowDefeatImage()
+    {
+        _loseImage.SetActive(true);
+    }
+
+    void ShowWinImage()
+    {
+        _winImage.SetActive(true);
+    }
 }
