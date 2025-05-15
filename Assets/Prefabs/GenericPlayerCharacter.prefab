@@ -160,7 +160,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   hitCooldown: 0.5
+  _netAnim: {fileID: 0}
   _SkinIndex: 0
+  _NetworkedRotation: {x: 0, y: 0, z: 0, w: 0}
+  _NetIsRunning: 0
+  _NetIsGrounded: 0
 --- !u!143 &2134335087393495545
 CharacterController:
   m_ObjectHideFlags: 0
@@ -202,7 +206,8 @@ MonoBehaviour:
   SortKey: 2988856016
   ObjectInterest: 1
   Flags: 262145
-  NestedObjects: []
+  NestedObjects:
+  - {fileID: 4366703257489672644}
   NetworkedBehaviours:
   - {fileID: 1998991201661013745}
   - {fileID: 3402611400538690546}
@@ -233,6 +238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5257348401970245875}
+  - component: {fileID: 4366703257489672644}
   m_Layer: 0
   m_Name: SkinRoot
   m_TagString: Untagged
@@ -255,3 +261,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6661825303984814850}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4366703257489672644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8541532371954767267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 230624327
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
+  ForceRemoteRenderTimeframe: 0

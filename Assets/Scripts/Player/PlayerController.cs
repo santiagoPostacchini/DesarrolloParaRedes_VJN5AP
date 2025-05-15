@@ -35,9 +35,11 @@ public class PlayerController : NetworkBehaviour
     public LayerMask hitLayer;
     public float hitCooldown = 1.0f;
 
-    private Animator _anim;
+    [SerializeField] NetworkMecanimAnimator _netAnim;
 
     [Networked] public int SkinIndex { get; set; }
+    [Networked] public bool NetIsRunning { get; set; }
+    [Networked] public bool NetIsGrounded { get; set; }
 
     private CharacterController _cc;
     private Camera _cam;
@@ -50,7 +52,7 @@ public class PlayerController : NetworkBehaviour
     private float _teleportTimer;
     private Vector3 _velocity;
     private float _verticalVel;
-    private int _lastSkinIndex;
+    private int _lastSkinIndex = -1;
 
     private bool _hitRequested;
     private float _hitTimer;
@@ -59,7 +61,6 @@ public class PlayerController : NetworkBehaviour
     {
         _cc = GetComponent<CharacterController>();
         _cam = Camera.main;
-        
     }
 
     public override void Spawned()
@@ -71,20 +72,16 @@ public class PlayerController : NetworkBehaviour
         _isStunned = false;
         _hitRequested = false;
         _hitTimer = 0f;
-        _lastSkinIndex = -1;
 
-        Debug.Log($"SkinSelection.instance = {SkinSelection.instance}");
-        Debug.Log($"GameManager.Instance = {GameManager.Instance}");
-        Debug.Log($"Camera.main = {Camera.main}");
-
-        if (Object.HasInputAuthority)
+        if (HasInputAuthority)
         {
-            int idx = SkinSelection.instance.GetCurrentIndex();
-            GameManager.Instance.RegisterLocalSkin(Runner.LocalPlayer, idx);
-            RPC_SetSkin(idx);
+            SkinIndex = SkinSelection.instance.GetCurrentIndex();
         }
-        _anim = GetComponentInChildren<Animator>();
-        Debug.Log($"[Spawn] Player spawned at {transform.position}");
+
+        ApplySkin(SkinIndex);
+        _lastSkinIndex = SkinIndex;
+
+        _netAnim = GetComponentInChildren<NetworkMecanimAnimator>();
     }
 
     void Update()
@@ -95,12 +92,15 @@ public class PlayerController : NetworkBehaviour
         HandleJumpInput();
         BufferHitRequest();
         PreviewDragRotation();
-        UpdateAnimations();
     }
 
     public override void FixedUpdateNetwork()
     {
-        if (!HasInputAuthority) return;
+        if (_lastSkinIndex != SkinIndex)
+        {
+            ApplySkin(SkinIndex);
+            _lastSkinIndex = SkinIndex;
+        }
 
         ProcessTeleport();
         ProcessJumpAndGravity();
@@ -108,19 +108,13 @@ public class PlayerController : NetworkBehaviour
         UpdateHitTimer();
         ProcessBufferedHit();
         ProcessRotationAfterMove();
-    }
-
-    [Rpc(RpcSources.InputAuthority, RpcTargets.All, InvokeLocal = true)]
-    public void RPC_SetSkin(int index)
-    {
-        ApplySkin(index);
-        Debug.Log($"[Skin] Applied skin #{index} on player {Object.InputAuthority}");
+        UpdateAnimations();
     }
 
     public void ApplySkin(int index)
     {
-        foreach (Transform t in skinRoot)
-            Destroy(t.gameObject);
+        foreach (Transform child in skinRoot)
+            Destroy(child.gameObject);
 
         GameObject go = Instantiate(
             SkinSelection.instance.skins[index],
@@ -137,16 +131,14 @@ public class PlayerController : NetworkBehaviour
     private void HandleMouseInput()
     {
         if (Input.GetMouseButtonDown(0))
-        {
             _mouseHeld = true;
-            Debug.Log("[Input] Drag started");
-        }
+
         if (Input.GetMouseButtonUp(0))
         {
             _mouseHeld = false;
             _isMoving = false;
-            Debug.Log("[Input] Drag ended");
         }
+
         if (!_mouseHeld || _isStunned) return;
 
         Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
@@ -164,18 +156,14 @@ public class PlayerController : NetworkBehaviour
         if (_cc.isGrounded && Input.GetButtonDown("Jump"))
         {
             _jumpReq = true;
-            Debug.Log("[Input] Jump requested");
-            _anim?.SetTrigger("Jump");
+            _netAnim.SetTrigger("Jump");
         }
     }
 
     private void BufferHitRequest()
     {
         if (Input.GetMouseButtonDown(1) && !_hitRequested)
-        {
             _hitRequested = true;
-            Debug.Log("[Input] Right-click detected");
-        }
     }
 
     private void ProcessTeleport()
@@ -185,16 +173,13 @@ public class PlayerController : NetworkBehaviour
             transform.position += _clickDir * teleportDistance;
             _canTeleport = false;
             _teleportTimer = teleportCooldown;
-            Debug.Log($"[Teleport] Teleported to {transform.position}");
         }
+
         if (!_canTeleport)
         {
             _teleportTimer -= Runner.DeltaTime;
             if (_teleportTimer <= 0f)
-            {
                 _canTeleport = true;
-                Debug.Log("[Teleport] Ready again");
-            }
         }
     }
 
@@ -207,7 +192,6 @@ public class PlayerController : NetworkBehaviour
         {
             _verticalVel = Mathf.Sqrt(2f * jumpHeight * -gravity);
             _jumpReq = false;
-            Debug.Log($"[Jump] Jump applied, verticalVel={_verticalVel}");
         }
 
         _verticalVel += gravity * Runner.DeltaTime;
@@ -216,6 +200,9 @@ public class PlayerController : NetworkBehaviour
     private void ProcessMovement()
     {
         if (_isStunned) return;
+
+        _netAnim.Animator.SetBool("isRunning", NetIsRunning);
+        _netAnim.Animator.SetBool("isGrounded", NetIsGrounded);
 
         Vector3 target = _isMoving ? _clickDir * moveSpeed : Vector3.zero;
         float rate = _isMoving ? acceleration : deceleration;
@@ -237,65 +224,64 @@ public class PlayerController : NetworkBehaviour
         if (!_hitRequested) return;
         _hitRequested = false;
 
-        _anim?.SetTrigger("Throw");
+        _netAnim.Animator.SetTrigger("Throw");
 
-        if (_isStunned)
-        {
-            Debug.Log("[Hit] Aborted: player is stunned");
-            return;
-        }
-        if (_hitTimer > 0f)
-        {
-            Debug.Log("[Hit] Aborted: on cooldown");
-            return;
-        }
+        if (_isStunned || _hitTimer > 0f) return;
 
         Vector3 dir = skinRoot.forward;
         Vector3 origin = transform.position + skinRoot.forward * 0.2f;
-        Debug.DrawRay(origin, dir * hitRange, Color.red, 4f);
-        Debug.Log($"[Hit] SphereCast from {origin} toward {dir}");
 
         if (Physics.SphereCast(origin, hitRadius, dir, out var hit, hitRange, hitLayer))
         {
-            Debug.Log($"[Hit] Spherecast HIT {hit.collider.name} at {hit.point}");
             if (hit.collider.TryGetComponent<PlayerController>(out var other))
-            {
-                Debug.Log($"[Hit] RPC_TakeHit -> {other.Object.InputAuthority}");
                 other.RPC_TakeHit();
-            }
-        }
-        else
-        {
-            Debug.Log("[Hit] Spherecast missed");
         }
 
         _hitTimer = hitCooldown;
-        Debug.Log($"[Hit] Cooldown started ({hitCooldown}s)");
     }
 
     private void PreviewDragRotation()
     {
         if (_mouseHeld && !_isStunned)
-            RotateSkinTo(_clickDir);
+            RotateTransformTo(_clickDir);
+
+        UpdateSkinRootRotation();
     }
 
     private void ProcessRotationAfterMove()
     {
-        if (_mouseHeld) return;
-        if (_velocity.sqrMagnitude <= 0.001f) return;
-        if (_isStunned) return;
-        RotateSkinTo(_velocity.normalized);
+        if (_velocity.sqrMagnitude <= 0.001f || _isStunned) return;
+        RotateTransformTo(_velocity.normalized);
     }
 
-    private void RotateSkinTo(Vector3 dir)
+    private void RotateTransformTo(Vector3 dir)
     {
-        if (skinRoot == null) return;
+        if (dir == Vector3.zero) return;
+
         Quaternion desired = Quaternion.LookRotation(dir, Vector3.up);
-        skinRoot.rotation = Quaternion.RotateTowards(
-            skinRoot.rotation,
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
             desired,
             rotationSpeed * Time.deltaTime
         );
+    }
+
+    private void UpdateSkinRootRotation()
+    {
+        if (HasInputAuthority && _mouseHeld && !_isStunned)
+        {
+            Quaternion look = Quaternion.LookRotation(_clickDir, Vector3.up);
+            skinRoot.rotation = look;
+        }
+        else
+        {
+            Quaternion look = Quaternion.LookRotation(transform.forward, Vector3.up);
+            skinRoot.rotation = Quaternion.Slerp(
+                skinRoot.rotation,
+                look,
+                Runner.DeltaTime
+            );
+        }
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
@@ -310,7 +296,6 @@ public class PlayerController : NetworkBehaviour
         if (_isStunned) return;
         _isStunned = true;
         _isMoving = false;
-        Debug.Log("[Stun] Player stunned locally");
         StartCoroutine(RecoverFromStun());
     }
 
@@ -318,15 +303,17 @@ public class PlayerController : NetworkBehaviour
     {
         yield return new WaitForSeconds(1f);
         _isStunned = false;
-        Debug.Log("[Stun] Player recovered locally");
     }
 
     private void UpdateAnimations()
     {
-        if (_anim == null || _cc == null) return;
+        if (IsProxy) return;
 
-        _anim.SetBool("isRunning", _isMoving);
-        _anim.SetBool("isGrounded", _cc.isGrounded);
+        NetIsRunning = _isMoving;
+        NetIsGrounded = _cc.isGrounded;
+
+        if (_jumpReq)
+            _netAnim.Animator.SetTrigger("Jump");
     }
 }
 
