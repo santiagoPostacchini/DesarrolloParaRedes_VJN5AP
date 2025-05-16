@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 5423793361795167528}
   - component: {fileID: 8134256602302406}
   - component: {fileID: 6370290710034217154}
+  - component: {fileID: 1648624780857277258}
   m_Layer: 7
   m_Name: RhinoPlayerCharacter
   m_TagString: Player
@@ -309,7 +310,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinRoot: {fileID: 7936761710049731376}
-  _netAnim: {fileID: 6370290710034217154}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -328,8 +328,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   hitCooldown: 0.5
+  bombSlot: {fileID: 471987177805432220}
+  _netAnim: {fileID: 6370290710034217154}
+  _SkinIndex: 0
   _NetIsRunning: 0
   _NetIsGrounded: 0
+  _NetRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!143 &6984124387511523521
 CharacterController:
   m_ObjectHideFlags: 0
@@ -412,6 +416,20 @@ MonoBehaviour:
   StateHashes: 000000002b1a167c794069552638cb43a21b1dacf3b09ce077934a0f336e528eb1211e0b
   TriggerHashes: 0000000028a98107336e528e
   TotalWords: 1
+--- !u!114 &1648624780857277258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3768757878675335176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: cda22b48e3b336242b677ca7d8ee0e81
 --- !u!1 &4049462670014239976
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,6 +576,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5026125482844157998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 471987177805432220}
+  m_Layer: 2
+  m_Name: Bomb.Slot (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &471987177805432220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026125482844157998}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.023, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7537948089376739556}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5133958009477988437
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,7 +929,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 471987177805432220}
   m_Father: {fileID: 6251200864589410276}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &1226493006174728382
