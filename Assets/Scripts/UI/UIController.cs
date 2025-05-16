@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Fusion;
 
 public class UIController : MonoBehaviour
 {
@@ -8,10 +10,12 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private GameObject skinSelectionPanel;
     [SerializeField] private TextMeshProUGUI skinName;
+    [SerializeField] private Button startButton;
+
+    private NetworkRunner _runner;
 
     private void Awake()
     {
-        // Singleton robusto
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -20,9 +24,12 @@ public class UIController : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Validar referencias
-        if (skinSelectionPanel == null) Debug.LogError("Debe asignar skinSelectionPanel en inspector");
-        if (skinName == null) Debug.LogError("Debe asignar skinName en inspector");
+        _runner = FindObjectOfType<NetworkRunner>();
+
+        if (skinSelectionPanel == null) Debug.LogError("Asignar skinSelectionPanel en inspector");
+        if (skinName == null) Debug.LogError("Asignar skinName en inspector");
+        if (startButton == null) Debug.LogError("Asignar startButton en inspector");
+        else startButton.onClick.AddListener(OnStartButtonClicked);
     }
 
     private void OnDestroy()
@@ -32,7 +39,6 @@ public class UIController : MonoBehaviour
 
     public void DisableSkinSelectionUI()
     {
-        // Mejor con CanvasGroup si el panel es muy complejo
         skinSelectionPanel.SetActive(false);
     }
 
@@ -40,5 +46,27 @@ public class UIController : MonoBehaviour
     {
         if (skinName != null)
             skinName.text = name;
+    }
+
+    public void ShowStartButtonIfHost()
+    {
+        if (_runner != null && _runner.IsSharedModeMasterClient)
+        {
+            startButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            startButton.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnStartButtonClicked()
+    {
+        if (FindObjectOfType<PlayerSpawner>() is PlayerSpawner spawner)
+        {
+            spawner.StartGame();
+        }
+        DisableSkinSelectionUI();
+        startButton.gameObject.SetActive(false);
     }
 }

@@ -33,11 +33,6 @@ public class SkinSelection : MonoBehaviour
         UIController.Instance.SetSkinNameOnUI(skins[selectedSkin].name);
     }
 
-    public GameObject GetCurrentSelection()
-    {
-        return skins[selectedSkin];
-    }
-
     public int GetCurrentIndex()
     {
         return selectedSkin;

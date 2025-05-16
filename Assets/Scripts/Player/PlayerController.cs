@@ -36,10 +36,11 @@ public class PlayerController : NetworkBehaviour
     public float hitCooldown = 1.0f;
 
     [SerializeField] NetworkMecanimAnimator _netAnim;
-
+    private Animator _childAnim;
     [Networked] public int SkinIndex { get; set; }
     [Networked] public bool NetIsRunning { get; set; }
     [Networked] public bool NetIsGrounded { get; set; }
+    [Networked] public Quaternion NetRotation { get; set; }
 
     private CharacterController _cc;
     private Camera _cam;
@@ -81,7 +82,9 @@ public class PlayerController : NetworkBehaviour
         ApplySkin(SkinIndex);
         _lastSkinIndex = SkinIndex;
 
-        _netAnim = GetComponentInChildren<NetworkMecanimAnimator>();
+        _childAnim = GetComponentInChildren<Animator>();
+        _netAnim.Animator = _childAnim;
+        _netAnim.Animator.Rebind();
     }
 
     void Update()
@@ -96,6 +99,12 @@ public class PlayerController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        // Actualiza la rotación en clientes sin autoridad
+        if (!HasInputAuthority)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, NetRotation, Runner.DeltaTime * 10f);
+        }
+
         if (_lastSkinIndex != SkinIndex)
         {
             ApplySkin(SkinIndex);
@@ -116,15 +125,10 @@ public class PlayerController : NetworkBehaviour
         foreach (Transform child in skinRoot)
             Destroy(child.gameObject);
 
-        GameObject go = Instantiate(
-            SkinSelection.instance.skins[index],
-            skinRoot
-        );
-
+        GameObject go = Instantiate(SkinSelection.instance.skins[index], skinRoot);
         go.transform.localPosition = Vector3.zero;
         go.transform.localRotation = Quaternion.identity;
         go.transform.localScale = Vector3.one;
-
         go.SetActive(true);
     }
 
@@ -156,7 +160,7 @@ public class PlayerController : NetworkBehaviour
         if (_cc.isGrounded && Input.GetButtonDown("Jump"))
         {
             _jumpReq = true;
-            _netAnim.SetTrigger("Jump");
+            _netAnim?.SetTrigger("Jump");
         }
     }
 
@@ -201,8 +205,8 @@ public class PlayerController : NetworkBehaviour
     {
         if (_isStunned) return;
 
-        _netAnim.Animator.SetBool("isRunning", NetIsRunning);
-        _netAnim.Animator.SetBool("isGrounded", NetIsGrounded);
+        _netAnim?.Animator.SetBool("isRunning", _isMoving);
+        _netAnim?.Animator.SetBool("isGrounded", _cc.isGrounded);
 
         Vector3 target = _isMoving ? _clickDir * moveSpeed : Vector3.zero;
         float rate = _isMoving ? acceleration : deceleration;
@@ -224,12 +228,12 @@ public class PlayerController : NetworkBehaviour
         if (!_hitRequested) return;
         _hitRequested = false;
 
-        _netAnim.Animator.SetTrigger("Throw");
+        _netAnim?.SetTrigger("Throw");
 
         if (_isStunned || _hitTimer > 0f) return;
 
-        Vector3 dir = skinRoot.forward;
-        Vector3 origin = transform.position + skinRoot.forward * 0.2f;
+        Vector3 dir = skinRoot.transform.forward;
+        Vector3 origin = transform.position + skinRoot.transform.forward * 0.2f;
 
         if (Physics.SphereCast(origin, hitRadius, dir, out var hit, hitRange, hitLayer))
         {
@@ -264,24 +268,15 @@ public class PlayerController : NetworkBehaviour
             desired,
             rotationSpeed * Time.deltaTime
         );
+
+        if (HasInputAuthority)
+            NetRotation = transform.rotation;
     }
 
     private void UpdateSkinRootRotation()
     {
-        if (HasInputAuthority && _mouseHeld && !_isStunned)
-        {
-            Quaternion look = Quaternion.LookRotation(_clickDir, Vector3.up);
-            skinRoot.rotation = look;
-        }
-        else
-        {
-            Quaternion look = Quaternion.LookRotation(transform.forward, Vector3.up);
-            skinRoot.rotation = Quaternion.Slerp(
-                skinRoot.rotation,
-                look,
-                Runner.DeltaTime
-            );
-        }
+        Quaternion look = Quaternion.LookRotation(_clickDir, Vector3.up);
+        skinRoot.rotation = look;
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
@@ -313,7 +308,7 @@ public class PlayerController : NetworkBehaviour
         NetIsGrounded = _cc.isGrounded;
 
         if (_jumpReq)
-            _netAnim.Animator.SetTrigger("Jump");
+            _netAnim?.SetTrigger("Jump");
     }
 }
 
