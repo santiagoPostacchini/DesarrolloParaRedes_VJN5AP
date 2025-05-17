@@ -11,11 +11,9 @@ GameObject:
   - component: {fileID: 8534794208087051129}
   - component: {fileID: 7594144712016291230}
   - component: {fileID: 5614044256441603569}
-  - component: {fileID: 1330457042155714728}
-  - component: {fileID: -1937035914668633751}
   - component: {fileID: 3083977540179167710}
   - component: {fileID: -5078700184593155225}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LittleBom
   m_TagString: Bomb
   m_Icon: {fileID: 0}
@@ -88,54 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1330457042155714728
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061731439351115852}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!54 &-1937035914668633751
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061731439351115852}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &3083977540179167710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6069937c901bf34d837865bfccb4bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionVFX: {fileID: 0}
 --- !u!114 &-5078700184593155225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +127,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8140115597599603499}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PS_Origin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +161,7 @@ GameObject:
   - component: {fileID: 3718924539248133618}
   - component: {fileID: 2530529137935760976}
   - component: {fileID: 2140279906800147640}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +245,7 @@ GameObject:
   - component: {fileID: 2021223203994973874}
   - component: {fileID: 167631592608796581}
   - component: {fileID: 7269580398264598233}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}

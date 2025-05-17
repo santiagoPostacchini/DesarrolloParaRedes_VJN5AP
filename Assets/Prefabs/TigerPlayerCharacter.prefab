@@ -353,6 +353,37 @@ Transform:
   - {fileID: 7488260003301263365}
   m_Father: {fileID: 135018479069063157}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2756368796060517945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8344745861586267186}
+  m_Layer: 2
+  m_Name: Bomb.Slot
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8344745861586267186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2756368796060517945}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6150976347521801126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2976540808997191912
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +431,6 @@ GameObject:
   - component: {fileID: 2839905569460405280}
   - component: {fileID: 6880089612156349932}
   - component: {fileID: 5736299005474169942}
-  - component: {fileID: 3267357855903299846}
   m_Layer: 7
   m_Name: TigerPlayerCharacter
   m_TagString: Player
@@ -421,6 +451,7 @@ Transform:
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8344745861586267186}
   - {fileID: 5007328641011102677}
   - {fileID: 326106833235563832}
   m_Father: {fileID: 0}
@@ -464,7 +495,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   hitCooldown: 0.5
-  bombSlot: {fileID: 8392459714063742049}
+  bombSlot: {fileID: 8344745861586267186}
   _netAnim: {fileID: 5736299005474169942}
   _SkinIndex: 0
   _NetIsRunning: 0
@@ -552,20 +583,6 @@ MonoBehaviour:
   StateHashes: 000000002b1a167c794069552638cb43a21b1dacf3b09ce077934a0f336e528eb1211e0b
   TriggerHashes: 0000000028a98107336e528e
   TotalWords: 1
---- !u!114 &3267357855903299846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3037557585348264983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 423f17cf4db0c89439e13de7a6835569
 --- !u!1 &3443380380946761030
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,8 +612,7 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8392459714063742049}
+  m_Children: []
   m_Father: {fileID: 7924310586940785603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &6055500619228612566
@@ -654,37 +670,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.47868183, y: 0.033747107, z: -0.018966824}
     m_Extent: {x: 0.5121583, y: 0.42577615, z: 0.41846848}
   m_DirtyAABB: 0
---- !u!1 &3476702911929455351
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8392459714063742049}
-  m_Layer: 2
-  m_Name: Bomb.Slot (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8392459714063742049
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3476702911929455351}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.023, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7148903551027766894}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3506970895339804913
 GameObject:
   m_ObjectHideFlags: 0

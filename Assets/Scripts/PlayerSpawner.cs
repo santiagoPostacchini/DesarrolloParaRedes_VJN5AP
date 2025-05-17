@@ -1,12 +1,12 @@
-using Fusion;
+Ôªøusing Fusion;
 using UnityEngine;
 
-public class  PlayerSpawner : SimulationBehaviour, IPlayerJoined
+public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 {
-    [Header("Skins: Prefabs por Ìndice")]
+    [Header("Skins: Prefabs por √≠ndice")]
     [SerializeField] private NetworkPrefabRef[] skinPrefabs;
 
-    [Header("Spawn Point")]
+    [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPoints;
 
     [Header("UI")]
@@ -17,65 +17,70 @@ public class  PlayerSpawner : SimulationBehaviour, IPlayerJoined
 
     public void PlayerJoined(PlayerRef player)
     {
-        Debug.Log($"[Spawner] Se conectÛ {player}");
+        Debug.Log($"[Spawner] PlayerJoined: {player}");
 
-        // Spawn inmediato para quien se conecta
+        // Spawn local
         if (player == Runner.LocalPlayer)
         {
             SpawnLocalPlayer(player);
         }
 
-        // Mostrar botÛn de inicio solo al primer jugador local si hay 2 o m·s conectados
-        if (Runner.LocalPlayer.PlayerId == 1 &&
-            Runner.SessionInfo.PlayerCount >= 2 &&
-            startButtonUI != null && !_gameStarted)
+        // Mostrar bot√≥n solo al host (MasterClient) cuando haya >=2
+        if (!Runner.IsSharedModeMasterClient)
+            return;
+
+        if (Runner.SessionInfo.PlayerCount >= 2 && !_gameStarted)
         {
-            startButtonUI.SetActive(true);
+            Debug.Log("[Spawner] Soy MasterClient y ya hay 2+ jugadores: muestro StartButton");
+            startButtonUI?.SetActive(true);
         }
     }
 
     public void StartGame()
     {
+        // Evita doble click
         if (_gameStarted) return;
 
-        if (Runner.SessionInfo.PlayerCount < 2)
+        // Solo el host puede iniciar
+        if (!Runner.IsSharedModeMasterClient)
         {
-            Debug.LogWarning("[Spawner] No se puede iniciar con menos de 2 jugadores");
+            Debug.LogWarning("[Spawner] Ignorando StartGame: no soy el host");
             return;
         }
 
+        // Verifica conteo justo antes de iniciar
+        if (Runner.SessionInfo.PlayerCount < 2)
+        {
+            Debug.LogWarning("[Spawner] Ignorando StartGame: menos de 2 jugadores");
+            return;
+        }
+
+        Debug.Log("[Spawner] Todos ok, llamando a GameManager.StartGame()");
         _gameStarted = true;
+        startButtonUI?.SetActive(false);
 
-        if (startButtonUI != null)
-            startButtonUI.SetActive(false);
-
-        Debug.Log("[Spawner] Partida iniciada");
-        // PodÈs poner aquÌ lÛgica adicional si necesit·s, como cerrar selecciÛn de skin o deshabilitar UI
+        GameManager.Instance.StartGame();
     }
 
     private void SpawnLocalPlayer(PlayerRef player)
     {
         int skinIndex = SkinSelection.instance.GetCurrentIndex();
-
         if (skinIndex < 0 || skinIndex >= skinPrefabs.Length)
         {
-            Debug.LogWarning($"[Spawner] Õndice de skin inv·lido: {skinIndex}, usando 0");
+            Debug.LogWarning($"[Spawner] Skin index inv√°lido ({skinIndex}), uso 0");
             skinIndex = 0;
         }
 
         var prefab = skinPrefabs[skinIndex];
+        var sp = (_spawnedPlayers < spawnPoints.Length)
+            ? spawnPoints[_spawnedPlayers]
+            : null;
 
-        Vector3 position = spawnPoints.Length > _spawnedPlayers
-            ? spawnPoints[_spawnedPlayers].position
-            : Vector3.up * 2f;
+        Vector3 pos = sp != null ? sp.position : Vector3.up * 2f;
+        Quaternion rot = sp != null ? sp.rotation : Quaternion.identity;
 
-        Quaternion rotation = spawnPoints.Length > _spawnedPlayers
-            ? spawnPoints[_spawnedPlayers].rotation
-            : Quaternion.identity;
-
-        Runner.Spawn(prefab, position, rotation, player);
-        Debug.Log($"[Spawner] Spawned {player} with skin #{skinIndex}");
-
+        Runner.Spawn(prefab, pos, rot, player);
+        Debug.Log($"[Spawner] Spawned jugador {player} en skin #{skinIndex}");
         _spawnedPlayers++;
     }
 }

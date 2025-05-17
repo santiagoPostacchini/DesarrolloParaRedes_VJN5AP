@@ -9,6 +9,9 @@ public class PlayerController : NetworkBehaviour
     [Header("Skin")]
     public Transform skinRoot;
 
+    [Header("Bomb")]
+    public Transform bombSlot;
+
     [Header("Layers")]
     [SerializeField] private LayerMask groundLayer;
 
@@ -34,10 +37,7 @@ public class PlayerController : NetworkBehaviour
     public float hitRange = 0.3f;
     public LayerMask hitLayer;
     public float hitCooldown = 1.0f;
-
-    [Header("Bomb Pickup")]
-    [Tooltip("Transform vacío hijo donde se colocará la bomba al recogerla")]
-    [SerializeField] private Transform bombSlot;
+    
 
     [SerializeField] NetworkMecanimAnimator _netAnim;
     private Animator _childAnim;
@@ -213,7 +213,9 @@ public class PlayerController : NetworkBehaviour
         if (Physics.SphereCast(origin, hitRadius, dir, out var hit, hitRange, hitLayer))
         {
             if (hit.collider.TryGetComponent<PlayerController>(out var other))
+            {
                 other.RPC_TakeHit();
+            }
         }
 
         _hitTimer = hitCooldown;
@@ -254,11 +256,20 @@ public class PlayerController : NetworkBehaviour
         skinRoot.rotation = look;
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    [Rpc(RpcSources.All, RpcTargets.InputAuthority)]
     private void RPC_TakeHit()
     {
-        if (!Object.HasInputAuthority) return;
         ApplyLocalStun();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.InputAuthority)]
+    public void RpcEliminated()
+    {
+        if (Object.HasInputAuthority)
+            UIController.Instance.ShowEliminated(); // opcional
+
+        gameObject.SetActive(false);
+        GameManager.Instance.OnPlayerEliminated(Object.InputAuthority);
     }
 
     private void ApplyLocalStun()

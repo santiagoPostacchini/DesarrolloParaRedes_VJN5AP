@@ -995,6 +995,37 @@ Transform:
   - {fileID: 5282227916511408327}
   m_Father: {fileID: 5398260610508908263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7736224553284938351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1468671668899480830}
+  m_Layer: 2
+  m_Name: Bomb.Slot
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1468671668899480830
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7736224553284938351}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4568246317497920954}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8123963266745908911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1131,7 +1162,6 @@ GameObject:
   - component: {fileID: 7960226860147006589}
   - component: {fileID: 1331600063517055776}
   - component: {fileID: 6538206658240782248}
-  - component: {fileID: 3358569308761817982}
   m_Layer: 7
   m_Name: PigPlayerCharacter
   m_TagString: Player
@@ -1152,6 +1182,7 @@ Transform:
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1468671668899480830}
   - {fileID: 8970169376242482801}
   - {fileID: 3492335605327969170}
   m_Father: {fileID: 0}
@@ -1195,7 +1226,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   hitCooldown: 0.5
-  bombSlot: {fileID: 8598217304746274535}
+  bombSlot: {fileID: 1468671668899480830}
   _netAnim: {fileID: 5128430768052502452}
   _SkinIndex: 0
   _NetIsRunning: 0
@@ -1265,17 +1296,3 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 0
---- !u!114 &3358569308761817982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8725491222905471827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: d15c2a35251ddf3419effb52274cdb7d
