@@ -6086,6 +6086,7 @@ GameObject:
   m_Component:
   - component: {fileID: 624630158}
   - component: {fileID: 624630157}
+  - component: {fileID: 624630159}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -6105,15 +6106,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5819c693f08c25c44b485ee63ba875a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombPrefab:
-    RawGuidValue: 131974edaf1896147a81da5c5362e82d
   playerSpawnPoints:
   - {fileID: 571988751}
   - {fileID: 1302960390}
   - {fileID: 1408069167}
   - {fileID: 448714236}
   - {fileID: 1241819829}
-  minPlayersToStart: 2
+  bombPrefab:
+    RawGuidValue: 131974edaf1896147a81da5c5362e82d
 --- !u!4 &624630158
 Transform:
   m_ObjectHideFlags: 0
@@ -6129,6 +6129,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &624630159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624630156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3772632157
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 624630157}
+  ForceRemoteRenderTimeframe: 0
 --- !u!4 &626351421 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8903058273634951509, guid: f1fc5bb90ac285e4486771552d63bcb8, type: 3}
@@ -7691,9 +7710,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1292817833}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: OnStartButtonClicked
+      - m_Target: {fileID: 412752744}
+        m_TargetAssemblyTypeName: PlayerSpawner, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19193,7 +19212,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinSelectionPanel: {fileID: 1161151158}
   skinName: {fileID: 1449651432}
-  startButton: {fileID: 705863373}
   losePanel: {fileID: 1032194334}
   winPanel: {fileID: 1067895234}
 --- !u!1 &1296092213
@@ -27943,6 +27961,63 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &5497921557632890267
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7909584536696021923, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909584536696021923, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909584536696021923, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909584536696021923, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909584536696021923, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909584536696021923, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909584536696021923, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909584536696021923, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909584536696021923, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909584536696021923, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8022349513433352168, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_Name
+      value: StarsStun
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
 --- !u!1 &5699495375701448118
 GameObject:
   m_ObjectHideFlags: 0
@@ -52605,3 +52680,4 @@ SceneRoots:
   - {fileID: 839516933}
   - {fileID: 1240272707}
   - {fileID: 1631584304}
+  - {fileID: 5497921557632890267}

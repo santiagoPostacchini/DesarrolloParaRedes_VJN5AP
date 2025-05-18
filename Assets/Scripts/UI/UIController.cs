@@ -11,7 +11,6 @@ public class UIController : MonoBehaviour
     [Header("Skin Selection UI")]
     [SerializeField] private GameObject skinSelectionPanel;
     [SerializeField] private TextMeshProUGUI skinName;
-    [SerializeField] private Button startButton;
 
     [Header("Elimination UI")]
     [SerializeField] private GameObject losePanel;
@@ -33,7 +32,6 @@ public class UIController : MonoBehaviour
 
         if (skinSelectionPanel == null) Debug.LogError("Asignar skinSelectionPanel en inspector");
         if (skinName == null) Debug.LogError("Asignar skinName en inspector");
-        if (startButton == null) Debug.LogError("Asignar startButton en inspector");
 
         losePanel?.SetActive(false);
 
@@ -45,7 +43,8 @@ public class UIController : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
-    public void DisableSkinSelectionUI()
+    [Rpc]
+    public void RPC_DisableSkinSelectionUI()
     {
         if (skinSelectionPanel != null)
             skinSelectionPanel.SetActive(false);
@@ -55,28 +54,6 @@ public class UIController : MonoBehaviour
     {
         if (skinName != null)
             skinName.text = name;
-    }
-
-    public void ShowStartButtonIfHost()
-    {
-        if (_runner != null && _runner.IsSharedModeMasterClient)
-        {
-            startButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            startButton.gameObject.SetActive(false);
-        }
-    }
-
-    public void OnStartButtonClicked()
-    {
-        if (FindObjectOfType<PlayerSpawner>() is PlayerSpawner spawner)
-        {
-            spawner.StartGame();
-        }
-        DisableSkinSelectionUI();
-        startButton.gameObject.SetActive(false);
     }
 
     public void ShowEliminated()

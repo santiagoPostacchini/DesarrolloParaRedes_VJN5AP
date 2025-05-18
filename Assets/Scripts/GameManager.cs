@@ -2,225 +2,183 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Fusion.Sockets;
 
-public class GameManager : MonoBehaviour, INetworkRunnerCallbacks
+public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [Header("Spawns")]
+    [Header("Spawns & Prefabs")]
     [SerializeField] private Transform[] playerSpawnPoints;
-
-    [Header("Settings")]
-    [SerializeField] private int minPlayersToStart = 2;
-
-    [Header("Lobby UI")]
-    [SerializeField] private GameObject startButtonObj;
-
-    [Header("Prefabs")]
     [SerializeField] private NetworkPrefabRef bombPrefab;
 
-    private NetworkRunner _runner;
-    private readonly List<PlayerRef> _alive = new List<PlayerRef>();
+    private readonly Dictionary<PlayerRef, PlayerController> _clients = new Dictionary<PlayerRef, PlayerController>();
     private Bomb _currentBomb;
+    private NetworkRunner runner;
 
     private void Awake()
     {
         if (Instance != null) Destroy(gameObject);
-        else { Instance = this; DontDestroyOnLoad(gameObject); }
-    }
-
-    private void Start()
-    {
-        _runner = FindObjectOfType<NetworkRunner>();
-        if (_runner == null)
+        else
         {
-            Debug.LogError("[GameManager] No NetworkRunner found!");
-            return;
-        }
-        _runner.AddCallbacks(this);
-
-        _alive.Clear();
-
-        // NUEVO: Pre-popular con jugadores ya activos, SOLO si eres host
-        if (_runner.IsSharedModeMasterClient)
-        {
-            foreach (var pr in _runner.ActivePlayers)
-            {
-                if (!_alive.Contains(pr))
-                {
-                    _alive.Add(pr);
-                    Debug.Log($"[GameManager] Pre-populated alive with: {pr}");
-                }
-            }
-        }
-
-        UpdateStartButton();
-    }
-
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-    {
-        if (!_runner.IsSharedModeMasterClient) return;
-        if (!_alive.Contains(player))
-        {
-            _alive.Add(player);
-            Debug.Log($"[GameManager] Player joined: {player}, alive: {_alive.Count}");
-            UpdateStartButton();
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    private NetworkRunner GetRunner()
     {
-        if (!_runner.IsSharedModeMasterClient) return;
-        if (_alive.Remove(player))
+        if (runner == null)
         {
-            Debug.Log($"[GameManager] Player left: {player}, alive: {_alive.Count}");
-            UpdateStartButton();
+            runner = GetComponent<NetworkRunner>();
+            if (runner == null)
+                runner = FindObjectOfType<NetworkRunner>();
+            if (runner == null)
+                Debug.LogError("[GameManager] Runner is null (could not find runner in scene)");
         }
+        return runner;
     }
 
-    // --- Nuevo: Sólo permite arrancar cuando todos los PlayerObjects existen ---
-    private bool AllPlayerObjectsExist()
+    public void AddToList(PlayerController player)
     {
-        foreach (var pr in _alive)
-        {
-            var netObj = _runner.GetPlayerObject(pr);
-            if (netObj == null)
-            {
-                Debug.LogWarning($"[GameManager] Esperando PlayerObject de {pr}");
-                return false;
-            }
-        }
-        return true;
+        var playerRef = player.Object.InputAuthority;
+        if (_clients.ContainsKey(playerRef)) return;
+        _clients.Add(playerRef, player);
+        Debug.Log($"[GameManager] Added player {playerRef}. Total = {_clients.Count}");
     }
 
-    private void UpdateStartButton()
+    public void RemoveFromList(PlayerRef client)
     {
-        bool ready = _alive.Count >= minPlayersToStart &&
-                     _runner.IsSharedModeMasterClient &&
-                     AllPlayerObjectsExist();
-
-        if (startButtonObj != null)
-            startButtonObj.SetActive(ready);
+        _clients.Remove(client);
+        Debug.Log($"[GameManager] Removed player {client}. Total = {_clients.Count}");
     }
 
-    // --- Llama este método desde el botón de Start de la UI ---
-    public void OnStartButtonPressed()
+    public PlayerController GetPlayerController(PlayerRef pr)
     {
-        StartGame();
+        _clients.TryGetValue(pr, out var pc);
+        return pc;
     }
+
+    public bool TryGetPlayerController(PlayerRef pr, out PlayerController pc) => _clients.TryGetValue(pr, out pc);
+    public Bomb GetCurrentBomb() => _currentBomb;
 
     public void StartGame()
     {
-        Debug.Log($"[GameManager] Starting game with {_alive.Count} players");
-        if (!AllPlayerObjectsExist())
-        {
-            Debug.LogWarning("[GameManager] No todos los PlayerObjects existen. Esperando...");
-            UpdateStartButton();
-            return;
-        }
+        Debug.Log($"[GameManager] StartGame() with {_clients.Count} players");
 
-        // Posiciona todos los jugadores
-        for (int i = 0; i < _alive.Count && i < playerSpawnPoints.Length; i++)
+        int index = 0;
+        foreach (var kvp in _clients)
         {
-            var pr = _alive[i];
-            var netObj = _runner.GetPlayerObject(pr);
-            if (netObj == null)
+            if (index >= playerSpawnPoints.Length)
+                break;
+            var pc = kvp.Value;
+            var spawn = playerSpawnPoints[index];
+            if (pc == null)
             {
-                Debug.LogError($"[GameManager] No PlayerObject for {pr}! No se puede posicionar.");
+                Debug.LogError($"[GameManager] PlayerController for {kvp.Key} is null!");
+                index++;
                 continue;
             }
-            netObj.transform.position = playerSpawnPoints[i].position;
-            netObj.transform.rotation = playerSpawnPoints[i].rotation;
+            pc.transform.SetPositionAndRotation(
+                spawn.position,
+                spawn.rotation
+            );
+            Debug.Log($"[GameManager] Positioned {kvp.Key} at spawn {index}");
+            index++;
         }
 
-        // Spawn de bomba inicial
-        if (_currentBomb == null && _alive.Count > 0)
+        if (_currentBomb == null && _clients.Count > 0)
         {
-            var randomIndex = Random.Range(0, _alive.Count);
-            SpawnBombOn(_alive[randomIndex]);
+            var keys = new List<PlayerRef>(_clients.Keys);
+            var first = keys[Random.Range(0, keys.Count)];
+
+            var usedRunner = GetRunner();
+            if (usedRunner == null)
+            {
+                Debug.LogError("[GameManager] Runner is null when spawning bomb! Aborting bomb spawn.");
+                return;
+            }
+
+            if (!_clients.TryGetValue(first, out var pc))
+            {
+                Debug.LogError($"[GameManager] No PlayerController for {first}");
+                return;
+            }
+
+            if (bombPrefab == null)
+            {
+                Debug.LogError("[GameManager] bombPrefab is not assigned!");
+                return;
+            }
+
+            var bombObj = usedRunner.Spawn(
+                bombPrefab,
+                pc.bombSlot.position,
+                Quaternion.identity,
+                first
+            );
+
+            if (bombObj == null)
+            {
+                Debug.LogError("[GameManager] Runner.Spawn returned null! Is the prefab registered?");
+                return;
+            }
+
+            _currentBomb = bombObj.GetComponent<Bomb>();
+            if (_currentBomb == null)
+            {
+                Debug.LogError("[GameManager] Spawned bomb does not have a Bomb component!");
+                return;
+            }
+
+            _currentBomb.OwnerRef = first;
+            if (_currentBomb.Object.HasStateAuthority)
+                _currentBomb.Object.AssignInputAuthority(first);
+
+            _currentBomb.ActivateBomb(first);
+            Debug.Log($"[GameManager] Bomb spawned on {first} (OwnerRef set, authority assigned)");
         }
-        // Aquí podés desactivar la UI del lobby si lo necesitás
-    }
-
-    private void SpawnBombOn(PlayerRef pr)
-    {
-        var netObj = _runner.GetPlayerObject(pr);
-        if (netObj == null)
-        {
-            Debug.LogError($"[GameManager] No PlayerObject for {pr} al intentar asignar bomba.");
-            return;
-        }
-
-        var pc = netObj.GetComponent<PlayerController>();
-        if (pc?.bombSlot == null)
-        {
-            Debug.LogError($"[GameManager] Player {pr} no tiene bombSlot asignado.");
-            return;
-        }
-
-        var bombObj = _runner.Spawn(
-            bombPrefab, // Prefab asignado por Inspector
-            pc.bombSlot.position,
-            Quaternion.identity,
-            pr
-        );
-        _currentBomb = bombObj.GetComponent<Bomb>();
-        bombObj.transform.SetParent(pc.bombSlot, worldPositionStays: false);
-
-        _currentBomb.ActivateBomb();
-
-        Debug.Log($"[GameManager] Bomb spawned & parented to {pr}");
     }
 
     public void OnBombExploded(Bomb bomb)
     {
-        Debug.Log("[GameManager] 💥 OnBombExploded()");
+        var eliminated = bomb.OwnerRef;
+        Debug.Log($"[GameManager] Bomb exploded on {eliminated}");
+        RPC_Defeat(eliminated);
 
-        // Si solo queda un jugador, fin de la partida
-        if (_alive.Count <= 1)
+        if (_clients.Count > 1)
         {
-            Debug.Log("[GameManager] Only one left, game over.");
-            RPC_GameOver(_alive.First());
-            return;
+            var keys = new List<PlayerRef>(_clients.Keys);
+            var next = keys[Random.Range(0, keys.Count)];
+            Debug.Log($"[GameManager] Reassigning bomb to {next}");
+            bomb.RPC_Reassign(next);
+        }
+    }
+
+    [Rpc]
+    public void RPC_Defeat(PlayerRef client)
+    {
+        Debug.Log($"[GameManager] RPC_Defeat: {client}");
+
+        if (client == Runner.LocalPlayer)
+        {
+            UIController.Instance.ShowEliminated();
         }
 
-        // Escoge un nuevo dueño aleatorio de los vivos
-        var next = _alive[Random.Range(0, _alive.Count)];
-        bomb.RPC_Reassign(next);
+        RemoveFromList(client);
+
+        if (_clients.Count == 1 && HasStateAuthority)
+        {
+            var winner = _clients.Keys.First();
+            RPC_Win(winner);
+        }
     }
 
-    public void OnPlayerEliminated(PlayerRef pr)
+    [Rpc]
+    public void RPC_Win([RpcTarget] PlayerRef client)
     {
-        if (_alive.Remove(pr))
-            Debug.Log($"[GameManager] Player eliminated: {pr}, alive now {_alive.Count}");
+        Debug.Log($"[GameManager] RPC_Win: {client}");
+        UIController.Instance.ShowWin();
     }
 
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_GameOver(PlayerRef winner)
-    {
-        Debug.Log($"🏆 Game Over – Winner: {winner}");
-        // Aquí lógica visual/UI de fin de partida
-    }
-
-    // --- Callbacks vacíos de INetworkRunnerCallbacks ---
-    public void OnInput(NetworkRunner r, NetworkInput i) { }
-    public void OnInputMissing(NetworkRunner r, PlayerRef p, NetworkInput i) { }
-    public void OnShutdown(NetworkRunner r, ShutdownReason s) { }
-    public void OnConnectedToServer(NetworkRunner r) { }
-    public void OnDisconnectedFromServer(NetworkRunner r, NetDisconnectReason d) { }
-    public void OnConnectRequest(NetworkRunner r, NetworkRunnerCallbackArgs.ConnectRequest req, byte[] token) { }
-    public void OnConnectFailed(NetworkRunner r, NetAddress addr, NetConnectFailedReason reason) { }
-    public void OnUserSimulationMessage(NetworkRunner r, NetworkRunnerCallbackArgs.ConnectRequest msg) { }
-    public void OnSessionListUpdated(NetworkRunner r, List<SessionInfo> list) { }
-    public void OnReliableDataReceived(NetworkRunner r, PlayerRef p, Allocator buf) { }
-    public void OnSceneLoadDone(NetworkRunner r) { }
-    public void OnSceneLoadStart(NetworkRunner r) { }
-    public void OnHostMigration(NetworkRunner r, HostMigrationToken t) { }
-    public void OnCustomAuthenticationResponse(NetworkRunner r, Dictionary<string, object> data) { }
-    public void OnObjectExitAOI(NetworkRunner r, NetworkObject obj, PlayerRef p) { }
-    public void OnObjectEnterAOI(NetworkRunner r, NetworkObject obj, PlayerRef p) { }
-    public void OnUserSimulationMessage(NetworkRunner r, SimulationMessagePtr msg) { }
-    public void OnReliableDataProgress(NetworkRunner r, PlayerRef p, ReliableKey key, float prog) { }
-    public void OnReliableDataReceived(NetworkRunner r, PlayerRef p, ReliableKey key, System.ArraySegment<byte> data) { }
+    public bool TryGetPlayer(PlayerRef pr, out PlayerController pc) => _clients.TryGetValue(pr, out pc);
 }

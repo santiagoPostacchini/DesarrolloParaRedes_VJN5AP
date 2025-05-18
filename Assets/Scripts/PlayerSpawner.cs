@@ -15,21 +15,24 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
     private bool _gameStarted = false;
     private int _spawnedPlayers = 0;
 
+    private NetworkRunner _cachedRunner;
+
     public void PlayerJoined(PlayerRef player)
     {
         Debug.Log($"[Spawner] PlayerJoined: {player}");
 
-        // Spawn local
+        if (_cachedRunner == null)
+            _cachedRunner = Runner;
+
         if (player == Runner.LocalPlayer)
         {
             SpawnLocalPlayer(player);
         }
 
-        // Mostrar botón solo al host (MasterClient) cuando haya >=2
-        if (!Runner.IsSharedModeMasterClient)
+        if (!_cachedRunner.IsSharedModeMasterClient)
             return;
 
-        if (Runner.SessionInfo.PlayerCount >= 2 && !_gameStarted)
+        if (_cachedRunner.SessionInfo.PlayerCount >= 2 && !_gameStarted)
         {
             Debug.Log("[Spawner] Soy MasterClient y ya hay 2+ jugadores: muestro StartButton");
             startButtonUI?.SetActive(true);
@@ -38,18 +41,25 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 
     public void StartGame()
     {
-        // Evita doble click
         if (_gameStarted) return;
 
-        // Solo el host puede iniciar
-        if (!Runner.IsSharedModeMasterClient)
+        NetworkRunner runner = Runner;
+        if (runner == null)
+            runner = FindObjectOfType<NetworkRunner>();
+
+        if (runner == null)
+        {
+            Debug.LogError("[Spawner] Runner is NULL in StartGame. (¿Apretaste el botón muy temprano? ¿Está inicializado el Runner en la escena?)");
+            return;
+        }
+
+        if (!runner.IsSharedModeMasterClient)
         {
             Debug.LogWarning("[Spawner] Ignorando StartGame: no soy el host");
             return;
         }
 
-        // Verifica conteo justo antes de iniciar
-        if (Runner.SessionInfo.PlayerCount < 2)
+        if (runner.SessionInfo == null || runner.SessionInfo.PlayerCount < 2)
         {
             Debug.LogWarning("[Spawner] Ignorando StartGame: menos de 2 jugadores");
             return;
@@ -58,9 +68,10 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
         Debug.Log("[Spawner] Todos ok, llamando a GameManager.StartGame()");
         _gameStarted = true;
         startButtonUI?.SetActive(false);
-
+        UIController.Instance.RPC_DisableSkinSelectionUI();
         GameManager.Instance.StartGame();
     }
+
 
     private void SpawnLocalPlayer(PlayerRef player)
     {
@@ -78,7 +89,6 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 
         Vector3 pos = sp != null ? sp.position : Vector3.up * 2f;
         Quaternion rot = sp != null ? sp.rotation : Quaternion.identity;
-
         Runner.Spawn(prefab, pos, rot, player);
         Debug.Log($"[Spawner] Spawned jugador {player} en skin #{skinIndex}");
         _spawnedPlayers++;
