@@ -144,6 +144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinRoot: {fileID: 5257348401970245875}
+  bombSlot: {fileID: 0}
+  stunStars: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -166,6 +168,7 @@ MonoBehaviour:
   _SkinIndex: 0
   _NetIsRunning: 0
   _NetIsGrounded: 0
+  _NetRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!143 &2134335087393495545
 CharacterController:
   m_ObjectHideFlags: 0
@@ -278,7 +281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5257348401970245875}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SkinRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

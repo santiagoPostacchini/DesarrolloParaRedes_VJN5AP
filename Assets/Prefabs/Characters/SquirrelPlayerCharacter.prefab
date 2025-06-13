@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5381947133635348272}
   - component: {fileID: 1692323597359691579}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Squirrel_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2942023198514114869}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedNeck_0108
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7606111697968342379}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedRPalm_0107
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 130220967427312727}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedLCollarbone_0100
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3467730730759012002}
   - component: {fileID: 1419037505272458508}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Squirrel_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8082109726923733668}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedSpine1_096
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3161605730966408719}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedLCalf_091
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2578867547263868274}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedSpine3_098
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +392,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5554434786177932319}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedLFoot_092
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3362612473222967191}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedLUpperarm_0101
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -455,7 +455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 604340987203623893}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedRThigh_093
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3629703863862656713}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedRCollarbone_0104
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +519,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3375426715308978724}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedTail_0110
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +550,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2188184421925969961}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedLThigh_090
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,7 +582,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1237300004168095596}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedRForearm_0106
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,7 +614,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4629152765668257991}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SkinRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -729,7 +729,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4657212095880652523}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedRUpperarm_0105
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -762,7 +762,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3633726778979909159}
   - component: {fileID: 2012928916388452879}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Squirrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -817,7 +817,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7448641885789770559}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedLPalm_0103
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -848,7 +848,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7208107590110601660}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedHead_0109
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1048,7 +1048,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1110859775496627862}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedRFoot_095
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1079,7 +1079,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 470774902321639458}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedPelvis_089
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1114,7 +1114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8581118815297872190}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedRCalf_094
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1146,7 +1146,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8260617775226302136}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Bomb.Slot
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -1177,7 +1177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2172278309956143775}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedLForearm_0102
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1209,7 +1209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1450694618226296523}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedRibcage_099
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1243,7 +1243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5386291540931750628}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: SquirrelRiggedSpine2_097
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1317,6 +1317,10 @@ PrefabInstance:
     - target: {fileID: 8022349513433352168, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
       propertyPath: m_Name
       value: StarsStun
+      objectReference: {fileID: 0}
+    - target: {fileID: 8022349513433352168, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

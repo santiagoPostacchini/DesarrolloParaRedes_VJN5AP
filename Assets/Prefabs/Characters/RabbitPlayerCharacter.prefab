@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4646377106152374810}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRForearm_082
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4424781902406191192}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLForearm_078
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7236220049663292132}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRCalf_070
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2932729374333511511}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedPelvis_065
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3748396594625431165}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRThigh_069
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6801095408991453102}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLUpperarm_077
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2113497212754361479}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLFoot_068
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4917358398814440666}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRibcage_075
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5317290850269669225}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRUpperarm_081
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,7 +384,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4574552151879522285}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SkinRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +566,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7435184520814899327}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRPalm_083
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +597,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8996417750722799685}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedSpine3_074
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -629,7 +629,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3789795539565855522}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedEar_R_087
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,7 +660,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6671497673028330424}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLCalf_067
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -693,7 +693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 310711260404579578}
   - component: {fileID: 5028843946253460005}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Rabbit_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -783,7 +783,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3958539236848810787}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedSpine1_072
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -815,7 +815,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1534726921449722356}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLCollarbone_076
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -849,7 +849,7 @@ GameObject:
   - component: {fileID: 6584211797657206766}
   - component: {fileID: 5381366435723823688}
   - component: {fileID: 5401416651035945347}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Rabbit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -922,7 +922,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4042419734684664322}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLThigh_066
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -954,7 +954,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3811493328967695322}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRFoot_071
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -985,7 +985,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8705055747330622636}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedSpine2_073
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1017,7 +1017,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1752195275172969035}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedNeck_084
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1050,7 +1050,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5778750361601530559}
   - component: {fileID: 9454614163095339}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Rabbit_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1152,7 +1152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1349986231704957549}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedEar_L_086
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1183,7 +1183,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5006351199364249610}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRCollarbone_080
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1215,7 +1215,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6256706304406956741}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedHead_085
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1248,7 +1248,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8308339336085461025}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Bomb.Slot
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -1279,7 +1279,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6550118543976419013}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLPalm_079
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1310,7 +1310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6980677527363123583}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedTail_088
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1383,6 +1383,10 @@ PrefabInstance:
     - target: {fileID: 8022349513433352168, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
       propertyPath: m_Name
       value: StarsStun
+      objectReference: {fileID: 0}
+    - target: {fileID: 8022349513433352168, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
