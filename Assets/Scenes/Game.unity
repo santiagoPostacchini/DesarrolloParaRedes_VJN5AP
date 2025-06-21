@@ -15488,13 +15488,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RunnerPrefab: {fileID: 412752742}
   StartMode: 1
-  AutoStartAs: 2
+  AutoStartAs: 6
   AutoHideGUI: 1
   AutoClients: 1
   ClientStartDelay: 0.1
   ServerPort: 0
   DefaultRoomName: 
-  InitialScenePath: Assets/Scenes/Game.unity
+  InitialScenePath: 
   _currentStage: 0
   AutoConnectVirtualInstances: 1
   VirtualInstanceConnectDelay: 1

@@ -9,22 +9,16 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
     [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPoints;
 
-    [Header("UI")]
-    [SerializeField] private GameObject startButtonUI;
-
-    private bool _gameStarted = false;
-    private int _spawnedPlayers = 0;
+    private bool _gameStarted;
+    private int _spawnedPlayers;
 
     private NetworkRunner _cachedRunner;
 
-    public void PlayerJoined(PlayerRef player)
+    public void PlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         Debug.Log($"[Spawner] PlayerJoined: {player}");
 
-        if (_cachedRunner == null)
-            _cachedRunner = Runner;
-
-        if (player == Runner.LocalPlayer)
+        if (runner.IsServer)
         {
             SpawnLocalPlayer(player);
         }
@@ -35,7 +29,6 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
         if (_cachedRunner.SessionInfo.PlayerCount >= 2 && !_gameStarted)
         {
             Debug.Log("[Spawner] Soy MasterClient y ya hay 2+ jugadores: muestro StartButton");
-            startButtonUI?.SetActive(true);
         }
     }
 
@@ -44,10 +37,10 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
         if (_gameStarted) return;
 
         NetworkRunner runner = Runner;
-        if (runner == null)
+        if (!runner)
             runner = FindObjectOfType<NetworkRunner>();
 
-        if (runner == null)
+        if (!runner)
         {
             Debug.LogError("[Spawner] Runner is NULL in StartGame. (¿Apretaste el botón muy temprano? ¿Está inicializado el Runner en la escena?)");
             return;
@@ -67,7 +60,6 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 
         Debug.Log("[Spawner] Todos ok, llamando a GameManager.StartGame()");
         _gameStarted = true;
-        startButtonUI?.SetActive(false);
         UIController.Instance.RPC_DisableSkinSelectionUI();
         GameManager.Instance.StartGame();
     }
@@ -87,8 +79,8 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
             ? spawnPoints[_spawnedPlayers]
             : null;
 
-        Vector3 pos = sp != null ? sp.position : Vector3.up * 2f;
-        Quaternion rot = sp != null ? sp.rotation : Quaternion.identity;
+        Vector3 pos = sp ? sp.position : Vector3.up * 2f;
+        Quaternion rot = sp ? sp.rotation : Quaternion.identity;
         Runner.Spawn(prefab, pos, rot, player);
         Debug.Log($"[Spawner] Spawned jugador {player} en skin #{skinIndex}");
         _spawnedPlayers++;
