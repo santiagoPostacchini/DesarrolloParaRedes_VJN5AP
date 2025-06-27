@@ -5,37 +5,38 @@ using UnityEngine;
 
 public class SkinSelection : MonoBehaviour
 {
-    public static SkinSelection instance;
+    [SerializeField] MainMenuHandler _mainMenuHandler;
+    public static SkinSelection Instance;
     public List<GameObject> skins;
-    private int selectedSkin = 0;
+    private int _selectedSkin = 0;
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
     public void NextCharacter()
     {
-        skins[selectedSkin].SetActive(false);
-        selectedSkin = (selectedSkin + 1) % skins.Count;
-        skins[selectedSkin].SetActive(true);
-        UIController.Instance.SetSkinNameOnUI(skins[selectedSkin].name);
+        skins[_selectedSkin].SetActive(false);
+        _selectedSkin = (_selectedSkin + 1) % skins.Count;
+        skins[_selectedSkin].SetActive(true);
+        _mainMenuHandler.UpdateSkinName(skins[_selectedSkin].name);
     }
     
     public void PrevCharacter()
     {
-        skins[selectedSkin].SetActive(false);
-        selectedSkin--;
-        if(selectedSkin < 0)
+        skins[_selectedSkin].SetActive(false);
+        _selectedSkin--;
+        if(_selectedSkin < 0)
         {
-            selectedSkin += skins.Count;
+            _selectedSkin += skins.Count;
         }
-        skins[selectedSkin].SetActive(true);
-        UIController.Instance.SetSkinNameOnUI(skins[selectedSkin].name);
+        skins[_selectedSkin].SetActive(true);
+        _mainMenuHandler.UpdateSkinName(skins[_selectedSkin].name);
     }
 
     public int GetCurrentIndex()
     {
-        return selectedSkin;
+        return _selectedSkin;
     }
 }

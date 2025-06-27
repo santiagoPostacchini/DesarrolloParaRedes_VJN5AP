@@ -23,6 +23,7 @@ public class MainMenuHandler : MonoBehaviour
 
     [Header("Texts")]
     [SerializeField] private TMP_Text _statusText;
+    [SerializeField] private TMP_Text _selectedSkinText;
     
     void Start()
     {
@@ -60,5 +61,10 @@ public class MainMenuHandler : MonoBehaviour
         _hostGameBTN.interactable = false;
         
         _networkRunnerHandler.CreateGame(_sessionName.text, "Game");
+    }
+
+    public void UpdateSkinName(string name)
+    {
+        _selectedSkinText.text = name;
     }
 }

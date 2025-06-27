@@ -77,7 +77,7 @@ namespace Player
             _hitTimer = 0f;
 
             if (HasInputAuthority)
-                SkinIndex = SkinSelection.instance.GetCurrentIndex();
+                SkinIndex = SkinSelection.Instance.GetCurrentIndex();
 
             _lastSkinIndex = SkinIndex;
             _childAnim = GetComponentInChildren<Animator>();

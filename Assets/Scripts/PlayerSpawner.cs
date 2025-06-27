@@ -43,7 +43,7 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     
     private void SpawnLocalPlayer(NetworkRunner runner, PlayerRef player)
     {
-        int skinIndex = SkinSelection.instance.GetCurrentIndex();
+        int skinIndex = SkinSelection.Instance.GetCurrentIndex();
         if (skinIndex < 0 || skinIndex >= skinPrefabs.Length)
         {
             Debug.LogWarning($"[Spawner] Skin index inválido ({skinIndex}), uso 0");
