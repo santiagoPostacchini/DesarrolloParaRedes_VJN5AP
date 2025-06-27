@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using NetworkPlayer = Player.New.NetworkPlayer;
 
 public class NicknameItem : MonoBehaviour
 {

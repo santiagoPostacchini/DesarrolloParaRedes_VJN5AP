@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using Fusion;
+using UI;
 using UnityEngine;
 
 namespace Player
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(NetworkObject))]
-    public class PlayerController : NetworkBehaviour
+    public class OldPlayerController : NetworkBehaviour
     {
         [Header("Skin")]
         public Transform skinRoot;
@@ -83,7 +84,7 @@ namespace Player
             _netAnim.Animator = _childAnim;
             _netAnim.Animator.Rebind();
 
-            GameManager.Instance.AddToList(this);
+            //GameManager.Instance.AddToList(this);
         }
 
         void Update()
@@ -217,7 +218,7 @@ namespace Player
 
             if (Physics.SphereCast(origin, hitRadius, dir, out var hit, hitRange, hitLayer))
             {
-                if (hit.collider.TryGetComponent<PlayerController>(out var other))
+                if (hit.collider.TryGetComponent<OldPlayerController>(out var other))
                 {
                     other.RPC_TakeHit();
 

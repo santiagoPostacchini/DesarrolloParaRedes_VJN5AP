@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Player;
+using UI;
 
 public class GameManager : NetworkBehaviour
 {
@@ -38,7 +39,7 @@ public class GameManager : NetworkBehaviour
         }
         return runner;
     }
-
+    /*
     public void AddToList(PlayerController player)
     {
         var playerRef = player.Object.InputAuthority;
@@ -46,7 +47,7 @@ public class GameManager : NetworkBehaviour
         _clients.Add(playerRef, player);
         Debug.Log($"[GameManager] Added player {playerRef}. Total = {_clients.Count}");
     }
-
+    */
     public void RemoveFromList(PlayerRef client)
     {
         _clients.Remove(client);
@@ -104,7 +105,7 @@ public class GameManager : NetworkBehaviour
                 Debug.LogError($"[GameManager] No PlayerController for {first}");
                 return;
             }
-
+            /*
             if (bombPrefab == null)
             {
                 Debug.LogError("[GameManager] bombPrefab is not assigned!");
@@ -137,6 +138,7 @@ public class GameManager : NetworkBehaviour
 
             _currentBomb.ActivateBomb(first);
             Debug.Log($"[GameManager] Bomb spawned on {first} (OwnerRef set, authority assigned)");
+            */
         }
     }
 

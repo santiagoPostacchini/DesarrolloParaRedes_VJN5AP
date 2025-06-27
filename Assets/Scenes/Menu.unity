@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec9b74355983b047b2ceb8b0c00d6de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runnerPrefab: {fileID: -5889668889194130745, guid: 57c4c0e4c3cbd59439d490cae23b2b73, type: 3}
+  _runnerPrefab: {fileID: -5889668889194130745, guid: 6382dfa798663154b92a8099bbb3c827, type: 3}
 --- !u!4 &17675592
 Transform:
   m_ObjectHideFlags: 0
@@ -18565,7 +18565,7 @@ MonoBehaviour:
   _hostGameBTN: {fileID: 8273704852744858891}
   _sessionName: {fileID: 4454920359055709774}
   _nicknameField: {fileID: 4841164088546736962}
-  _statusText: {fileID: 796982315546360777}
+  _statusText: {fileID: 3388451898520421336}
 --- !u!1001 &1299546404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28627,8 +28627,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3851942950196182837}
-  - component: {fileID: 4402036440044153150}
   - component: {fileID: 4402036440044153149}
+  - component: {fileID: 4402036440044153150}
   m_Layer: 5
   m_Name: Session Browser Panel
   m_TagString: Untagged
@@ -28656,7 +28656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 655474c1ad90c52419ecb5b53c558d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sessionItemPrefab: {fileID: 5445195999262228612, guid: 6784e18f289ef3c4f8b0a7b9c37feb9f, type: 3}
+  _sessionItemPrefab: {fileID: 7643431026318603006, guid: 6e95a7f7988e2de48802005d73660a83, type: 3}
   _networkRunnerHandler: {fileID: 17675591}
   _statusText: {fileID: 3388451898520421336}
   _verticalLayout: {fileID: 1033986364384099569}

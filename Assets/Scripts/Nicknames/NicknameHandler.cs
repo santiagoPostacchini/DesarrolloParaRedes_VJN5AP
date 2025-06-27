@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
+using NetworkPlayer = Player.New.NetworkPlayer;
 
 namespace Nicknames
 {
@@ -25,7 +26,7 @@ namespace Nicknames
             _nicknames = new List<NicknameItem>();
         }
 
-        public NicknameItem AddNickname(PlayerController owner)
+        public NicknameItem AddNickname(NetworkPlayer owner)
         {
             var newNickname = Instantiate(_nicknameItemPrefab, transform)
                 .SetOwner(owner);
