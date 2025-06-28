@@ -5662,7 +5662,6 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
-  - component: {fileID: 963194231}
   - component: {fileID: 963194232}
   m_Layer: 0
   m_Name: Main Camera
@@ -5761,23 +5760,6 @@ MonoBehaviour:
   Components:
   - {fileID: 963194226}
   _guid: d4aba403-2e72-4039-
---- !u!114 &963194231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bcabedfd30545448b5245c3a9de2097, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 6661825303984814850, guid: 982c4958328477f4eb70ddc6dd62f3d2, type: 3}
-  obstacleLayers:
-    serializedVersion: 2
-    m_Bits: 256
-  cam: {fileID: 963194227}
 --- !u!114 &963194232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12755,8 +12737,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 123a634380618fb4f8ab1bab5537e6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinSelectionPanel: {fileID: 0}
-  skinName: {fileID: 0}
   losePanel: {fileID: 1032194334}
   winPanel: {fileID: 1067895234}
 --- !u!1001 &1299546404
@@ -16760,7 +16740,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4791066036141470907, guid: 057c1734216e91540a94c6fc214d9e85, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.73
       objectReference: {fileID: 0}
     - target: {fileID: 4791066036141470907, guid: 057c1734216e91540a94c6fc214d9e85, type: 3}
       propertyPath: m_LocalPosition.z

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3806631525775104372}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLThigh_022
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +32,58 @@ Transform:
   - {fileID: 8728030849630564569}
   m_Father: {fileID: 2542552488408269742}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &343886664364908566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2375825975110204067}
+  - component: {fileID: 2098486266410137959}
+  m_Layer: 0
+  m_Name: Hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2375825975110204067
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343886664364908566}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6661825303984814850}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2098486266410137959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343886664364908566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1014831617, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 3
+  SphereRadius: 0
+  CapsuleRadius: 0.18
+  BoxExtents: {x: 0, y: 0, z: 0}
+  CapsuleExtents: 0.6
+  Offset: {x: 0, y: -0.165, z: 0}
+  Root: {fileID: 0}
+  GizmosColor: {r: 1, g: 0.015686275, b: 0.6039216, a: 1}
 --- !u!1 &503172831510042125
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8728030849630564569}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLCalf_023
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +125,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8713833804472400250}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLFoot_024
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +156,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7646461240698890192}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRForearm_038
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +188,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 329176526455920643}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedSpine2_029
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5174433168729822303}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLUpperarm_033
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +254,8 @@ GameObject:
   - component: {fileID: 1808387069436585621}
   - component: {fileID: 6038862170700437626}
   - component: {fileID: 1025851710689621719}
-  m_Layer: 2
+  - component: {fileID: 923774771949830627}
+  m_Layer: 7
   m_Name: Cat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,9 +291,9 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0107ed3a1f90b2742b0027e332827925, type: 3}
   m_Controller: {fileID: 9100000, guid: 77d7776e49343ac45a47dd65ba52dabf, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -266,6 +319,20 @@ MonoBehaviour:
   StateHashes: 000000002b1a167c794069552638cb43a21b1dacf3b09ce077934a0f336e528eb1211e0b
   TriggerHashes: 0000000028a98107336e528e
   TotalWords: 1
+--- !u!114 &923774771949830627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013184259046639903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c603c1fe1d7f054c97c6b9bfbd29ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hitParticles: {fileID: 3565711011242878102}
+  _playerVisual: {fileID: 2013184259046639903}
 --- !u!1 &2266744378573514930
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +342,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8346653081665179788}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedTail_042
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,7 +456,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6857129813634333632}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedSpine3_030
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +488,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1113965254122361533}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRCollarbone_036
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +520,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7770626514062434016}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRFoot_027
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +551,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8905974593910157923}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLCollarbone_032
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,11 +583,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6661825303984814850}
-  - component: {fileID: 4985040857713639138}
-  - component: {fileID: 1998991201661013745}
-  - component: {fileID: 4121971468161713206}
-  - component: {fileID: 2134335087393495545}
   - component: {fileID: 7541090226632964104}
+  - component: {fileID: 2134335087393495545}
+  - component: {fileID: -7009209205646404360}
+  - component: {fileID: -6187590686870382081}
+  - component: {fileID: 3898792934400671626}
+  - component: {fileID: 394621444941060187}
+  - component: {fileID: 6343931478302844609}
+  - component: {fileID: 3808036156226942016}
+  - component: {fileID: 5221674592469167160}
   m_Layer: 7
   m_Name: CatPlayerCharacter
   m_TagString: Player
@@ -545,17 +616,10 @@ Transform:
   - {fileID: 2129586156916715121}
   - {fileID: 5257348401970245875}
   - {fileID: 8586759798523536962}
+  - {fileID: 2375825975110204067}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4985040857713639138
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4606737848556146447}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1998991201661013745
+--- !u!114 &7541090226632964104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -564,54 +628,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 4606737848556146447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db59dc71106a34a49aa19b98135e6f07, type: 3}
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinRoot: {fileID: 5257348401970245875}
-  bombSlot: {fileID: 2129586156916715121}
-  stunStars: {fileID: 3565711011242878102}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  moveSpeed: 5
-  acceleration: 15
-  deceleration: 15
-  clickRadius: 0.3
-  rotationSpeed: 720
-  jumpHeight: 1
-  gravity: -20
-  teleportDistance: 5
-  teleportCooldown: 20
-  hitRadius: 0.3
-  hitRange: 0.5
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  hitCooldown: 0.5
-  _netAnim: {fileID: 1025851710689621719}
-  _SkinIndex: 0
-  _NetIsRunning: 0
-  _NetIsGrounded: 0
-  _NetRotation: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &4121971468161713206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4606737848556146447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 378411a89480da345945c2f888327a2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stateAuthorityChangeErrorCorrectionDelta: 0
-  gravity: -20
-  jumpImpulse: 8
-  acceleration: 10
-  braking: 10
-  maxSpeed: 2
-  rotationSpeed: 15
+  SortKey: 6413641
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: -7009209205646404360}
+  - {fileID: 3898792934400671626}
+  - {fileID: 394621444941060187}
+  - {fileID: 6343931478302844609}
+  - {fileID: 3808036156226942016}
+  - {fileID: 5221674592469167160}
+  - {fileID: 1025851710689621719}
+  - {fileID: 923774771949830627}
+  ForceRemoteRenderTimeframe: 0
 --- !u!143 &2134335087393495545
 CharacterController:
   m_ObjectHideFlags: 0
@@ -637,8 +670,8 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7541090226632964104
+  m_Center: {x: 0, y: -0.27, z: 0}
+--- !u!114 &-7009209205646404360
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -647,18 +680,100 @@ MonoBehaviour:
   m_GameObject: {fileID: 4606737848556146447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Script: {fileID: 11500000, guid: 21eafbde6160a4045ae01daf5689f99d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 2447816974
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 1998991201661013745}
-  - {fileID: 4121971468161713206}
-  - {fileID: 1025851710689621719}
-  ForceRemoteRenderTimeframe: 0
+--- !u!114 &-6187590686870382081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606737848556146447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c4271e492d7b949b388a8ac9776c29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3898792934400671626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606737848556146447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5153b6e6e6af934a988f75138a18883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  gravity: -20
+  jumpImpulse: 8
+  acceleration: 20
+  braking: 10
+  maxSpeed: 5
+  rotationSpeed: 540
+  skinRoot: {fileID: 0}
+--- !u!114 &394621444941060187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606737848556146447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccdc77488afa17d4e9d2d1a2cd351e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  camera: {fileID: 0}
+--- !u!114 &6343931478302844609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606737848556146447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a7497c82bbc6f4392b78a8d91f9138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombSlotTransform: {fileID: 2129586156916715121}
+--- !u!114 &3808036156226942016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606737848556146447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a011d076d7fa444938150f56acf8bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5221674592469167160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606737848556146447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1039544458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Config: 3
+  BroadRadius: 0.4
+  Offset: {x: 0, y: -0.1, z: 0}
+  GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  Hitboxes:
+  - {fileID: 2098486266410137959}
 --- !u!1 &4609921605850030844
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,7 +783,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7738417426890955299}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRUpperarm_037
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -700,7 +815,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4605435931647006855}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedNeck_040
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -748,7 +863,7 @@ Transform:
   m_GameObject: {fileID: 4968492007632551743}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.652, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -763,7 +878,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5622712321782570273}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLForearm_034
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -795,7 +910,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5058913739721576591}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRPalm_039
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -827,7 +942,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6598018007953108813}
   - component: {fileID: 2996782693171875051}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Cat_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -915,7 +1030,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2196823732093073601}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedSpine1_028
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -947,7 +1062,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1159816603246273893}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRibcage_031
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -981,7 +1096,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1978957637045624116}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRThigh_025
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1013,7 +1128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5429243064429508905}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedLPalm_035
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1044,7 +1159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6498740159365087640}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedRCalf_026
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1076,7 +1191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1051645186502065408}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedHead_041
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1108,7 +1223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3921429275120465350}
   - component: {fileID: 3513604774633426241}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Cat_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1210,7 +1325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2542552488408269742}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: CatRiggedPelvis_021
   m_TagString: Untagged
   m_Icon: {fileID: 0}

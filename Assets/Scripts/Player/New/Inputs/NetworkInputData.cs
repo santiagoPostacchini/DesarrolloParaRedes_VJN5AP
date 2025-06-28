@@ -1,11 +1,13 @@
 using Fusion;
+using UnityEngine;
 
 namespace Player.New.Inputs
 {
     public struct NetworkInputData : INetworkInput
     {
-        public float MovementInput;
         public NetworkBool IsHitPressed;
+        public NetworkBool IsMovePressed;
+        public Vector2 MouseScreenPosition; 
 
         public NetworkButtons NetworkButtons;
     }
@@ -13,5 +15,6 @@ namespace Player.New.Inputs
     enum MyButtons
     {
         Jump = 0,
+        Hit = 1
     }
 }

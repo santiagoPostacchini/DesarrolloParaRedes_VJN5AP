@@ -5,10 +5,13 @@ using UnityEngine;
 
 namespace Player
 {
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(NetworkCharacterController))]
     [RequireComponent(typeof(NetworkObject))]
     public class OldPlayerController : NetworkBehaviour
     {
+        private static readonly int IsRunning = Animator.StringToHash("isRunning");
+        private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
+
         [Header("Skin")]
         public Transform skinRoot;
 
@@ -43,13 +46,13 @@ namespace Player
         public LayerMask hitLayer;
         public float hitCooldown = 1.0f;
 
-        [SerializeField] NetworkMecanimAnimator _netAnim;
+        [SerializeField] private NetworkMecanimAnimator netAnim;
         private Animator _childAnim;
 
-        [Networked] public int SkinIndex { get; set; }
+        [Networked] private int SkinIndex { get; set; }
         [Networked] public bool NetIsRunning { get; set; }
         [Networked] public bool NetIsGrounded { get; set; }
-        [Networked] public Quaternion NetRotation { get; set; }
+        [Networked] private Quaternion NetRotation { get; set; }
 
         private CharacterController _cc;
         private Camera _cam;
@@ -81,13 +84,11 @@ namespace Player
 
             _lastSkinIndex = SkinIndex;
             _childAnim = GetComponentInChildren<Animator>();
-            _netAnim.Animator = _childAnim;
-            _netAnim.Animator.Rebind();
-
-            //GameManager.Instance.AddToList(this);
+            netAnim.Animator = _childAnim;
+            netAnim.Animator.Rebind();
         }
 
-        void Update()
+        private void Update()
         {
             if (!HasInputAuthority) return;
             HandleMouseInput();
@@ -101,6 +102,7 @@ namespace Player
             if (!HasInputAuthority)
                 transform.rotation = Quaternion.Slerp(transform.rotation, NetRotation, Runner.DeltaTime * 10f);
 
+            // ReSharper disable once RedundantCheckBeforeAssignment
             if (_lastSkinIndex != SkinIndex)
                 _lastSkinIndex = SkinIndex;
 
@@ -141,7 +143,7 @@ namespace Player
             if (_cc.isGrounded && Input.GetButtonDown("Jump"))
             {
                 _jumpReq = true;
-                _netAnim?.SetTrigger("Jump");
+                netAnim?.SetTrigger("Jump");
             }
         }
 
@@ -186,8 +188,8 @@ namespace Player
         {
             if (_isStunned) return;
 
-            _netAnim?.Animator.SetBool("isRunning", _isMoving);
-            _netAnim?.Animator.SetBool("isGrounded", _cc.isGrounded);
+            netAnim?.Animator.SetBool(IsRunning, _isMoving);
+            netAnim?.Animator.SetBool(IsGrounded, _cc.isGrounded);
 
             Vector3 target = _isMoving ? _clickDir * moveSpeed : Vector3.zero;
             float rate = _isMoving ? acceleration : deceleration;
@@ -209,7 +211,7 @@ namespace Player
             if (!_hitRequested) return;
             _hitRequested = false;
 
-            _netAnim?.SetTrigger("Throw");
+            netAnim?.SetTrigger("Throw");
 
             if (_isStunned || _hitTimer > 0f) return;
 
@@ -221,12 +223,10 @@ namespace Player
                 if (hit.collider.TryGetComponent<OldPlayerController>(out var other))
                 {
                     other.RPC_TakeHit();
-
-                    // --- PASAR BOMBA ---
+                    
                     var bomb = GameManager.Instance.GetCurrentBomb();
-                    if (bomb != null)
+                    if (bomb)
                     {
-                        // SOLO si yo tengo la bomba y soy host (StateAuthority)
                         if (bomb.OwnerRef == Object.InputAuthority)
                         {
                             bomb.RPC_RequestPassBomb(other.Object.InputAuthority);
@@ -278,7 +278,7 @@ namespace Player
 
         // CAMBIO: Stun sincronizado a todos
         [Rpc(RpcSources.All, RpcTargets.All)]
-        public void RPC_TakeHit()
+        private void RPC_TakeHit()
         {
             ApplyLocalStun();
         }
@@ -299,9 +299,9 @@ namespace Player
 
 
         [Rpc(RpcSources.All, RpcTargets.All)]
-        public void RPC_PlayStunEffect()
+        private void RPC_PlayStunEffect()
         {
-            if (stunStars != null)
+            if (stunStars)
                 stunStars.Play();
         }
 
@@ -328,7 +328,7 @@ namespace Player
             NetIsGrounded = _cc.isGrounded;
 
             if (_jumpReq)
-                _netAnim?.SetTrigger("Jump");
+                netAnim?.SetTrigger("Jump");
         }
     }
 }

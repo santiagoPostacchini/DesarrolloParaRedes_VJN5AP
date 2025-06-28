@@ -18,8 +18,7 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     private int _spawnedPlayers;
 
     private NetworkRunner _cachedRunner;
-
-
+    
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         Debug.Log($"[Spawner] PlayerJoined: {player}");

@@ -14,6 +14,7 @@ public class Bomb : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        /*
         // Seguir el bombSlot del OwnerRef
         if (GameManager.Instance.TryGetPlayer(OwnerRef, out var pc) && pc.bombSlot != null)
         {
@@ -21,7 +22,7 @@ public class Bomb : NetworkBehaviour
             transform.rotation = pc.bombSlot.rotation;
         }
 
-        // Explosión SOLO por el host
+        // Explosiï¿½n SOLO por el host
         if (IsActive && ExplodeTimer.Expired(Runner) && !exploded)
         {
             if (Object.HasStateAuthority)
@@ -31,6 +32,7 @@ public class Bomb : NetworkBehaviour
                 RPC_Explode();
             }
         }
+        */
     }
 
     public void ActivateBomb(PlayerRef owner)
@@ -83,15 +85,15 @@ public class Bomb : NetworkBehaviour
             Object.AssignInputAuthority(newOwner);
             Debug.Log($"[Bomb] Reassigned: Ahora OwnerRef/InputAuthority es {newOwner}");
         }
-
+        /*
         // Mover visual para todos
         if (GameManager.Instance.TryGetPlayerController(newOwner, out var nextPc) && nextPc.bombSlot != null)
         {
             transform.position = nextPc.bombSlot.position;
             transform.rotation = nextPc.bombSlot.rotation;
         }
-
-        // Reactiva SOLO si soy el nuevo dueño
+*/
+        // Reactiva SOLO si soy el nuevo dueï¿½o
         if (Object.InputAuthority == newOwner)
         {
             ActivateBomb(newOwner);

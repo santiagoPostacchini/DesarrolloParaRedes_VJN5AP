@@ -7,7 +7,9 @@ namespace Player.New.Inputs
         private NetworkInputData _networkInputData;
 
         private bool _isJumpPressed;
-        private bool _isFirePressed;
+        private bool _isHitPressed;
+        private bool _isMovePressed;
+        private Vector2 _mouseScreenPosition;
     
         void Start()
         {
@@ -16,26 +18,27 @@ namespace Player.New.Inputs
 
         void Update()
         {
-            _networkInputData.MovementInput = Input.GetAxis("Horizontal");
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _isFirePressed = true;
-            }
-
-            _isFirePressed |= Input.GetKeyDown(KeyCode.Space);
-        
-            _isJumpPressed |= Input.GetKeyDown(KeyCode.W);
+            _mouseScreenPosition = Input.mousePosition;
+            
+            _isJumpPressed |= Input.GetKeyDown(KeyCode.Space);
+            
+            _isMovePressed = Input.GetMouseButton(0);
+            
+            _isHitPressed |= Input.GetMouseButtonDown(1);
         }
 
         public NetworkInputData GetLocalInputs()
         {
-            _networkInputData.IsHitPressed = _isFirePressed;
-            _isFirePressed = false;
-
+            _networkInputData.IsMovePressed = _isMovePressed;
+            
             _networkInputData.NetworkButtons.Set(MyButtons.Jump, _isJumpPressed);
             _isJumpPressed = false;
-        
+            
+            _networkInputData.NetworkButtons.Set(MyButtons.Hit, _isHitPressed);
+            _isHitPressed = false;
+            
+            _networkInputData.MouseScreenPosition = _mouseScreenPosition;
+            
             return _networkInputData;
         }
     }
