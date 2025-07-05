@@ -4,42 +4,59 @@ namespace Player.New.Inputs
 {
     public class LocalInputs : MonoBehaviour
     {
-        private NetworkInputData _networkInputData;
+        private NetworkInputData _data;
 
-        private bool _isJumpPressed;
-        private bool _isHitPressed;
-        private bool _isMovePressed;
-        private Vector2 _mouseScreenPosition;
+        private bool _mouseButton0;
+        private bool _space;
+        private Vector3 _direction;
     
         void Start()
         {
-            _networkInputData = new NetworkInputData();
+            _data = new NetworkInputData();
         }
 
         void Update()
         {
-            _mouseScreenPosition = Input.mousePosition;
+            if (Input.GetKeyDown(KeyCode.W))
+                _direction += Vector3.forward;
+
+            if (Input.GetKeyDown(KeyCode.S))
+                _direction += Vector3.back;
+
+            if (Input.GetKeyDown(KeyCode.A))
+                _direction += Vector3.left;
+
+            if (Input.GetKeyDown(KeyCode.D))
+                _direction += Vector3.right;
             
-            _isJumpPressed |= Input.GetKeyDown(KeyCode.Space);
+            if (Input.GetKeyUp(KeyCode.W))
+                _direction -= Vector3.forward;
+
+            if (Input.GetKeyUp(KeyCode.S))
+                _direction -= Vector3.back;
+
+            if (Input.GetKeyUp(KeyCode.A))
+                _direction -= Vector3.left;
+
+            if (Input.GetKeyUp(KeyCode.D))
+                _direction -= Vector3.right;
             
-            _isMovePressed = Input.GetMouseButton(0);
+            _mouseButton0 = _mouseButton0 || Input.GetMouseButtonDown(0);
             
-            _isHitPressed |= Input.GetMouseButtonDown(1);
+            _space = _space || Input.GetKeyDown(KeyCode.Space);
         }
 
         public NetworkInputData GetLocalInputs()
         {
-            _networkInputData.IsMovePressed = _isMovePressed;
+            _data.Buttons.Set(NetworkInputData.MOUSEBUTTON0, _mouseButton0);
+            _mouseButton0 = false;
+
+            _data.Buttons.Set(NetworkInputData.SPACE, _space);
+            _space = false;
             
-            _networkInputData.NetworkButtons.Set(MyButtons.Jump, _isJumpPressed);
-            _isJumpPressed = false;
+            _data.direction = _direction;
             
-            _networkInputData.NetworkButtons.Set(MyButtons.Hit, _isHitPressed);
-            _isHitPressed = false;
-            
-            _networkInputData.MouseScreenPosition = _mouseScreenPosition;
-            
-            return _networkInputData;
+            return _data;
         }
     }
 }

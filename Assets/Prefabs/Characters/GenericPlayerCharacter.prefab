@@ -93,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6661825303984814850}
   - component: {fileID: 4985040857713639138}
-  - component: {fileID: 1998991201661013745}
   - component: {fileID: 2134335087393495545}
   - component: {fileID: 7541090226632964104}
   - component: {fileID: 3878349087695644932}
@@ -131,44 +130,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4606737848556146447}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1998991201661013745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4606737848556146447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db59dc71106a34a49aa19b98135e6f07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skinRoot: {fileID: 5257348401970245875}
-  bombSlot: {fileID: 0}
-  stunStars: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  moveSpeed: 5
-  acceleration: 15
-  deceleration: 15
-  clickRadius: 0.3
-  rotationSpeed: 720
-  jumpHeight: 1
-  gravity: -20
-  teleportDistance: 5
-  teleportCooldown: 20
-  hitRadius: 0.3
-  hitRange: 0.5
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  hitCooldown: 0.5
-  _netAnim: {fileID: 4941764489799409058}
-  _SkinIndex: 0
-  _NetIsRunning: 0
-  _NetIsGrounded: 0
-  _NetRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!143 &2134335087393495545
 CharacterController:
   m_ObjectHideFlags: 0
@@ -212,7 +173,6 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 1998991201661013745}
   - {fileID: 3878349087695644932}
   - {fileID: 4941764489799409058}
   ForceRemoteRenderTimeframe: 0
@@ -249,7 +209,7 @@ MonoBehaviour:
   ApplyTiming: 2
   SyncSettings: 79
   StateHashes: 000000002b1a167c794069552638cb43a21b1dacf3b09ce077934a0f336e528eb1211e0b
-  TriggerHashes: 0000000028a98107336e528e
+  TriggerHashes: 00000000336e528e
   TotalWords: 1
 --- !u!95 &4511118232201132723
 Animator:

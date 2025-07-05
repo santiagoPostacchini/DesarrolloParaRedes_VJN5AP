@@ -1,5 +1,6 @@
 using System;
 using Fusion;
+using UnityEngine;
 
 namespace Player.New
 {
@@ -11,6 +12,7 @@ namespace Player.New
         public event Action<bool> OnDeadChanged = delegate { };
         public event Action OnRespawn = delegate { };
         public event Action OnLeft = delegate {  };
+        public event Action OnGetHit = delegate { };
 
         public override void Spawned()
         {
@@ -22,7 +24,7 @@ namespace Player.New
 
         public void TakeHit()
         {
-            //tener la bomba o hacer cooldown
+            OnGetHit();
         }
 
         public void Server_Resurrect()

@@ -8,30 +8,53 @@ namespace Player.New
     {
         public event Action<bool> OnMoving = delegate { };
         public event Action OnJump = delegate { };
+        
+        [SerializeField] private float maxVerticalVelocity = 8f;
 
         public override void Move(Vector3 direction)
         {
-            Vector3 target = direction * maxSpeed;
-            
-            if (direction.sqrMagnitude > 0)
-            {
-                Velocity = Vector3.MoveTowards(Velocity, target, acceleration * Runner.DeltaTime);
-                transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+            var deltaTime    = Runner.DeltaTime;
+            var previousPos  = transform.position;
+            var moveVelocity = Velocity;
+
+            direction = direction.normalized;
+
+            if (Grounded && moveVelocity.y < 0) {
+                moveVelocity.y = 0f;
             }
-            else
+
+            moveVelocity.y += gravity * Runner.DeltaTime;
+            
+            moveVelocity.y = Mathf.Clamp(moveVelocity.y, -maxVerticalVelocity, maxVerticalVelocity);
+            
+            var horizontalVel = new Vector3(moveVelocity.x, 0f, moveVelocity.z);
+
+            if (direction == default) 
             {
-                Velocity = Vector3.MoveTowards(Velocity, Vector3.zero, braking * Runner.DeltaTime);
-            }
+                horizontalVel = Vector3.Lerp(horizontalVel, Vector3.zero, braking * deltaTime);
+            } 
+            else 
+            {
+                Vector3 horizontalDirection = new Vector3(direction.x, 0f, direction.z);
+                horizontalVel = Vector3.ClampMagnitude(horizontalVel + horizontalDirection * acceleration * deltaTime, maxSpeed);
+                
+                if (horizontalDirection.sqrMagnitude > 0.01f)
+                {
+                    transform.rotation = Quaternion.LookRotation(horizontalDirection);
+                }
+            }   
             
-            Vector3 move = Velocity;
-            move.y = Velocity.y;
-            
-            Controller.Move(move * Runner.DeltaTime);
+            moveVelocity.x = horizontalVel.x;
+            moveVelocity.z = horizontalVel.z;
+
+            Controller.Move(moveVelocity * deltaTime);
+
+            Velocity = (transform.position - previousPos) * Runner.TickRate;
             Grounded = Controller.isGrounded;
             
             OnMoving(direction.sqrMagnitude > 0);
         }
-
+        
         public override void Jump(bool ignoreGrounded = false, float? overrideImpulse = null)
         {
             base.Jump(ignoreGrounded, overrideImpulse);

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Bomb;
 using Fusion;
 using Fusion.Sockets;
+using Player.New;
 using Player.New.Inputs;
 using UnityEngine;
 using NetworkPlayer = Player.New.NetworkPlayer;
@@ -14,23 +16,41 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     [Header("Spawn Points")]
     [SerializeField] private Transform spawnPointParent;
 
+    private BombManager _bombManager;
+
     private bool _gameStarted;
     private int _spawnedPlayers;
+    private int _connectedPlayers;
+    private readonly int _maxPlayers = 5;
+    private readonly int _minPlayers = 2;
 
     private NetworkRunner _cachedRunner;
-    
+
+    private readonly Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
+
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        Debug.Log($"[Spawner] PlayerJoined: {player}");
+        _connectedPlayers++;
 
         if (runner.IsServer)
         {
-            SpawnLocalPlayer(runner, player);
+            if (_spawnedPlayers < _maxPlayers)
+            {
+                SpawnLocalPlayer(runner, player);
+            }
+
+            if (_connectedPlayers == _minPlayers && _spawnedPlayers == _minPlayers)
+            {
+                _bombManager = FindObjectOfType<BombManager>();
+                Debug.Log("[Spawner] Ready to spawn bomb — all players spawned");
+                _bombManager.SpawnBombOnRandomPlayer();
+            }
         }
     }
 
+
     private LocalInputs _localInputs;
-    
+
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
         if (!NetworkPlayer.Local) return;
@@ -39,35 +59,49 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
         input.Set(_localInputs.GetLocalInputs());
     }
-    
+
     private void SpawnLocalPlayer(NetworkRunner runner, PlayerRef player)
     {
         int skinIndex = SkinSelection.Instance.GetCurrentIndex();
-        if (skinIndex < 0 || skinIndex >= skinPrefabs.Length)
-        {
-            Debug.LogWarning($"[Spawner] Skin index inválido ({skinIndex}), uso 0");
-            skinIndex = 0;
-        }
-        
-        var spawnPoints = spawnPointParent.GetComponentsInChildren<Transform>();
-        
-        var prefab = skinPrefabs[skinIndex];
-        var sp = (_spawnedPlayers < spawnPoints.Length)
-            ? spawnPoints[_spawnedPlayers]
-            : null;
+        skinIndex = Mathf.Clamp(skinIndex, 0, skinPrefabs.Length - 1);
 
-        Vector3 pos = sp ? sp.position : Vector3.up * 2f;
-        Quaternion rot = sp ? sp.rotation : Quaternion.identity;
-        runner.Spawn(prefab, pos, rot, player);
-        Debug.Log($"[Spawner] Spawned jugador {player} en skin #{skinIndex}");
+        var spawnPoints = spawnPointParent.GetComponentsInChildren<Transform>();
+        var prefab = skinPrefabs[skinIndex];
+        var sp = spawnPoints[_spawnedPlayers % spawnPoints.Length];
+
+        Vector3 pos = sp.position + Vector3.up * 0.1f;
+        Quaternion rot = sp.rotation;
+
+        var netObj = runner.Spawn(prefab, pos, rot, player);
+        Debug.Log($"[Spawner] Runner.Spawn returned null: {!netObj}");
+        
+        runner.SetPlayerObject(player, netObj);
+        Debug.Log($"[Spawner] Runner.SetPlayerObject for {player}");
+
+        var cc = netObj.GetComponent<NetworkCharacterControllerCustom>();
+        cc.Controller.enabled = false;
+        netObj.transform.position = pos;
+        cc.Controller.enabled = true;
+        cc.Velocity = Vector3.zero;
+
+        _spawnedCharacters.Add(player, netObj);
         _spawnedPlayers++;
     }
-    
+
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
+        if (_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
+        {
+            runner.Despawn(networkObject);
+            _spawnedCharacters.Remove(player);
+        }
+    }
+
     public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
     {
         runner.Shutdown();
     }
-    
+
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnConnectedToServer(NetworkRunner runner) { }
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
@@ -77,44 +111,10 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnSceneLoadStart(NetworkRunner runner) { }
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
-    
-    /*public void StartGame()
-    {
-        if (_gameStarted) return;
-
-        NetworkRunner runner = Runner;
-        if (!runner)
-            runner = FindObjectOfType<NetworkRunner>();
-
-        if (!runner)
-        {
-            Debug.LogError("[Spawner] Runner is NULL in StartGame. (¿Apretaste el botón muy temprano? ¿Está inicializado el Runner en la escena?)");
-            return;
-        }
-
-        if (!runner.IsSharedModeMasterClient)
-        {
-            Debug.LogWarning("[Spawner] Ignorando StartGame: no soy el host");
-            return;
-        }
-
-        if (runner.SessionInfo == null || runner.SessionInfo.PlayerCount < 2)
-        {
-            Debug.LogWarning("[Spawner] Ignorando StartGame: menos de 2 jugadores");
-            return;
-        }
-
-        Debug.Log("[Spawner] Todos ok, llamando a GameManager.StartGame()");
-        _gameStarted = true;
-        UIController.Instance.RPC_DisableSkinSelectionUI();
-        GameManager.Instance.StartGame();
-    }
-    */
 }

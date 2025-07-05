@@ -1,58 +1,92 @@
+using System.Collections;
 using Fusion;
-using Player.New;
 using UnityEngine;
 
-public class PlayerView : NetworkBehaviour
+namespace Player.New
 {
-    [SerializeField] private ParticleSystem _hitParticles;
-    [SerializeField] private GameObject _playerVisual;
-    
-    private NetworkMecanimAnimator _mecanimAnimator;
-    private Animator _childAnim;
-    
-    [Networked, OnChangedRender(nameof(TriggerHitParticles))] private NetworkBool Hit { get; set; }
-    
-    public override void Spawned()
+    public class PlayerView : NetworkBehaviour
     {
-        var hitComponent = GetComponentInParent<HitHandler>();
+        private static readonly int IsRunning = Animator.StringToHash("IsRunning");
+        private static readonly int IsJumping = Animator.StringToHash("IsJumping");
+        private static readonly int Throw = Animator.StringToHash("Throw");
+        [SerializeField] private ParticleSystem hitParticles;
+        [SerializeField] private GameObject playerVisual;
+        [Header("Bomb")]
+        public Transform bombSlot;
 
-        if (hitComponent)
+        private NetworkMecanimAnimator _mecanimAnimator;
+        private Animator _childAnim;
+
+        [Networked, OnChangedRender(nameof(TriggerGetHitParticles))]
+        private NetworkBool Hit { get; set; }
+
+        public void FixedUpdate()
         {
-            hitComponent.OnHit += ()=> Hit = !Hit;
-        }
-        
-        var lifeComponent = GetComponentInParent<LifeHandler>();
+            var lifeComponent = GetComponentInParent<LifeHandler>();
+            var hitComponent = GetComponentInParent<HitHandler>();
 
-        if (lifeComponent)
-        {
-            lifeComponent.OnDeadChanged += EnableMeshRender;
-        }
-        
-        _mecanimAnimator = GetComponent<NetworkMecanimAnimator>();
-
-        if (_mecanimAnimator)
-        {
-            var movementComponent = GetComponentInParent<NetworkCharacterControllerCustom>();
-
-            if (movementComponent)
+            if (lifeComponent)
             {
-                movementComponent.OnMoving += MoveAnimation;
+                lifeComponent.OnDeadChanged += EnableMeshRender;
+                lifeComponent.OnGetHit += TriggerGetHitParticles;
+                lifeComponent.OnGetHit += () => Hit = !Hit;
+            }
+
+            if (hitComponent)
+            {
+                hitComponent.OnTryHit += HitAnimation;
+            }
+
+            _mecanimAnimator = GetComponent<NetworkMecanimAnimator>();
+
+            if (_mecanimAnimator)
+            {
+                var movementComponent = GetComponentInParent<NetworkCharacterControllerCustom>();
+
+                if (movementComponent)
+                {
+                    movementComponent.OnMoving += MoveAnimation;
+                }
+
+                if (movementComponent)
+                {
+                    movementComponent.OnJump += JumpAnimationCoroutine;
+                }
             }
         }
-    }
-    
-    void MoveAnimation(bool isRunning)
-    {
-        _mecanimAnimator.Animator.SetBool("isRunning", isRunning);
-    }
-    
-    void TriggerHitParticles()
-    {
-        _hitParticles.Play();
-    }
-    
-    void EnableMeshRender(bool e)
-    {
-        _playerVisual.SetActive(!e);
+
+        void MoveAnimation(bool isRunning)
+        {
+            _mecanimAnimator.Animator.SetBool(IsRunning, isRunning);
+        }
+
+        void JumpAnimationCoroutine()
+        {
+            StartCoroutine(JumpAnimation());
+        }
+
+        IEnumerator JumpAnimation()
+        {
+            _mecanimAnimator.Animator.SetBool(IsJumping, true);
+
+            yield return new WaitForSeconds(0.1f);
+
+            _mecanimAnimator.Animator.SetBool(IsJumping, false);
+        }
+
+        void HitAnimation()
+        {
+            _mecanimAnimator.Animator.SetTrigger(Throw);
+        }
+
+        public void TriggerGetHitParticles()
+        {
+            hitParticles.Play();
+        }
+
+        void EnableMeshRender(bool e)
+        {
+            playerVisual.SetActive(!e);
+        }
     }
 }

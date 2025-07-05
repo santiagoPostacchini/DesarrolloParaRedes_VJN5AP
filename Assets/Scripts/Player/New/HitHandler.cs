@@ -1,4 +1,5 @@
 using System;
+using Bomb;
 using Fusion;
 using UnityEngine;
 
@@ -6,58 +7,67 @@ namespace Player.New
 {
     public class HitHandler : NetworkBehaviour
     {
-        [SerializeField] private Transform bombSlotTransform;
-    
-        public event Action OnHit = delegate { };
-    
+        [SerializeField] private float hitCooldown = 1f;
+        [SerializeField] private float hitRange = 0.8f;
+        [SerializeField] private int raycastCount = 6;
+        [SerializeField] private float raycastAngle = 180f;
+        [SerializeField] private LayerMask hitboxLayer;
+
+        [Networked] private TickTimer HitCooldownTimer { get; set; }
+
+        public event Action OnTryHit = delegate { };
+
         public void Hit()
         {
-            if (!HasStateAuthority) return;
+            if (!HasStateAuthority || !HitCooldownTimer.ExpiredOrNotRunning(Runner)) return;
 
-            RayHit();
+            PerformHit();
 
-            OnHit();
+            HitCooldownTimer = TickTimer.CreateFromSeconds(Runner, hitCooldown);
+
+            OnTryHit();
         }
-    
-        void RayHit()
+
+        void PerformHit()
         {
-            /*
-            if (_isStunned || _hitTimer > 0f) return;
+            float angleStep = raycastAngle / (raycastCount - 1);
+            float startAngle = -raycastAngle / 2;
 
-            Vector3 dir = skinRoot.transform.forward;
-            Vector3 origin = transform.position + skinRoot.transform.forward * 0.2f;
-
-            if (Physics.SphereCast(origin, hitRadius, dir, out var hit, hitRange, hitLayer))
+            for (int i = 0; i < raycastCount; i++)
             {
-                if (hit.collider.TryGetComponent<OldPlayerController>(out var other))
+                float currentAngle = startAngle + (angleStep * i);
+                Quaternion rotation = Quaternion.Euler(0, currentAngle, 0);
+                Vector3 direction = rotation * transform.forward;
+
+                Debug.DrawRay(transform.position, direction * hitRange, Color.yellow, 1);
+
+                if (Runner.LagCompensation.Raycast(transform.position, direction, hitRange, Object.InputAuthority, out var hit, hitboxLayer, HitOptions.IgnoreInputAuthority | HitOptions.SubtickAccuracy))
                 {
-                    other.RPC_TakeHit();
-                    
-                    var bomb = GameManager.Instance.GetCurrentBomb();
-                    if (bomb)
+                    if (hit.Hitbox && hit.Hitbox.Root.TryGetComponent(out LifeHandler player))
                     {
-                        if (bomb.OwnerRef == Object.InputAuthority)
+                        player.TakeHit();
+                        RPC_TriggerHitEffects(player.Object);
+                        var attacker = Object.InputAuthority;
+                        var victim = hit.Hitbox.Root.GetComponent<NetworkObject>().InputAuthority;
+
+                        var bm = FindObjectOfType<BombManager>();
+                        if (bm && bm.HasBomb(attacker) && attacker != victim)
                         {
-                            bomb.RPC_RequestPassBomb(other.Object.InputAuthority);
+                            bm.TransferBomb(victim);
                         }
+                        break;
                     }
                 }
             }
-            _hitTimer = hitCooldown;
-            */
-            Debug.DrawLine(transform.position, transform.position + transform.forward * 2, Color.magenta, 2);
-        
-            Runner.LagCompensation.Raycast(origin: transform.position, 
-                direction: transform.forward, 
-                length: 100, 
-                player: Object.InputAuthority, 
-                hit: out var hitInfo);
+        }
 
-            if (!hitInfo.Hitbox) return;
-            
-            if (!hitInfo.Hitbox.transform.root.TryGetComponent(out LifeHandler player)) return;
-            
-            player.TakeHit();
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void RPC_TriggerHitEffects(NetworkObject playerHit)
+        {
+            if (playerHit.TryGetComponent(out PlayerView view))
+            {
+                view.TriggerGetHitParticles();
+            }
         }
     }
 }

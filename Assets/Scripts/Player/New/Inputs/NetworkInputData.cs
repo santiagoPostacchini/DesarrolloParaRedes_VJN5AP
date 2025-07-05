@@ -5,16 +5,13 @@ namespace Player.New.Inputs
 {
     public struct NetworkInputData : INetworkInput
     {
-        public NetworkBool IsHitPressed;
-        public NetworkBool IsMovePressed;
-        public Vector2 MouseScreenPosition; 
-
-        public NetworkButtons NetworkButtons;
-    }
-
-    enum MyButtons
-    {
-        Jump = 0,
-        Hit = 1
+        public const byte MOUSEBUTTON0 = 1;
+        public const byte SPACE = 2;
+        
+        public NetworkButtons Buttons;
+        public Vector3 direction;
+        
+        public bool IsHitPressed => Buttons.IsSet(MOUSEBUTTON0);
+        public bool IsJumpPressed => Buttons.IsSet(SPACE);
     }
 }

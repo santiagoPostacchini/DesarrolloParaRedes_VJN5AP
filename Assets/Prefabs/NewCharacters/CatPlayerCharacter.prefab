@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2375825975110204067}
   - component: {fileID: 2098486266410137959}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,12 +76,12 @@ MonoBehaviour:
   m_Script: {fileID: 1014831617, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 3
+  Type: 1
   SphereRadius: 0
   CapsuleRadius: 0.18
-  BoxExtents: {x: 0, y: 0, z: 0}
+  BoxExtents: {x: 0.15, y: 0.29, z: 0.09}
   CapsuleExtents: 0.6
-  Offset: {x: 0, y: -0.165, z: 0}
+  Offset: {x: 0, y: -0.18, z: 0}
   Root: {fileID: 0}
   GizmosColor: {r: 1, g: 0.015686275, b: 0.6039216, a: 1}
 --- !u!1 &503172831510042125
@@ -331,8 +331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c603c1fe1d7f054c97c6b9bfbd29ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitParticles: {fileID: 3565711011242878102}
-  _playerVisual: {fileID: 2013184259046639903}
+  hitParticles: {fileID: 3565711011242878102}
+  playerVisual: {fileID: 2013184259046639903}
 --- !u!1 &2266744378573514930
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +658,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -667,7 +667,7 @@ CharacterController:
   m_Height: 1
   m_Radius: 0.3
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.15
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: -0.27, z: 0}
@@ -713,8 +713,7 @@ MonoBehaviour:
   acceleration: 20
   braking: 10
   maxSpeed: 5
-  rotationSpeed: 540
-  skinRoot: {fileID: 0}
+  rotationSpeed: 720
 --- !u!114 &394621444941060187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,7 +729,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  camera: {fileID: 0}
 --- !u!114 &6343931478302844609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,7 +741,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31a7497c82bbc6f4392b78a8d91f9138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombSlotTransform: {fileID: 2129586156916715121}
+  hitCooldown: 1
+  hitRange: 0.5
+  raycastCount: 6
+  raycastAngle: 180
+  hitboxLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &3808036156226942016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,7 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Config: 3
-  BroadRadius: 0.4
+  BroadRadius: 0.4186739
   Offset: {x: 0, y: -0.1, z: 0}
   GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   Hitboxes:

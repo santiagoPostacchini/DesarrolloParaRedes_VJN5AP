@@ -375,7 +375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 94650217}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Assets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -466,6 +466,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 34674780c2f35b945861ae483fea3346, type: 3}
       propertyPath: m_Name
       value: RuinedWallRubbleA
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 34674780c2f35b945861ae483fea3346, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -788,6 +792,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlankMed
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bf720d7e2002a794ab5b4467bf243988, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -995,7 +1003,7 @@ Transform:
   m_GameObject: {fileID: 210318623}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -20.72, z: 0}
+  m_LocalPosition: {x: 0, y: -0.28, z: 0}
   m_LocalScale: {x: 38.211304, y: 38.211304, z: 38.211304}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1154,6 +1162,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 714c17ae390ef904887e324f12e381b0, type: 3}
       propertyPath: m_Name
       value: PlankStackB
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 714c17ae390ef904887e324f12e381b0, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1773,6 +1785,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: IvybranchCDense
       objectReference: {fileID: 0}
+    - target: {fileID: 367887217930779257, guid: 7edbaad9155dda841bb997ba4c826ec1, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132147672640557, guid: 7edbaad9155dda841bb997ba4c826ec1, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2916109496512366460, guid: 7edbaad9155dda841bb997ba4c826ec1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.426
@@ -1812,6 +1832,10 @@ PrefabInstance:
     - target: {fileID: 2916109496512366460, guid: 7edbaad9155dda841bb997ba4c826ec1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6588924630561132911, guid: 7edbaad9155dda841bb997ba4c826ec1, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2202,6 +2226,7 @@ MonoBehaviour:
   - RawGuidValue: 423f17cf4db0c89439e13de7a6835569
   - RawGuidValue: 5836727ea83f8b9478872bde96e63515
   spawnPointParent: {fileID: 0}
+  bombManager: {fileID: 0}
 --- !u!114 &412752746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2376,6 +2401,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148768438421, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1369806154078156713, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.421756
@@ -2419,6 +2448,14 @@ PrefabInstance:
     - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_Name
       value: WildGarlicBLeaves (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805522062514611357, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2597,6 +2634,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlankMed (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bf720d7e2002a794ab5b4467bf243988, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2607,11 +2648,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bf720d7e2002a794ab5b4467bf243988, type: 3}
   m_PrefabInstance: {fileID: 447291096}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &448714236 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5497479780046427373, guid: 057c1734216e91540a94c6fc214d9e85, type: 3}
-  m_PrefabInstance: {fileID: 4876111911895320013}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &483725890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2620,6 +2656,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148768438421, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1369806154078156713, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.99928063
@@ -2663,6 +2703,14 @@ PrefabInstance:
     - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_Name
       value: WildGarlicBLeaves (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805522062514611357, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2737,6 +2785,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b455936d14ab647478c64619cf509e72, type: 3}
       propertyPath: m_Name
       value: RuinedWallA (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b455936d14ab647478c64619cf509e72, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3117,11 +3169,6 @@ PrefabInstance:
       addedObject: {fileID: 440055923}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b71b0f8d2f881c743a85228f3030d1cb, type: 3}
---- !u!4 &571988751 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2480566364459121809, guid: 057c1734216e91540a94c6fc214d9e85, type: 3}
-  m_PrefabInstance: {fileID: 4876111911895320013}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &580577410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3293,78 +3340,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6239969156481072347, guid: b71b0f8d2f881c743a85228f3030d1cb, type: 3}
   m_PrefabInstance: {fileID: 1135583742}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &624630156
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 624630158}
-  - component: {fileID: 624630157}
-  - component: {fileID: 624630159}
-  m_Layer: 0
-  m_Name: Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &624630157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624630156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5819c693f08c25c44b485ee63ba875a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSpawnPoints:
-  - {fileID: 571988751}
-  - {fileID: 1302960390}
-  - {fileID: 1408069167}
-  - {fileID: 448714236}
-  - {fileID: 1241819829}
-  bombPrefab:
-    RawGuidValue: 131974edaf1896147a81da5c5362e82d
---- !u!4 &624630158
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624630156}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &624630159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624630156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 3772632157
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 624630157}
-  ForceRemoteRenderTimeframe: 0
 --- !u!4 &626351421 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8903058273634951509, guid: f1fc5bb90ac285e4486771552d63bcb8, type: 3}
@@ -3604,6 +3579,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d035b4713ea22e947880b592698aaa2a, type: 3}
       propertyPath: m_Name
       value: TreeLogOakB
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d035b4713ea22e947880b592698aaa2a, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4440,6 +4419,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148768438421, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1369806154078156713, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.4548693
@@ -4483,6 +4466,14 @@ PrefabInstance:
     - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_Name
       value: WildGarlicBLeaves (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805522062514611357, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4798,6 +4789,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148768438421, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1369806154078156713, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.5920367
@@ -4841,6 +4836,14 @@ PrefabInstance:
     - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_Name
       value: WildGarlicBLeaves (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805522062514611357, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4942,6 +4945,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148953027052, guid: e08f9a3fcce6f4345a69f4b0f96ead2c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3458728353346558786, guid: e08f9a3fcce6f4345a69f4b0f96ead2c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4271280109589885106, guid: e08f9a3fcce6f4345a69f4b0f96ead2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.2748733
@@ -4985,6 +4996,10 @@ PrefabInstance:
     - target: {fileID: 9177927242501222736, guid: e08f9a3fcce6f4345a69f4b0f96ead2c, type: 3}
       propertyPath: m_Name
       value: FoxgloveBVariantB (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9177927242501222736, guid: e08f9a3fcce6f4345a69f4b0f96ead2c, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5489,6 +5504,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148768438421, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1369806154078156713, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.1997266
@@ -5532,6 +5551,14 @@ PrefabInstance:
     - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_Name
       value: WildGarlicBLeaves (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805522062514611357, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5756,7 +5783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d73b0a95be81246699cf0d9ecdc01863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PreferredRunner: 0
+  PreferredRunner: 2
   Components:
   - {fileID: 963194226}
   _guid: d4aba403-2e72-4039-
@@ -6285,6 +6312,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148768438421, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1369806154078156713, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.9034367
@@ -6328,6 +6359,14 @@ PrefabInstance:
     - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_Name
       value: WildGarlicBLeaves (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805522062514611357, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6746,6 +6785,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 714c17ae390ef904887e324f12e381b0, type: 3}
       propertyPath: m_Name
       value: PlankStackB (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 714c17ae390ef904887e324f12e381b0, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11828,6 +11871,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuinedWallA (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b455936d14ab647478c64619cf509e72, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12092,6 +12139,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuinedWallA
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b455936d14ab647478c64619cf509e72, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12311,6 +12362,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148953027052, guid: e08f9a3fcce6f4345a69f4b0f96ead2c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3458728353346558786, guid: e08f9a3fcce6f4345a69f4b0f96ead2c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4271280109589885106, guid: e08f9a3fcce6f4345a69f4b0f96ead2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.06209
@@ -12355,6 +12414,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FoxgloveBVariantB
       objectReference: {fileID: 0}
+    - target: {fileID: 9177927242501222736, guid: e08f9a3fcce6f4345a69f4b0f96ead2c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12373,6 +12436,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148768438421, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1369806154078156713, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.3425612
@@ -12417,6 +12484,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: WildGarlicBLeaves (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805522062514611357, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12426,11 +12501,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1369806154078156713, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
   m_PrefabInstance: {fileID: 1240272707}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1241819829 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5140329401111815474, guid: 057c1734216e91540a94c6fc214d9e85, type: 3}
-  m_PrefabInstance: {fileID: 4876111911895320013}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1252321099 stripped
 Transform:
@@ -12816,11 +12886,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6308cb7062fac34e8e50600086b12a1, type: 3}
---- !u!4 &1302960390 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4383581527932454026, guid: 057c1734216e91540a94c6fc214d9e85, type: 3}
-  m_PrefabInstance: {fileID: 4876111911895320013}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1310901218 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5186735023777053022, guid: ac8efb728f1fb9b4092c4df591c827ca, type: 3}
@@ -12959,6 +13024,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 49391071842577c4b890d0bdb964dc31, type: 3}
       propertyPath: m_Name
       value: FlyAgaricBYoungVariantB (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 49391071842577c4b890d0bdb964dc31, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13389,11 +13458,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6239969156481072347, guid: b71b0f8d2f881c743a85228f3030d1cb, type: 3}
   m_PrefabInstance: {fileID: 540242704}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1408069167 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7982631100756608659, guid: 057c1734216e91540a94c6fc214d9e85, type: 3}
-  m_PrefabInstance: {fileID: 4876111911895320013}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1423034734 stripped
 Transform:
@@ -14021,6 +14085,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148768438421, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1369806154078156713, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.0512857
@@ -14064,6 +14132,14 @@ PrefabInstance:
     - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_Name
       value: WildGarlicBLeaves (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805522062514611357, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14214,6 +14290,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GirolleAVariantA
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 42bc5f970a0316c4c94102c4f153df33, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14237,9 +14317,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132147805164056, guid: 405500ba6852da942957eec1e3d7c92b, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668011301477826028, guid: 405500ba6852da942957eec1e3d7c92b, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4725021614877904655, guid: 405500ba6852da942957eec1e3d7c92b, type: 3}
       propertyPath: m_Name
       value: FernBClusterVariantA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4725021614877904655, guid: 405500ba6852da942957eec1e3d7c92b, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8122536342666285899, guid: 405500ba6852da942957eec1e3d7c92b, type: 3}
       propertyPath: m_LocalScale.x
@@ -14582,6 +14674,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7968647836051014052, guid: 872662274017b554aafd2b7a4f1a81bd, type: 3}
+      propertyPath: m_DynamicPixelsPerUnit
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 9197164130131971020, guid: 872662274017b554aafd2b7a4f1a81bd, type: 3}
       propertyPath: _nicknameItemPrefab
       value: 
@@ -14643,6 +14739,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyAgaricBYoungVariantB
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 49391071842577c4b890d0bdb964dc31, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14661,6 +14761,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148897519281, guid: 27c9d9ad6c2fa2e45bdd6520dd9fdfb9, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5149170989470311486, guid: 27c9d9ad6c2fa2e45bdd6520dd9fdfb9, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7456235671971741034, guid: 27c9d9ad6c2fa2e45bdd6520dd9fdfb9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.20408
@@ -14704,6 +14812,10 @@ PrefabInstance:
     - target: {fileID: 7864123483960243694, guid: 27c9d9ad6c2fa2e45bdd6520dd9fdfb9, type: 3}
       propertyPath: m_Name
       value: PlantSaplingG
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864123483960243694, guid: 27c9d9ad6c2fa2e45bdd6520dd9fdfb9, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15470,6 +15582,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8903058273634951509, guid: f1fc5bb90ac285e4486771552d63bcb8, type: 3}
   m_PrefabInstance: {fileID: 1262111033}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1891774734
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3058199937662407157, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: m_Name
+      value: Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549873285829702112, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549873285829702112, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549873285829702112, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549873285829702112, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549873285829702112, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549873285829702112, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549873285829702112, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549873285829702112, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549873285829702112, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549873285829702112, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949261321579987544, guid: fd80f9601ada033409b6f221746c1423, type: 3}
+      propertyPath: SortKey
+      value: 1253708406
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fd80f9601ada033409b6f221746c1423, type: 3}
 --- !u!1 &1894140857
 GameObject:
   m_ObjectHideFlags: 0
@@ -15721,7 +15894,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1938189042
@@ -16294,6 +16467,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148768438421, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1369806154078156713, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.2318416
@@ -16337,6 +16514,14 @@ PrefabInstance:
     - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_Name
       value: WildGarlicBLeaves
+      objectReference: {fileID: 0}
+    - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805522062514611357, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16411,6 +16596,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 70b99cc28be90ca48bce628f23bbc4db, type: 3}
       propertyPath: m_Name
       value: TreeLogPileNormalB
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 70b99cc28be90ca48bce628f23bbc4db, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16529,6 +16718,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94650217}
     m_Modifications:
+    - target: {fileID: 919132148768438421, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1369806154078156713, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.089138865
@@ -16572,6 +16765,14 @@ PrefabInstance:
     - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
       propertyPath: m_Name
       value: WildGarlicBLeaves (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4254767652343685531, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805522062514611357, guid: 36c1a8d39f98c6c448e00c6f51c2b625, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16648,7 +16849,7 @@ GameObject:
   - component: {fileID: 3469287836924549493}
   - component: {fileID: 1711813856351251903}
   - component: {fileID: 3469287836924549494}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CampfireASmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16740,7 +16941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4791066036141470907, guid: 057c1734216e91540a94c6fc214d9e85, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.73
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 4791066036141470907, guid: 057c1734216e91540a94c6fc214d9e85, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16834,6 +17035,10 @@ PrefabInstance:
     - target: {fileID: 8022349513433352168, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
       propertyPath: m_Name
       value: StarsStun
+      objectReference: {fileID: 0}
+    - target: {fileID: 8022349513433352168, guid: a48ca580b2d19554ebf6ec04b49c7e3b, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16935,7 +17140,7 @@ GameObject:
   - component: {fileID: 6068408194828144850}
   - component: {fileID: 6267232755685429720}
   - component: {fileID: 6267329783610993302}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PS_Fire_ALPHA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16953,7 +17158,7 @@ GameObject:
   - component: {fileID: 6064541833812322128}
   - component: {fileID: 6267058993616693354}
   - component: {fileID: 6267513698655189624}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PS_Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16971,7 +17176,7 @@ GameObject:
   - component: {fileID: 6064294363965455320}
   - component: {fileID: 6267797396684735010}
   - component: {fileID: 6267424362333832700}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PS_Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16989,7 +17194,7 @@ GameObject:
   - component: {fileID: 6064298131343866984}
   - component: {fileID: 6267278397322844420}
   - component: {fileID: 6267517433033485930}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PS_Fire_ADD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17007,7 +17212,7 @@ GameObject:
   - component: {fileID: 6068211214137919394}
   - component: {fileID: 6267195508718822650}
   - component: {fileID: 6268144800048348008}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PS_Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41055,7 +41260,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 187994023}
   - {fileID: 1894140860}
-  - {fileID: 624630158}
+  - {fileID: 1891774734}
   - {fileID: 412752743}
   - {fileID: 100769405}
   - {fileID: 4876111911895320013}
