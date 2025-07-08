@@ -10,7 +10,10 @@ namespace Bomb
     {
         [Networked] public PlayerRef Holder { get; private set; }
         [Networked] private TickTimer FuseTimer { get; set; }
-
+        
+        [Header("Explosion Effect")]
+        [SerializeField] private GameObject explosionEffect;
+        
         public event Action<PlayerRef> OnExplode;
 
         private float _fuseTime;
@@ -40,7 +43,7 @@ namespace Bomb
             Holder = holder;
 
             var playerObj = Runner.GetPlayerObject(holder);
-            if (playerObj && playerObj.TryGetComponent(out PlayerView view))
+            if (playerObj && playerObj.GetComponentInChildren<PlayerView>().TryGetComponent(out PlayerView view))
             {
                 transform.SetParent(view.bombSlot);
                 transform.localPosition = Vector3.zero;
@@ -51,8 +54,24 @@ namespace Bomb
 
         private void TriggerExplode()
         {
+            RPC_TriggerExplosionEffect();
+            
             OnExplode?.Invoke(Holder);
             FuseTimer = TickTimer.None;
         }
+        
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void RPC_TriggerExplosionEffect()
+        {
+            if (explosionEffect && explosionEffect.GetComponentsInChildren<ParticleSystem>().Length > 0)
+            {
+                var effects = explosionEffect.GetComponentsInChildren<ParticleSystem>();
+                foreach (var effect in effects)
+                {
+                    effect.Play();
+                }
+            }
+        }
+
     }
 }

@@ -13,6 +13,12 @@ namespace Player.New
 
         [Header("Layers")] [SerializeField] private LayerMask groundLayer;
         
+        [Header("Stun")]
+        [SerializeField] private float stunDuration = 1.5f;
+        
+        [Networked] private TickTimer StunTimer { get; set; }
+        private bool IsStunned => !StunTimer.ExpiredOrNotRunning(Runner);
+        
         public override void Spawned()
         {
             _cc = GetComponent<NetworkCharacterControllerCustom>();
@@ -23,14 +29,18 @@ namespace Player.New
             lifeHandler.OnDeadChanged += b => { enabled = !b; };
 
             lifeHandler.OnRespawn += () => { _cc.Teleport(transform.position + Vector3.up * 3); };
+            
+            lifeHandler.OnGetHit += Stun;
         }
 
         public override void FixedUpdateNetwork()
         {
             if (!GetInput(out NetworkInputData inputs)) return;
-
+            
+            if(IsStunned) return;
+            
             _cc.Move(inputs.direction.normalized);
-
+            
             if (inputs.IsJumpPressed && _cc.Grounded)
             {
                 _cc.Jump();
@@ -39,6 +49,14 @@ namespace Player.New
             if (inputs.IsHitPressed)
             {
                 _hitHandler.Hit();
+            }
+        }
+
+        private void Stun()
+        {
+            if (HasStateAuthority)
+            {
+                StunTimer = TickTimer.CreateFromSeconds(Runner, stunDuration);
             }
         }
     }

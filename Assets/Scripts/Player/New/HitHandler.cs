@@ -50,7 +50,7 @@ namespace Player.New
                         var attacker = Object.InputAuthority;
                         var victim = hit.Hitbox.Root.GetComponent<NetworkObject>().InputAuthority;
 
-                        var bm = FindObjectOfType<BombManager>();
+                        var bm = FindObjectOfType<Bomb.GameManager>();
                         if (bm && bm.HasBomb(attacker) && attacker != victim)
                         {
                             bm.TransferBomb(victim);

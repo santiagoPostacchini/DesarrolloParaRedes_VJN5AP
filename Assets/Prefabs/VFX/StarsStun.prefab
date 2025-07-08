@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7909584536696021923}
   - component: {fileID: 5175338999782097188}
   - component: {fileID: 2003323527353522077}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StarsStun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8022349513433352168}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 1.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0

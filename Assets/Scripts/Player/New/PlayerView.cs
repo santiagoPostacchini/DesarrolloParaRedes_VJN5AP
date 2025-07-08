@@ -17,9 +17,6 @@ namespace Player.New
         private NetworkMecanimAnimator _mecanimAnimator;
         private Animator _childAnim;
 
-        [Networked, OnChangedRender(nameof(TriggerGetHitParticles))]
-        private NetworkBool Hit { get; set; }
-
         public void FixedUpdate()
         {
             var lifeComponent = GetComponentInParent<LifeHandler>();
@@ -29,7 +26,6 @@ namespace Player.New
             {
                 lifeComponent.OnDeadChanged += EnableMeshRender;
                 lifeComponent.OnGetHit += TriggerGetHitParticles;
-                lifeComponent.OnGetHit += () => Hit = !Hit;
             }
 
             if (hitComponent)

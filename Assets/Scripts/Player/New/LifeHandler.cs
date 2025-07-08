@@ -8,7 +8,6 @@ namespace Player.New
     {
         [Networked, OnChangedRender(nameof(DeadStateChanged))] 
         private NetworkBool IsDead { get; set; }
-    
         public event Action<bool> OnDeadChanged = delegate { };
         public event Action OnRespawn = delegate { };
         public event Action OnLeft = delegate {  };

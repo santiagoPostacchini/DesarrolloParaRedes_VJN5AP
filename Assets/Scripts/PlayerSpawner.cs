@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bomb;
 using Fusion;
 using Fusion.Sockets;
 using Player.New;
@@ -16,7 +15,7 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     [Header("Spawn Points")]
     [SerializeField] private Transform spawnPointParent;
 
-    private BombManager _bombManager;
+    private Bomb.GameManager _gameManager;
 
     private bool _gameStarted;
     private int _spawnedPlayers;
@@ -41,9 +40,9 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
             if (_connectedPlayers == _minPlayers && _spawnedPlayers == _minPlayers)
             {
-                _bombManager = FindObjectOfType<BombManager>();
+                _gameManager = FindObjectOfType<Bomb.GameManager>();
                 Debug.Log("[Spawner] Ready to spawn bomb — all players spawned");
-                _bombManager.SpawnBombOnRandomPlayer();
+                _gameManager.RPC_SpawnBombOnRandomPlayer();
             }
         }
     }
