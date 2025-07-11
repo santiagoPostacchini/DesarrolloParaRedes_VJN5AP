@@ -4,28 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85557a03-1e28-4377-a0d1-2b4d472ee2be" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DesarrolloParaRedes_VJN5AP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DesarrolloParaRedes_VJN5AP/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Global Volumes/Ghibli.Vol.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Global Volumes/Ghibli.Vol.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Global Volumes/MenuVol.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Global Volumes/MenuVol.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Imports/Skybox/CasualDay.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imports/Skybox/CasualDay.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bomb.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bomb.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Network Runner.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Network Runner.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/NewCharacters/CatPlayerCharacter.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/NewCharacters/CatPlayerCharacter.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/VFX/StarsStun.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/VFX/StarsStun.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bomb/BombBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bomb/BombBehaviour.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bomb/BombManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bomb/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bomb/BombManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bomb/GameManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Nicknames/NicknameHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Nicknames/NicknameHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/New/HitHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/New/HitHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/New/LifeHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/New/LifeHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/New/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/New/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/New/PlayerView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/New/PlayerView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerSpawner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/WaterShader/ToonWater.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/WaterShader/ToonWater.mat" afterDir="false" />
-    </list>
+    <list default="true" id="85557a03-1e28-4377-a0d1-2b4d472ee2be" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -163,7 +142,7 @@
       <workItem from="1751653877170" duration="19423000" />
       <workItem from="1751728057020" duration="11912000" />
       <workItem from="1751927117443" duration="5404000" />
-      <workItem from="1751997602554" duration="6048000" />
+      <workItem from="1751997602554" duration="6643000" />
     </task>
     <servers />
   </component>
