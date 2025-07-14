@@ -6,7 +6,7 @@ public class NicknameItem : MonoBehaviour
 {
     private Transform _owner;
 
-    private const float HEAD_OFFSET = 2.5F;
+    private const float HEAD_OFFSET = 1F;
 
     private Text _myText;
 
