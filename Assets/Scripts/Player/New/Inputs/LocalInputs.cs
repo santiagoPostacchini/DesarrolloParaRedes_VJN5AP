@@ -54,7 +54,7 @@ namespace Player.New.Inputs
             _data.Buttons.Set(NetworkInputData.SPACE, _space);
             _space = false;
             
-            _data.direction = _direction;
+            _data.Direction = _direction;
             
             return _data;
         }

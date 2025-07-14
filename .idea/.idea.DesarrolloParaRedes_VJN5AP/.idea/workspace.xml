@@ -6,8 +6,26 @@
   <component name="ChangeListManager">
     <list default="true" id="85557a03-1e28-4377-a0d1-2b4d472ee2be" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DesarrolloParaRedes_VJN5AP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DesarrolloParaRedes_VJN5AP/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Canvas - Nicknames.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Canvas - Nicknames.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/NewCharacters/CatPlayerCharacter.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/NewCharacters/CatPlayerCharacter.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Nickname Text.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Nickname Text.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Nicknames/NicknameItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Nicknames/NicknameItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/New/Inputs/LocalInputs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/New/Inputs/LocalInputs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/New/Inputs/NetworkInputData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/New/Inputs/NetworkInputData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/New/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/New/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/M_Explosion.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Shaders/M_Explosion.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Lose.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/Lose.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Lose.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/Lose.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/VFX/Universal Render Pipeline Asset_Renderer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/VFX/Universal Render Pipeline Asset_Renderer.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +79,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/../../../../Build/DesarrolloParaRedes_VJN5AP.exe" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../../../../Build\Bomb Runners.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="C:\Users\Asriel\Desktop\Build" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -150,6 +168,10 @@
       <workItem from="1752456605226" duration="10000" />
       <workItem from="1752456789441" duration="8000" />
       <workItem from="1752456967209" duration="33000" />
+      <workItem from="1752518575025" duration="61000" />
+      <workItem from="1752518665068" duration="1000" />
+      <workItem from="1752518978778" duration="616000" />
+      <workItem from="1752519991603" duration="246000" />
     </task>
     <servers />
   </component>

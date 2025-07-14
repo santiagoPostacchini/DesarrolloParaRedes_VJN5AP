@@ -10,8 +10,6 @@ namespace Player.New
     {
         private NetworkCharacterControllerCustom _cc;
         private HitHandler _hitHandler;
-
-        [Header("Layers")] [SerializeField] private LayerMask groundLayer;
         
         [Header("Stun")]
         [SerializeField] private float stunDuration = 1.5f;
@@ -39,7 +37,7 @@ namespace Player.New
             
             if(IsStunned) return;
             
-            _cc.Move(inputs.direction.normalized);
+            _cc.Move(inputs.Direction.normalized);
             
             if (inputs.IsJumpPressed && _cc.Grounded)
             {

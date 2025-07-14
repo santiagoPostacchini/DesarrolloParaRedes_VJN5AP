@@ -9,7 +9,7 @@ namespace Player.New.Inputs
         public const byte SPACE = 2;
         
         public NetworkButtons Buttons;
-        public Vector3 direction;
+        public Vector3 Direction;
         
         public bool IsHitPressed => Buttons.IsSet(MOUSEBUTTON0);
         public bool IsJumpPressed => Buttons.IsSet(SPACE);
